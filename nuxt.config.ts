@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   runtimeConfig: {
-    allowedUsers: ''
+    allowedUsers: process.env.NUXT_ALLOWED_USERS || ''
   },
 
   compatibilityDate: '2025-07-16',

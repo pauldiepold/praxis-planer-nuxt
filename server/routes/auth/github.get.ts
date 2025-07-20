@@ -1,9 +1,6 @@
 export default defineOAuthGitHubEventHandler({
   async onSuccess(event, { user }) {
     const { allowedUsers } = useRuntimeConfig(event)
-    console.log(user)
-    console.log(user.login)
-    console.log(allowedUsers)
     // Hole die erlaubten E-Mails aus der ENV
     const allowed = (allowedUsers || '').split(',').map(e => e.trim().toLowerCase())
     // Prüfe, ob die User-Email in der Liste ist

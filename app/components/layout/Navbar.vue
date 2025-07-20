@@ -1,6 +1,31 @@
 <script setup lang="ts">
 const { loggedIn, user, clear } = useUserSession()
 const isMenuOpen = ref(false)
+const toast = useToast()
+
+const handleLogout = async () => {
+  try {
+    await clear()
+    toast.add({
+      title: 'Erfolgreich abgemeldet',
+      color: 'success',
+      icon: 'i-lucide-check-circle'
+    })
+    // Zur Startseite weiterleiten
+    await navigateTo('/')
+  } catch (error) {
+    console.error('Logout error:', error)
+    toast.add({
+      title: 'Fehler beim Abmelden',
+      color: 'error',
+      icon: 'i-lucide-alert-circle'
+    })
+  }
+}
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
 </script>
 
 <template>
@@ -23,7 +48,7 @@ const isMenuOpen = ref(false)
         </NuxtLink>
 
         <!-- Desktop Navigation -->
-        <nav class="hidden md:block">
+        <nav v-if="loggedIn" class="hidden md:block">
           <ul class="flex space-x-6">
             <LayoutHeaderLink
               to="/"
@@ -38,7 +63,7 @@ const isMenuOpen = ref(false)
 
         <!-- User Info und Logout (Desktop) -->
         <div class="hidden items-center space-x-6 md:flex">
-          <template v-if="loggedIn">
+          <template v-if="loggedIn && user">
             <span class="text-sm">
               {{ user.name }}
             </span>
@@ -46,7 +71,7 @@ const isMenuOpen = ref(false)
               variant="soft"
               class="cursor-pointer"
               icon="i-lucide-log-out"
-              @click="clear"
+              @click="handleLogout"
             >
               Ausloggen
             </UButton>
@@ -58,14 +83,15 @@ const isMenuOpen = ref(false)
             variant="soft"
             external
             class="cursor-pointer"
-            icon="i-lucide-log-out"
+            icon="i-lucide-github"
           >
-            Login
+            Mit GitHub anmelden
           </UButton>
         </div>
 
         <!-- Mobile Menu Button -->
         <button
+          v-if="loggedIn"
           class="hover:text-primary text-white transition-colors md:hidden"
           aria-label="Menü öffnen"
           @click="toggleMenu"
@@ -79,18 +105,24 @@ const isMenuOpen = ref(false)
 
       <!-- Mobile Navigation -->
       <div
-        v-show="isMenuOpen"
+        v-show="isMenuOpen && loggedIn"
         class="bg-muted absolute right-0 left-0 z-50 md:hidden"
       >
         <ul class="space-y-4 px-4 py-4">
           <LayoutHeaderLinkMobile
             to="/"
-            label="Wettkämpfe"
+            label="Startseite"
+            :is-menu-open="isMenuOpen"
+            @close-menu="isMenuOpen = false"
+          />
+          <LayoutHeaderLinkMobile
+            to="/schools"
+            label="Pflegeschulen"
             :is-menu-open="isMenuOpen"
             @close-menu="isMenuOpen = false"
           />
           <li
-            v-if="user"
+            v-if="loggedIn && user"
             class="border-t border-gray-700 pt-4 text-center"
           >
             <div class="flex flex-col space-y-4">
@@ -101,7 +133,7 @@ const isMenuOpen = ref(false)
                 variant="outline"
                 class="w-full justify-center"
                 icon="i-lucide-log-out"
-                @click="clear"
+                @click="handleLogout"
               >
                 Ausloggen
               </UButton>
