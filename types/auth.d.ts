@@ -1,13 +1,17 @@
-declare module '#auth-utils' {
-  interface User {
-    provider: string
-    id: string
-    name: string
-    avatar?: string
-    url?: string
-    email?: string
-  }
+import type { Ref } from 'vue'
 
+// Globale User-Typdefinition
+interface User {
+  provider: string
+  id: string
+  name: string
+  avatar?: string
+  url?: string
+  email?: string
+}
+
+// Nuxt Auth Utils Modul-Definition
+declare module '#auth-utils' {
   interface UserSession {
     // Session wird automatisch von nuxt-auth-utils verwaltet
     _placeholder?: never
@@ -16,6 +20,17 @@ declare module '#auth-utils' {
   interface SecureSessionData {
     // Hier können sensitive Daten gespeichert werden
     _placeholder?: never
+  }
+}
+
+// Globale Typdefinitionen für nuxt-auth-utils
+declare global {
+  function useUserSession(): {
+    loggedIn: Ref<boolean>
+    user: Ref<User | null>
+    ready: Ref<boolean>
+    signIn: (provider?: string) => Promise<void>
+    signOut: () => Promise<void>
   }
 }
 
