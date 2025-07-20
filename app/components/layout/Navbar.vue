@@ -29,6 +29,10 @@ const isMenuOpen = ref(false)
               to="/"
               label="Startseite"
             />
+            <LayoutHeaderLink
+              to="/schools"
+              label="Pflegeschulen"
+            />
           </ul>
         </nav>
 
@@ -74,46 +78,37 @@ const isMenuOpen = ref(false)
       </div>
 
       <!-- Mobile Navigation -->
-      <template>
-        <div
-          v-show="isMenuOpen"
-          class="bg-muted absolute right-0 left-0 z-50 md:hidden"
-        >
-          <ul class="space-y-4 px-4 py-4">
-            <LayoutHeaderLinkMobile
-              to="/"
-              label="Wettkämpfe"
-              :is-menu-open="isMenuOpen"
-              @close-menu="isMenuOpen = false"
-            />
-            <LayoutHeaderLinkMobile
-              v-if="user"
-              to="/admin"
-              label="Admin-Dashboard"
-              :is-menu-open="isMenuOpen"
-              @close-menu="isMenuOpen = false"
-            />
-            <li
-              v-if="user"
-              class="border-t border-gray-700 pt-4 text-center"
-            >
-              <div class="flex flex-col space-y-4">
-                <span class="text-muted text-sm">
-                  Eingeloggt als: {{ user.name }}
-                </span>
-                <UButton
-                  variant="outline"
-                  class="w-full justify-center"
-                  icon="i-lucide-log-out"
-                  @click="clear"
-                >
-                  Ausloggen
-                </UButton>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </template>
+      <div
+        v-show="isMenuOpen"
+        class="bg-muted absolute right-0 left-0 z-50 md:hidden"
+      >
+        <ul class="space-y-4 px-4 py-4">
+          <LayoutHeaderLinkMobile
+            to="/"
+            label="Wettkämpfe"
+            :is-menu-open="isMenuOpen"
+            @close-menu="isMenuOpen = false"
+          />
+          <li
+            v-if="user"
+            class="border-t border-gray-700 pt-4 text-center"
+          >
+            <div class="flex flex-col space-y-4">
+              <span class="text-muted text-sm">
+                Eingeloggt als: {{ user.name }}
+              </span>
+              <UButton
+                variant="outline"
+                class="w-full justify-center"
+                icon="i-lucide-log-out"
+                @click="clear"
+              >
+                Ausloggen
+              </UButton>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </header>
 </template>
