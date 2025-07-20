@@ -3,29 +3,21 @@ export default defineOAuthGitHubEventHandler({
     emailRequired: true
   },
   async onSuccess(event, { user, tokens: _tokens }) {
-    console.log('GitHub OAuth Success - Starting authentication process')
-    
     try {
       const { allowedUsers } = useRuntimeConfig(event)
-      console.log('Runtime config loaded, allowedUsers:', allowedUsers)
       
       // Hole die erlaubten E-Mails aus der ENV
       const allowed = (allowedUsers || '').split(',').map(e => e.trim().toLowerCase())
-      console.log('Parsed allowed users:', allowed)
-      console.log('User login:', user.login)
-      console.log('User object:', JSON.stringify(user, null, 2))
       
       // Prüfe, ob die User-Email in der Liste ist
       if (!user.login || !allowed.includes(user.login.toLowerCase())) {
-        console.log('User not allowed - login:', user.login, 'allowed users:', allowed)
+        console.log('Unauthorized login attempt:', user.login)
         // Session löschen, falls schon gesetzt
         await setUserSession(event, { user: null })
-        console.log('Session cleared for unauthorized user')
         // Weiterleitung mit Fehler
         return sendRedirect(event, '/')
       }
 
-      console.log('User authorized, setting session...')
       await setUserSession(event, {
         user: {
           provider: 'github',
@@ -36,18 +28,14 @@ export default defineOAuthGitHubEventHandler({
           email: user.email
         }
       })
-      console.log('Session set successfully')
 
       return sendRedirect(event, '/')
     } catch (error: unknown) {
-      console.error('Error in GitHub OAuth handler:', error)
-      console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace')
-      console.error('User object that caused error:', JSON.stringify(user, null, 2))
+      console.error('GitHub OAuth error:', error)
       
       // Fallback: Session löschen und zur Startseite weiterleiten
       try {
         await setUserSession(event, { user: null })
-        console.log('Session cleared after error')
       } catch (sessionError) {
         console.error('Error clearing session:', sessionError)
       }
