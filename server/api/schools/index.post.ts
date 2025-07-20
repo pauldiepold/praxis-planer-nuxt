@@ -32,7 +32,8 @@ export default eventHandler(async (event) => {
     contactPerson: validatedData.contactPerson,
     phone: validatedData.phone,
     email: validatedData.email,
-    createdAt: new Date()
+    createdAt: new Date(),
+    updatedAt: new Date()
   }).returning().get()
 
   return newSchool

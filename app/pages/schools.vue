@@ -5,7 +5,9 @@ import * as z from 'zod'
 
 import type { School } from '../../types/database'
 
+
 const UButton = resolveComponent('UButton')
+const UDropdownMenu = resolveComponent('UDropdownMenu')
 
 definePageMeta({
   name: 'schools-management-page',
@@ -33,10 +35,10 @@ const isDeleting = ref(false)
 
 // Zod schema for form validation
 const schoolSchema = z.object({
-  name: z.string().min(1, 'Name ist erforderlich'),
-  contactPerson: z.string().optional().or(z.literal('')).nullish(),
-  phone: z.string().optional().or(z.literal('')).nullish(),
-  email: z.string().email('Ungültige E-Mail-Adresse').optional().or(z.literal('')).nullish()
+  name: z.string().min(1, 'Name ist erforderlich').max(255, 'Name darf maximal 255 Zeichen haben'),
+  contactPerson: z.string().max(255, 'Ansprechpartner darf maximal 255 Zeichen haben').optional().or(z.literal('')).nullish(),
+  phone: z.string().max(50, 'Telefonnummer darf maximal 50 Zeichen haben').optional().or(z.literal('')).nullish(),
+  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail darf maximal 255 Zeichen haben').optional().or(z.literal('')).nullish()
 })
 
 type SchoolSchema = z.output<typeof schoolSchema>
@@ -56,71 +58,139 @@ const addForm = reactive<Partial<SchoolSchema>>({
   email: ''
 })
 
+const globalFilter = ref('')
+
 const tableData = computed(() => {
-  return schools.value || []
+  const data = schools.value || []
+  
+  if (!globalFilter.value) {
+    return data
+  }
+  
+  const searchTerm = globalFilter.value.toLowerCase()
+  
+  return data.filter(school => 
+    school.name.toLowerCase().includes(searchTerm) ||
+    (school.contactPerson && school.contactPerson.toLowerCase().includes(searchTerm)) ||
+    (school.phone && school.phone.toLowerCase().includes(searchTerm)) ||
+    (school.email && school.email.toLowerCase().includes(searchTerm))
+  )
 })
 
 const columns: TableColumn<School>[] = [
   {
+    accessorKey: 'id',
+    header: '#',
+    cell: ({ row }) => row.getValue('id'),
+    enableHiding: true,
+    enableSorting: true
+  },
+  {
     accessorKey: 'name',
-    header: 'Name'
+    header: 'Name',
+    enableHiding: true,
+    enableSorting: true
   },
   {
     accessorKey: 'contactPerson',
     header: 'Ansprechpartner',
-    cell: ({ row }) => row.getValue('contactPerson') || '-'
+    cell: ({ row }) => row.getValue('contactPerson') || '-',
+    enableHiding: true,
+    enableSorting: true
   },
   {
     accessorKey: 'phone',
     header: 'Telefon',
-    cell: ({ row }) => row.getValue('phone') || '-'
+    cell: ({ row }) => row.getValue('phone') || '-',
+    enableHiding: true,
+    enableSorting: true
   },
   {
     accessorKey: 'email',
     header: 'E-Mail',
-    cell: ({ row }) => row.getValue('email') || '-'
+    cell: ({ row }) => row.getValue('email') || '-',
+    enableHiding: true,
+    enableSorting: true
+  },
+  {
+    accessorKey: 'createdAt',
+    header: 'Erstellt am',
+    cell: ({ row }) => formatGermanDate(row.getValue('createdAt')),
+    enableHiding: true,
+    enableSorting: true
+  },
+  {
+    accessorKey: 'updatedAt',
+    header: 'Aktualisiert am',
+    cell: ({ row }) => formatGermanDate(row.getValue('updatedAt')),
+    enableHiding: true,
+    enableSorting: true
   },
   {
     id: 'actions',
     header: 'Aktionen',
+    enableHiding: false,
     cell: ({ row }) => {
-      return h(
-        'div',
-        { class: 'flex items-center gap-2 justify-end' },
-        [
-          h(UButton, {
-            icon: 'i-lucide-edit',
-            color: 'neutral',
-            variant: 'ghost',
-            size: 'sm',
-            'aria-label': 'Bearbeiten',
-            onClick: () => {
-              schoolToEdit.value = row.original
-              Object.assign(editForm, {
-                name: row.original.name,
-                contactPerson: row.original.contactPerson || '',
-                phone: row.original.phone || '',
-                email: row.original.email || ''
-              })
-              isEditModalOpen.value = true
-            }
-          }),
-          h(UButton, {
-            icon: 'i-lucide-trash-2',
-            color: 'red',
-            variant: 'ghost',
-            size: 'sm',
-            'aria-label': 'Löschen',
-            onClick: () => {
-              schoolToDelete.value = row.original
-              isDeleteModalOpen.value = true
-            }
-          })
-        ]
-      )
+      return h('div', { class: 'flex items-center gap-2 justify-end' }, [
+        h(UButton, {
+          'icon': 'i-lucide-edit',
+          'color': 'primary',
+          'variant': 'ghost',
+          'size': 'sm',
+          'aria-label': 'Schule bearbeiten',
+          onClick() {
+            schoolToEdit.value = row.original
+            Object.assign(editForm, {
+              name: row.original.name,
+              contactPerson: row.original.contactPerson || '',
+              phone: row.original.phone || '',
+              email: row.original.email || ''
+            })
+            isEditModalOpen.value = true
+          }
+        }),
+        h(UButton, {
+          'icon': 'i-lucide-trash-2',
+          'color': 'error',
+          'variant': 'ghost',
+          'size': 'sm',
+          'aria-label': 'Schule löschen',
+          onClick() {
+            schoolToDelete.value = row.original
+            isDeleteModalOpen.value = true
+          }
+        })
+      ])
     }
   }
 ]
+
+const table = useTemplateRef('table')
+
+// Deutsche Labels für die Spalten
+const getColumnLabel = (columnId: string): string => {
+  const labels: Record<string, string> = {
+    id: 'ID',
+    name: 'Name',
+    contactPerson: 'Ansprechpartner',
+    phone: 'Telefon',
+    email: 'E-Mail',
+    createdAt: 'Erstellt am',
+    updatedAt: 'Aktualisiert am'
+  }
+  return labels[columnId] || columnId
+}
+
+// Standard-Sichtbarkeit der Spalten konfigurieren
+const defaultColumnVisibility = {
+  id: false,
+  name: true,
+  contactPerson: true,
+  phone: true,
+  email: true,
+  createdAt: false,
+  updatedAt: false
+}
 
 const handleEditSubmit = async (event: FormSubmitEvent<SchoolSchema>) => {
   if (!schoolToEdit.value) return
@@ -142,36 +212,8 @@ const handleEditSubmit = async (event: FormSubmitEvent<SchoolSchema>) => {
     await refresh()
     handleEditCancel()
   } catch (error: unknown) {
-    console.error('Edit school error:', error)
-    
-    if (error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'errors' in error.data) {
-      // Serverseitige Validierungsfehler
-      const errors = error.data.errors as Array<{ field: string; message: string }>
-      errors.forEach(err => {
-        toast.add({
-          title: `Validierungsfehler: ${err.field}`,
-          description: err.message,
-          color: 'error',
-          icon: 'i-lucide-alert-circle'
-        })
-      })
-    } else if (error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'message' in error.data) {
-      // Allgemeine serverseitige Fehler
-      toast.add({
-        title: 'Fehler beim Bearbeiten der Schule',
-        description: String(error.data.message),
-        color: 'error',
-        icon: 'i-lucide-alert-circle'
-      })
-    } else {
-      // Unbekannte Fehler
-      toast.add({
-        title: 'Fehler beim Bearbeiten der Schule',
-        description: 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.',
-        color: 'error',
-        icon: 'i-lucide-alert-circle'
-      })
-    }
+    const errorToasts = handleApiError(error, 'Fehler beim Bearbeiten der Schule')
+    errorToasts.forEach((toastData) => toast.add(toastData))
   } finally {
     isSubmitting.value = false
   }
@@ -195,36 +237,8 @@ const handleAddSubmit = async (event: FormSubmitEvent<SchoolSchema>) => {
     await refresh()
     handleAddCancel()
   } catch (error: unknown) {
-    console.error('Add school error:', error)
-    
-    if (error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'errors' in error.data) {
-      // Serverseitige Validierungsfehler
-      const errors = error.data.errors as Array<{ field: string; message: string }>
-      errors.forEach(err => {
-        toast.add({
-          title: `Validierungsfehler: ${err.field}`,
-          description: err.message,
-          color: 'error',
-          icon: 'i-lucide-alert-circle'
-        })
-      })
-    } else if (error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'message' in error.data) {
-      // Allgemeine serverseitige Fehler
-      toast.add({
-        title: 'Fehler beim Erstellen der Schule',
-        description: String(error.data.message),
-        color: 'error',
-        icon: 'i-lucide-alert-circle'
-      })
-    } else {
-      // Unbekannte Fehler
-      toast.add({
-        title: 'Fehler beim Erstellen der Schule',
-        description: 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.',
-        color: 'error',
-        icon: 'i-lucide-alert-circle'
-      })
-    }
+    const errorToasts = handleApiError(error, 'Fehler beim Erstellen der Schule')
+    errorToasts.forEach((toastData) => toast.add(toastData))
   } finally {
     isSubmitting.value = false
   }
@@ -233,12 +247,12 @@ const handleAddSubmit = async (event: FormSubmitEvent<SchoolSchema>) => {
 const handleEditCancel = () => {
   isEditModalOpen.value = false
   schoolToEdit.value = null
-  Object.assign(editForm, { name: '', contactPerson: '', phone: '', email: '' })
+  resetForm(editForm, { name: '', contactPerson: '', phone: '', email: '' })
 }
 
 const handleAddCancel = () => {
   isAddModalOpen.value = false
-  Object.assign(addForm, { name: '', contactPerson: '', phone: '', email: '' })
+  resetForm(addForm, { name: '', contactPerson: '', phone: '', email: '' })
 }
 
 const handleDeleteConfirm = async () => {
@@ -301,20 +315,61 @@ const handleDeleteCancel = () => {
         </div>
       </template>
 
-      <UTable
-        :data="tableData"
-        :columns="columns"
-        :loading="pending"
-        class="flex-1"
-      >
-        <template #empty-state>
-          <div class="text-center py-8">
-            <p class="text-gray-500">
-              Keine Pflegeschulen gefunden
-            </p>
-          </div>
-        </template>
-      </UTable>
+      <div class="flex-1 divide-y divide-accented w-full">
+        <div class="flex items-center gap-4 justify-between pb-4">
+          <UInput
+            v-model="globalFilter"
+            class="grow max-w-sm"
+            placeholder="Schulen durchsuchen..."
+          />
+
+          <UDropdownMenu
+            :items="table?.tableApi?.getAllColumns().filter(column => column.getCanHide()).map(column => ({
+              label: getColumnLabel(column.id),
+              type: 'checkbox' as const,
+              checked: column.getIsVisible(),
+              onUpdateChecked(checked: boolean) {
+                table?.tableApi?.getColumn(column.id)?.toggleVisibility(!!checked)
+              },
+              onSelect(e?: Event) {
+                e?.preventDefault()
+              }
+            }))"
+            :content="{ align: 'end' }"
+          >
+            <UButton
+              label="Spalten"
+              color="neutral"
+              variant="outline"
+              trailing-icon="i-lucide-chevron-down"
+              class="ml-auto"
+              aria-label="Spalten-Auswahl Dropdown"
+            />
+          </UDropdownMenu>
+        </div>
+
+        <UTable
+          ref="table"
+          :data="tableData"
+          :columns="columns"
+          :loading="pending"
+          :column-visibility="defaultColumnVisibility"
+          sticky
+          class="flex-1"
+        >
+          <template #empty-state>
+            <div class="text-center py-8">
+              <p class="text-gray-500">
+                Keine Pflegeschulen gefunden
+              </p>
+            </div>
+          </template>
+        </UTable>
+
+        <div class="px-4 py-3.5 text-sm text-muted">
+          {{ tableData.length }} Schule(n) gefunden.
+        </div>
+      </div>
     </UCard>
 
     <!-- Edit Modal -->

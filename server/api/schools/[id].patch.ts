@@ -2,9 +2,9 @@ import { z } from 'zod'
 
 const updateSchoolSchema = z.object({
   name: z.string().min(1, 'Name ist erforderlich').max(255, 'Name darf maximal 255 Zeichen haben'),
-  contactPerson: z.string().max(255, 'Ansprechpartner darf maximal 255 Zeichen haben').optional(),
-  phone: z.string().max(50, 'Telefonnummer darf maximal 50 Zeichen haben').optional(),
-  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail darf maximal 255 Zeichen haben').optional()
+  contactPerson: z.string().max(255, 'Ansprechpartner darf maximal 255 Zeichen haben').optional().or(z.literal('')).nullish(),
+  phone: z.string().max(50, 'Telefonnummer darf maximal 50 Zeichen haben').optional().or(z.literal('')).nullish(),
+  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail darf maximal 255 Zeichen haben').optional().or(z.literal('')).nullish()
 })
 
 export default eventHandler(async (event) => {
@@ -32,7 +32,8 @@ export default eventHandler(async (event) => {
     name: validatedData.name,
     contactPerson: validatedData.contactPerson,
     phone: validatedData.phone,
-    email: validatedData.email
+    email: validatedData.email,
+    updatedAt: new Date()
   }).where(eq(tables.schools.id, Number(id))).returning().get()
 
   if (!updatedSchool) {

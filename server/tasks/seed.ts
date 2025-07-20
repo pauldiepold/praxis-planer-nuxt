@@ -69,70 +69,80 @@ export default defineTask({
           contactPerson: 'Frau Dr. Schmidt',
           phone: '089 12345678',
           email: 'info@krankenpflegeschule-muenchen.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Krankenpflegeschule am Klinikum Augsburg',
           contactPerson: 'Herr Müller',
           phone: '0821 98765432',
           email: 'kontakt@kps-augsburg.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Berufsfachschule für Gesundheits- und Krankenpflege Nürnberg',
           contactPerson: 'Frau Weber',
           phone: '0911 55556666',
           email: 'weber@kps-nuernberg.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Krankenpflegeschule der Caritas',
           contactPerson: 'Frau Fischer',
           phone: '089 87654321',
           email: 'fischer@caritas-kps.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Berufsfachschule für Krankenpflege am Rotkreuzklinikum',
           contactPerson: 'Herr Wagner',
           phone: '089 11112222',
           email: 'wagner@rk-kps.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Krankenpflegeschule der Diakonie',
           contactPerson: 'Frau Meyer',
           phone: '089 33334444',
           email: 'meyer@diakonie-kps.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Berufsfachschule für Gesundheits- und Kinderkrankenpflege',
           contactPerson: 'Frau Schulz',
           phone: '089 55556666',
           email: 'schulz@kinderkps.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Krankenpflegeschule am Universitätsklinikum',
           contactPerson: 'Dr. Hoffmann',
           phone: '089 77778888',
           email: 'hoffmann@uk-kps.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Berufsfachschule für Altenpflege München',
           contactPerson: 'Frau Klein',
           phone: '089 99990000',
           email: 'klein@altenpflege-muenchen.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Krankenpflegeschule der Barmherzigen Brüder',
           contactPerson: 'Herr Bauer',
           phone: '089 12345678',
           email: 'bauer@bb-kps.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         }
       ]
 
@@ -147,70 +157,80 @@ export default defineTask({
           contactPerson: 'Dr. Anna Müller',
           phone: '089 12345678',
           email: 'info@kinderarzt-muenchen.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Praxis für Kinder- und Jugendmedizin Dr. Schmidt',
           contactPerson: 'Dr. Thomas Schmidt',
           phone: '089 87654321',
           email: 'schmidt@kinderarzt.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Kinderarztpraxis am Marienplatz',
           contactPerson: 'Dr. Maria Weber',
           phone: '089 11112222',
           email: 'weber@kinderarzt-marienplatz.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Praxis für Kinderheilkunde Dr. Fischer',
           contactPerson: 'Dr. Peter Fischer',
           phone: '089 33334444',
           email: 'fischer@kinderheilkunde.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Kinderarztpraxis Schwabing',
           contactPerson: 'Dr. Lisa Wagner',
           phone: '089 55556666',
           email: 'wagner@kinderarzt-schwabing.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Praxis für Kinder- und Jugendmedizin am Englischen Garten',
           contactPerson: 'Dr. Michael Meyer',
           phone: '089 77778888',
           email: 'meyer@kinderarzt-englischer-garten.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Kinderarztpraxis Dr. Schulz',
           contactPerson: 'Dr. Sarah Schulz',
           phone: '089 99990000',
           email: 'schulz@kinderarzt.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Praxis für Kinderheilkunde in Haidhausen',
           contactPerson: 'Dr. Andreas Hoffmann',
           phone: '089 12345678',
           email: 'hoffmann@kinderarzt-haidhausen.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Kinderarztpraxis Dr. Klein',
           contactPerson: 'Dr. Julia Klein',
           phone: '089 87654321',
           email: 'klein@kinderarzt.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Praxis für Kinder- und Jugendmedizin am Viktualienmarkt',
           contactPerson: 'Dr. Christian Bauer',
           phone: '089 11112222',
           email: 'bauer@kinderarzt-viktualienmarkt.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         }
       ]
 
@@ -226,7 +246,8 @@ export default defineTask({
           companyId: insertedCompanies[0].id,
           phone: '0170 1234567',
           email: 'anna.schmidt@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Lisa Müller',
@@ -234,7 +255,8 @@ export default defineTask({
           companyId: insertedCompanies[1].id,
           phone: '0170 2345678',
           email: 'lisa.mueller@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Sarah Weber',
@@ -242,7 +264,8 @@ export default defineTask({
           companyId: insertedCompanies[2].id,
           phone: '0170 3456789',
           email: 'sarah.weber@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Maria Fischer',
@@ -250,7 +273,8 @@ export default defineTask({
           companyId: insertedCompanies[3].id,
           phone: '0170 4567890',
           email: 'maria.fischer@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Julia Wagner',
@@ -258,7 +282,8 @@ export default defineTask({
           companyId: insertedCompanies[4].id,
           phone: '0170 5678901',
           email: 'julia.wagner@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Nina Meyer',
@@ -266,7 +291,8 @@ export default defineTask({
           companyId: insertedCompanies[5].id,
           phone: '0170 6789012',
           email: 'nina.meyer@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Sophie Schulz',
@@ -274,7 +300,8 @@ export default defineTask({
           companyId: insertedCompanies[6].id,
           phone: '0170 7890123',
           email: 'sophie.schulz@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Laura Hoffmann',
@@ -282,7 +309,8 @@ export default defineTask({
           companyId: insertedCompanies[7].id,
           phone: '0170 8901234',
           email: 'laura.hoffmann@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Emma Klein',
@@ -290,7 +318,8 @@ export default defineTask({
           companyId: insertedCompanies[8].id,
           phone: '0170 9012345',
           email: 'emma.klein@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Lea Bauer',
@@ -298,7 +327,8 @@ export default defineTask({
           companyId: insertedCompanies[9].id,
           phone: '0170 0123456',
           email: 'lea.bauer@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Hannah Schmidt',
@@ -306,7 +336,8 @@ export default defineTask({
           companyId: insertedCompanies[1].id,
           phone: '0170 1234568',
           email: 'hannah.schmidt@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Mia Müller',
@@ -314,7 +345,8 @@ export default defineTask({
           companyId: insertedCompanies[2].id,
           phone: '0170 2345679',
           email: 'mia.mueller@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Lena Weber',
@@ -322,7 +354,8 @@ export default defineTask({
           companyId: insertedCompanies[3].id,
           phone: '0170 3456780',
           email: 'lena.weber@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Clara Fischer',
@@ -330,7 +363,8 @@ export default defineTask({
           companyId: insertedCompanies[4].id,
           phone: '0170 4567891',
           email: 'clara.fischer@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Ella Wagner',
@@ -338,7 +372,8 @@ export default defineTask({
           companyId: insertedCompanies[5].id,
           phone: '0170 5678902',
           email: 'ella.wagner@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Maya Meyer',
@@ -346,7 +381,8 @@ export default defineTask({
           companyId: insertedCompanies[6].id,
           phone: '0170 6789013',
           email: 'maya.meyer@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Zoe Schulz',
@@ -354,7 +390,8 @@ export default defineTask({
           companyId: insertedCompanies[7].id,
           phone: '0170 7890124',
           email: 'zoe.schulz@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Luna Hoffmann',
@@ -362,7 +399,8 @@ export default defineTask({
           companyId: insertedCompanies[8].id,
           phone: '0170 8901235',
           email: 'luna.hoffmann@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Ava Klein',
@@ -370,7 +408,8 @@ export default defineTask({
           companyId: insertedCompanies[9].id,
           phone: '0170 9012346',
           email: 'ava.klein@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           name: 'Isabella Bauer',
@@ -378,7 +417,8 @@ export default defineTask({
           companyId: insertedCompanies[0].id,
           phone: '0170 0123457',
           email: 'isabella.bauer@email.de',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         }
       ]
 

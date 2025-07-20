@@ -8,6 +8,13 @@
       "when": 1752931622279,
       "tag": "0000_conscious_tarot",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1753019973326,
+      "tag": "0001_foamy_magdalene",
+      "breakpoints": true
     }
   ]
 }

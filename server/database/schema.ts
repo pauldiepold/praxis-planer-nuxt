@@ -6,7 +6,8 @@ export const schools = sqliteTable('schools', {
   contactPerson: text('contact_person'),
   phone: text('phone'),
   email: text('email'),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull()
+  createdAt: integer('createdAt', { mode: 'timestamp' }).notNull(),
+  updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull()
 })
 
 export const companies = sqliteTable('companies', {
@@ -15,7 +16,8 @@ export const companies = sqliteTable('companies', {
   contactPerson: text('contact_person'),
   phone: text('phone'),
   email: text('email'),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull()
+  createdAt: integer('createdAt', { mode: 'timestamp' }).notNull(),
+  updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull()
 })
 
 export const students = sqliteTable('students', {
@@ -25,7 +27,8 @@ export const students = sqliteTable('students', {
   companyId: integer('company_id').references(() => companies.id),
   phone: text('phone'),
   email: text('email'),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull()
+  createdAt: integer('createdAt', { mode: 'timestamp' }).notNull(),
+  updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull()
 })
 
 export const weeks = sqliteTable('weeks', {
@@ -34,5 +37,6 @@ export const weeks = sqliteTable('weeks', {
   status: text('status', { enum: ['free', 'booked', 'vacation'] }).notNull().default('free'),
   studentId: integer('student_id').references(() => students.id),
   notes: text('notes'),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull()
+  createdAt: integer('createdAt', { mode: 'timestamp' }).notNull(),
+  updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull()
 })

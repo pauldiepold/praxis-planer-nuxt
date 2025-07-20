@@ -4,7 +4,7 @@ CREATE TABLE `companies` (
 	`contact_person` text,
 	`phone` text,
 	`email` text,
-	`created_at` integer NOT NULL
+	`createdAt` integer NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `schools` (
@@ -13,7 +13,7 @@ CREATE TABLE `schools` (
 	`contact_person` text,
 	`phone` text,
 	`email` text,
-	`created_at` integer NOT NULL
+	`createdAt` integer NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `students` (
@@ -23,7 +23,7 @@ CREATE TABLE `students` (
 	`company_id` integer,
 	`phone` text,
 	`email` text,
-	`created_at` integer NOT NULL,
+	`createdAt` integer NOT NULL,
 	FOREIGN KEY (`school_id`) REFERENCES `schools`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`company_id`) REFERENCES `companies`(`id`) ON UPDATE no action ON DELETE no action
 );
@@ -34,6 +34,6 @@ CREATE TABLE `weeks` (
 	`status` text DEFAULT 'free' NOT NULL,
 	`student_id` integer,
 	`notes` text,
-	`created_at` integer NOT NULL,
+	`createdAt` integer NOT NULL,
 	FOREIGN KEY (`student_id`) REFERENCES `students`(`id`) ON UPDATE no action ON DELETE no action
 );
