@@ -62,6 +62,10 @@ const toggleMenu = () => {
               to="/companies"
               label="Betriebe"
             />
+            <LayoutHeaderLink
+              to="/students"
+              label="Schülerinnen"
+            />
           </ul>
         </nav>
 
@@ -128,6 +132,12 @@ const toggleMenu = () => {
           <LayoutHeaderLinkMobile
             to="/companies"
             label="Betriebe"
+            :is-menu-open="isMenuOpen"
+            @close-menu="isMenuOpen = false"
+          />
+          <LayoutHeaderLinkMobile
+            to="/students"
+            label="Schülerinnen"
             :is-menu-open="isMenuOpen"
             @close-menu="isMenuOpen = false"
           />
