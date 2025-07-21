@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { h, resolveComponent } from 'vue'
+import { h, resolveComponent, ref, computed } from 'vue'
 import type { TableColumn, FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
 
@@ -59,21 +59,75 @@ const addForm = reactive<Partial<CompanySchema>>({
 
 const globalFilter = ref('')
 
-const tableData = computed(() => {
-  const data = companies.value || []
-  
-  if (!globalFilter.value) {
-    return data
+// Sortier-Logik
+const sortColumn = ref<'name' | 'contactPerson' | 'phone' | 'email' | 'createdAt' | 'updatedAt'>('name')
+const sortDirection = ref<'asc' | 'desc'>('asc')
+
+const sortOptions = [
+  { value: 'name', label: 'Name' },
+  { value: 'contactPerson', label: 'Ansprechpartner' },
+  { value: 'phone', label: 'Telefon' },
+  { value: 'email', label: 'E-Mail' },
+  { value: 'createdAt', label: 'Erstellt am' },
+  { value: 'updatedAt', label: 'Aktualisiert am' }
+]
+
+const sortDropdownItems = computed(() => [
+  ...sortOptions.map(option => ({
+    label: option.label,
+    value: option.value,
+    type: 'item' as const,
+    slot: `sort-${option.value}`,
+    onSelect() { sortColumn.value = option.value as typeof sortColumn.value },
+  })),
+  { type: 'divider' as const },
+  {
+    label: sortDirection.value === 'asc' ? 'Aufsteigend' : 'Absteigend',
+    icon: sortDirection.value === 'asc' ? 'i-lucide-arrow-up' : 'i-lucide-arrow-down',
+    type: 'item' as const,
+    active: true,
+    onSelect() { sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc' }
   }
-  
-  const searchTerm = globalFilter.value.toLowerCase()
-  
-  return data.filter(company => 
-    company.name.toLowerCase().includes(searchTerm) ||
-    (company.contactPerson && company.contactPerson.toLowerCase().includes(searchTerm)) ||
-    (company.phone && company.phone.toLowerCase().includes(searchTerm)) ||
-    (company.email && company.email.toLowerCase().includes(searchTerm))
-  )
+])
+
+const tableData = computed(() => {
+  let data = companies.value || []
+  if (globalFilter.value) {
+    const searchTerm = globalFilter.value.toLowerCase()
+    data = data.filter(company =>
+      company.name.toLowerCase().includes(searchTerm) ||
+      (company.contactPerson && company.contactPerson.toLowerCase().includes(searchTerm)) ||
+      (company.phone && company.phone.toLowerCase().includes(searchTerm)) ||
+      (company.email && company.email.toLowerCase().includes(searchTerm))
+    )
+  }
+
+  // Sortierung anwenden
+  const col = sortColumn.value
+  const dir = sortDirection.value
+  data = [...data].sort((a, b) => {
+    let aVal = a[col] ?? ''
+    let bVal = b[col] ?? ''
+    // Date-Vergleich
+    if (aVal instanceof Date && bVal instanceof Date) {
+      if (aVal.getTime() === bVal.getTime()) return 0
+      if (dir === 'asc') return aVal.getTime() > bVal.getTime() ? 1 : -1
+      return aVal.getTime() < bVal.getTime() ? 1 : -1
+    }
+    // String-Vergleich (case-insensitive)
+    if (typeof aVal === 'string' && typeof bVal === 'string') {
+      aVal = aVal.toLowerCase()
+      bVal = bVal.toLowerCase()
+    }
+    // Null-Fallback
+    if (aVal == null && bVal == null) return 0
+    if (aVal == null) return dir === 'asc' ? -1 : 1
+    if (bVal == null) return dir === 'asc' ? 1 : -1
+    if (aVal === bVal) return 0
+    if (dir === 'asc') return aVal > bVal ? 1 : -1
+    return aVal < bVal ? 1 : -1
+  })
+  return data
 })
 
 const columns: TableColumn<Company>[] = [
@@ -315,16 +369,18 @@ const handleDeleteCancel = () => {
       </template>
 
       <div class="flex-1 divide-y divide-accented w-full">
-        <div class="flex items-center gap-4 justify-between pb-4">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:gap-4 md:justify-between pb-4">
           <UInput
             v-model="globalFilter"
-            class="grow max-w-sm"
+            class="grow max-w-sm md:max-w-sm"
             placeholder="Betriebe durchsuchen..."
           />
 
+          <div class="flex gap-2 w-full md:w-auto md:ml-auto">
           <UDropdownMenu
             :items="table?.tableApi?.getAllColumns().filter(column => column.getCanHide()).map(column => ({
               label: getColumnLabel(column.id),
+              value: column.id,
               type: 'checkbox' as const,
               checked: column.getIsVisible(),
               onUpdateChecked(checked: boolean) {
@@ -332,19 +388,42 @@ const handleDeleteCancel = () => {
               },
               onSelect(e?: Event) {
                 e?.preventDefault()
-              }
+              },
+              slot: `col-${column.id}`
             }))"
             :content="{ align: 'end' }"
+            :ui="{ content: 'min-w-[12rem]' }"
           >
             <UButton
               label="Spalten"
               color="neutral"
               variant="outline"
               trailing-icon="i-lucide-chevron-down"
-              class="ml-auto"
+              class="w-full md:w-auto"
               aria-label="Spalten-Auswahl Dropdown"
             />
+            <template v-for="column in table?.tableApi?.getAllColumns().filter(c => c.getCanHide())" #[`col-${column.id}-trailing`] :key="column.id">
+              <UIcon v-if="column.getIsVisible()" name="i-lucide-check" class="shrink-0 size-5 text-primary" />
+            </template>
           </UDropdownMenu>
+          <UDropdownMenu
+            :items="sortDropdownItems"
+            :content="{ align: 'end' }"
+            :ui="{ content: 'min-w-[12rem]', item: { icon: 'order-last' } }"
+          >
+            <UButton
+              label="Sortieren"
+              color="neutral"
+              variant="outline"
+              trailing-icon="i-lucide-chevron-down"
+                class="w-full md:w-auto"
+              aria-label="Sortier-Auswahl Dropdown"
+            />
+            <template v-for="option in sortOptions" #[`sort-${option.value}-trailing`] :key="option.value">
+              <UIcon v-if="sortColumn === option.value" name="i-lucide-check" class="shrink-0 size-5 text-primary" />
+            </template>
+          </UDropdownMenu>
+          </div>
         </div>
 
         <UTable

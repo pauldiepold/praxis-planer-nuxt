@@ -48,11 +48,15 @@ const toggleMenu = () => {
         </NuxtLink>
 
         <!-- Desktop Navigation -->
-        <nav v-if="loggedIn" class="hidden md:block">
+        <nav v-if="loggedIn" class="hidden lg:block">
           <ul class="flex space-x-6">
             <LayoutHeaderLink
               to="/"
               label="Startseite"
+            />
+            <LayoutHeaderLink
+              to="/students"
+              label="Schülerinnen"
             />
             <LayoutHeaderLink
               to="/schools"
@@ -62,15 +66,11 @@ const toggleMenu = () => {
               to="/companies"
               label="Betriebe"
             />
-            <LayoutHeaderLink
-              to="/students"
-              label="Schülerinnen"
-            />
           </ul>
         </nav>
 
         <!-- User Info und Logout (Desktop) -->
-        <div class="hidden items-center space-x-6 md:flex">
+        <div class="hidden items-center space-x-6 lg:flex">
           <template v-if="loggedIn && user">
             <span class="text-sm">
               {{ user.name }}
@@ -100,7 +100,7 @@ const toggleMenu = () => {
         <!-- Mobile Menu Button -->
         <button
           v-if="loggedIn"
-          class="hover:text-primary text-white transition-colors md:hidden"
+          class="hover:text-primary text-white transition-colors lg:hidden"
           aria-label="Menü öffnen"
           @click="toggleMenu"
         >
@@ -114,12 +114,18 @@ const toggleMenu = () => {
       <!-- Mobile Navigation -->
       <div
         v-show="isMenuOpen && loggedIn"
-        class="bg-muted absolute right-0 left-0 z-50 md:hidden"
+        class="bg-muted absolute right-0 left-0 z-50 lg:hidden"
       >
         <ul class="space-y-4 px-4 py-4">
           <LayoutHeaderLinkMobile
             to="/"
             label="Startseite"
+            :is-menu-open="isMenuOpen"
+            @close-menu="isMenuOpen = false"
+          />
+          <LayoutHeaderLinkMobile
+            to="/students"
+            label="Schülerinnen"
             :is-menu-open="isMenuOpen"
             @close-menu="isMenuOpen = false"
           />
@@ -132,12 +138,6 @@ const toggleMenu = () => {
           <LayoutHeaderLinkMobile
             to="/companies"
             label="Betriebe"
-            :is-menu-open="isMenuOpen"
-            @close-menu="isMenuOpen = false"
-          />
-          <LayoutHeaderLinkMobile
-            to="/students"
-            label="Schülerinnen"
             :is-menu-open="isMenuOpen"
             @close-menu="isMenuOpen = false"
           />
