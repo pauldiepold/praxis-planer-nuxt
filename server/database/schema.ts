@@ -33,7 +33,7 @@ export const students = sqliteTable('students', {
 
 export const weeks = sqliteTable('weeks', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  weekStartDate: integer('week_start_date', { mode: 'timestamp' }).notNull(),
+  weekStartDate: text('week_start_date').notNull(),
   status: text('status', { enum: ['free', 'booked', 'vacation'] }).notNull().default('free'),
   studentId: integer('student_id').references(() => students.id),
   notes: text('notes'),

@@ -15,6 +15,13 @@
       "when": 1753019973326,
       "tag": "0001_foamy_magdalene",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1753125524697,
+      "tag": "0002_nervous_sharon_carter",
+      "breakpoints": true
     }
   ]
 }
