@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm'
 const updateWeekSchema = z.object({
   status: z.enum(['free', 'booked', 'vacation']),
   studentId: z.number().nullable(),
-  notes: z.string().max(1000, 'Notizen dürfen maximal 1000 Zeichen haben').optional().or(z.literal('')).nullish()
+  notes: z.string().max(1000, 'Notizen können maximal 1000 Zeichen haben').optional().or(z.literal('')).nullish()
 })
 
 export default eventHandler(async (event) => {

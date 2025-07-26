@@ -147,19 +147,19 @@ function handleWeekUpdated(updatedWeek: { id: number; status: 'free' | 'booked' 
   }
 }
 
-// Entities Store verwenden
-const entitiesStore = useEntitiesStore()
+// Entities Composable verwenden
+const { students, schools } = useEntities()
 
 // Funktion zum Laden der Schülerin-Details
 async function loadStudentDetails(studentId: number, weekIndex: number) {
   try {
-    const student = entitiesStore.students.find(s => s.id === studentId)
+    const student = students.value.find(s => s.id === studentId)
     if (student && weekIndex !== -1 && weeksRaw.value[weekIndex]) {
       weeksRaw.value[weekIndex].studentName = student.name
       
       // Schule-Name laden, falls verfügbar
       if (student.schoolId) {
-        const school = entitiesStore.schools.find(s => s.id === student.schoolId)
+        const school = schools.value.find(s => s.id === student.schoolId)
         weeksRaw.value[weekIndex].schoolName = school?.name || null
       } else {
         weeksRaw.value[weekIndex].schoolName = null
@@ -197,7 +197,7 @@ definePageMeta({
             v-model="selectedYear"
             :items="years"
             class="min-w-[100px]"
-            :placeholder="isLoadingYears ? 'Lade...' : 'Jahr wählen'"
+            :placeholder="isLoadingYears ? 'Lade...' : 'Jahr auswählen'"
             :loading="isLoadingYears"
           />
         </div>

@@ -55,6 +55,7 @@ export const useEntitiesStore = defineStore('entities', {
       return {
         id: student.id,
         name: student.name,
+        label: school ? `${student.name} - ${school.name}` : student.name,
         school: school?.name || null
       }
     })

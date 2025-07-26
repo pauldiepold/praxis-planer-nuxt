@@ -29,14 +29,14 @@ const isEditModalOpen = ref(false)
 // Loading states
 const isSubmitting = ref(false)
 
-// Entities Store verwenden
-const entitiesStore = useEntitiesStore()
+// Entities Composable verwenden
+const { studentOptionsWithSchool } = useEntities()
 
 // Zod schema für Formularvalidierung
 const weekSchema = z.object({
   status: z.enum(['free', 'booked', 'vacation']),
   studentId: z.number().nullable(),
-  notes: z.string().max(1000, 'Notizen dürfen maximal 1000 Zeichen haben').optional().or(z.literal('')).nullish()
+  notes: z.string().max(1000, 'Notizen können maximal 1000 Zeichen haben').optional().or(z.literal('')).nullish()
 })
 
 type WeekSchema = z.output<typeof weekSchema>
@@ -66,15 +66,17 @@ function getISOWeek(date: Date): number {
 function getWeekRange(weekStartDate: string): string {
   const startDate = new Date(weekStartDate)
   const endDate = addDays(startDate, 4) // Montag + 4 Tage = Freitag
-  
   const startFormatted = format(startDate, 'd.M.', { locale: de })
-  const endFormatted = format(endDate, 'd.M.yyyy', { locale: de })
-  
+  const endFormatted = format(endDate, 'd.M.', { locale: de })
   return `${startFormatted} - ${endFormatted}`
 }
 
+function getWeekYear(weekStartDate: string): number {
+  return new Date(weekStartDate).getFullYear()
+}
+
 // Schülerinnen-Optionen für das Select
-const studentOptions = computed(() => entitiesStore.studentOptionsWithSchool)
+const studentOptions = computed(() => studentOptionsWithSchool.value)
 
 // Modal öffnen
 function openEditModal() {
@@ -165,14 +167,18 @@ const statusOptions = [
     </div>
 
     <!-- Edit Modal -->
-    <UModal v-model:open="isEditModalOpen" title="Woche bearbeiten" description="Bearbeiten Sie die Informationen der ausgewählten Woche." :close="false">
+    <UModal v-model:open="isEditModalOpen" title="Woche bearbeiten" description="Bearbeite die Informationen der ausgewählten Woche." :close="false">
       <template #body>
         <UForm :schema="weekSchema" :state="editForm" class="space-y-6" @submit="handleEditSubmit">
           <!-- Woche Info -->
           <div class="bg-muted rounded-lg p-4">
-            <div class="text-sm text-muted mb-2">Woche</div>
-            <div class="font-medium">
-              KW {{ getISOWeek(new Date(week.weekStartDate)) }} - {{ getWeekRange(week.weekStartDate) }}
+            <div class="flex items-center justify-between">
+              <div class="font-medium text-lg">
+                KW {{ getISOWeek(new Date(week.weekStartDate)) }} - {{ getWeekYear(week.weekStartDate) }}
+              </div>
+              <div class="text-sm text-muted">
+                {{ getWeekRange(week.weekStartDate) }}
+              </div>
             </div>
           </div>
 
@@ -181,7 +187,7 @@ const statusOptions = [
             <USelect
               v-model="editForm.status"
               :items="statusOptions"
-              placeholder="Status wählen"
+              placeholder="Status auswählen"
               size="lg"
               class="w-full"
             />
@@ -193,13 +199,15 @@ const statusOptions = [
             label="Schülerin" 
             name="studentId"
           >
-            <USelect
+            <USelectMenu
               v-model="editForm.studentId"
               :items="studentOptions"
               value-key="id"
-              placeholder="Schülerin wählen"
+              label-key="label"
+              placeholder="Schülerin auswählen"
               size="lg"
               class="w-full"
+              searchable
             >
               <template #option="{ item }">
                 <div class="flex flex-col">
@@ -207,7 +215,7 @@ const statusOptions = [
                   <span v-if="item.school" class="text-sm text-muted">{{ item.school }}</span>
                 </div>
               </template>
-            </USelect>
+            </USelectMenu>
           </UFormField>
 
           <!-- Notizen -->

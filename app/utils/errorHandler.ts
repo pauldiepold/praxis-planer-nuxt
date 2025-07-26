@@ -32,7 +32,7 @@ export function handleApiError(error: unknown, defaultMessage: string): ToastDat
   // Unbekannte Fehler
   return [{
     title: defaultMessage,
-    description: 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.',
+    description: 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.',
     color: 'error' as const,
     icon: 'i-lucide-alert-circle'
   }]

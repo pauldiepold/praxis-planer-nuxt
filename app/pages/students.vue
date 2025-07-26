@@ -17,13 +17,9 @@ const {
   companyOptions, 
   addStudent, 
   updateStudent, 
-  deleteStudent 
+  deleteStudent,
+  isLoading
 } = useEntities()
-
-// Schülerinnen laden (falls noch nicht geladen)
-const { data: studentsData, pending, refresh } = await useFetch<Student[]>('/api/students', {
-  default: () => students.value
-})
 
 const toast = useToast()
 
@@ -44,11 +40,11 @@ const isDeleting = ref(false)
 
 // Zod schema für Formulare
 const studentSchema = z.object({
-  name: z.string().min(1, 'Name ist erforderlich').max(255, 'Name darf maximal 255 Zeichen haben'),
+  name: z.string().min(1, 'Name ist erforderlich').max(255, 'Name kann maximal 255 Zeichen haben'),
   schoolId: z.number().nullable(),
   companyId: z.number().nullable(),
-  phone: z.string().max(50, 'Telefonnummer darf maximal 50 Zeichen haben').optional().or(z.literal('')).nullish(),
-  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail darf maximal 255 Zeichen haben').optional().or(z.literal('')).nullish()
+  phone: z.string().max(50, 'Telefonnummer kann maximal 50 Zeichen haben').optional().or(z.literal('')).nullish(),
+  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail kann maximal 255 Zeichen haben').optional().or(z.literal('')).nullish()
 })
 
 type StudentSchema = z.output<typeof studentSchema>
@@ -105,20 +101,20 @@ const sortDropdownItems = computed(() => [
 ])
 
 const tableData = computed(() => {
-  let data = studentsData.value || []
+  let data = students.value || []
   if (globalFilter.value) {
     const searchTerm = globalFilter.value.toLowerCase()
-      data = data.filter(student => {
-    const school = schools.value.find(s => s.id === student.schoolId)
-    const company = companies.value.find(c => c.id === student.companyId)
-    return (
-      student.name.toLowerCase().includes(searchTerm) ||
-      (student.phone && student.phone.toLowerCase().includes(searchTerm)) ||
-      (student.email && student.email.toLowerCase().includes(searchTerm)) ||
-      (school && school.name.toLowerCase().includes(searchTerm)) ||
-      (company && company.name.toLowerCase().includes(searchTerm))
-    )
-  })
+    data = data.filter(student => {
+      const school = schools.value.find(s => s.id === student.schoolId)
+      const company = companies.value.find(c => c.id === student.companyId)
+      return (
+        student.name.toLowerCase().includes(searchTerm) ||
+        (student.phone && student.phone.toLowerCase().includes(searchTerm)) ||
+        (student.email && student.email.toLowerCase().includes(searchTerm)) ||
+        (school && school.name.toLowerCase().includes(searchTerm)) ||
+        (company && company.name.toLowerCase().includes(searchTerm))
+      )
+    })
   }
 
   // Sortierung anwenden
@@ -289,7 +285,6 @@ const handleEditSubmit = async (event: FormSubmitEvent<StudentSchema>) => {
       color: 'success',
       icon: 'i-lucide-check-circle'
     })
-    await refresh()
     handleEditCancel()
   } catch (error: unknown) {
     const errorToasts = handleApiError(error, 'Fehler beim Bearbeiten der Schülerin')
@@ -308,7 +303,6 @@ const handleAddSubmit = async (event: FormSubmitEvent<StudentSchema>) => {
       color: 'success',
       icon: 'i-lucide-check-circle'
     })
-    await refresh()
     handleAddCancel()
   } catch (error: unknown) {
     const errorToasts = handleApiError(error, 'Fehler beim Erstellen der Schülerin')
@@ -339,11 +333,11 @@ const handleDeleteConfirm = async () => {
       color: 'success',
       icon: 'i-lucide-check-circle'
     })
-    await refresh()
+
   } catch (error: unknown) {
     const errorMessage = error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'message' in error.data 
       ? String(error.data.message) 
-      : 'Bitte versuchen Sie es erneut'
+      : 'Bitte versuche es erneut'
     toast.add({
       title: 'Fehler beim Löschen der Schülerin',
       description: errorMessage,
@@ -445,7 +439,7 @@ const handleDeleteCancel = () => {
           ref="table"
           :data="tableData"
           :columns="columns"
-          :loading="pending"
+          :loading="isLoading.students"
           :column-visibility="defaultColumnVisibility"
           sticky
           class="flex-1"
@@ -460,13 +454,13 @@ const handleDeleteCancel = () => {
         </UTable>
 
         <div class="px-4 py-3.5 text-sm text-muted">
-          {{ tableData.length }} Schülerin(nen) gefunden.
+          {{ tableData.length }} Schülerin{{ tableData.length !== 1 ? 'nen' : '' }} gefunden.
         </div>
       </div>
     </UCard>
 
     <!-- Edit Modal -->
-    <UModal v-model:open="isEditModalOpen" title="Schülerin bearbeiten" description="Bearbeiten Sie die Informationen der ausgewählten Schülerin." :close="false">
+    <UModal v-model:open="isEditModalOpen" title="Schülerin bearbeiten" description="Bearbeite die Informationen der ausgewählten Schülerin." :close="false">
       <template #body>
         <UForm :schema="studentSchema" :state="editForm" class="space-y-6" @submit="handleEditSubmit">
           <UFormField label="Name" name="name">
@@ -537,7 +531,7 @@ const handleDeleteCancel = () => {
     </UModal>
 
     <!-- Add Modal -->
-    <UModal v-model:open="isAddModalOpen" title="Neue Schülerin hinzufügen" description="Fügen Sie eine neue Schülerin hinzu." :close="false">
+    <UModal v-model:open="isAddModalOpen" title="Neue Schülerin hinzufügen" description="Füge eine neue Schülerin hinzu." :close="false">
       <template #body>
         <UForm :schema="studentSchema" :state="addForm" class="space-y-6" @submit="handleAddSubmit">
           <UFormField label="Name" name="name">
@@ -611,7 +605,7 @@ const handleDeleteCancel = () => {
     <UModal v-model:open="isDeleteModalOpen" title="Schülerin löschen" description="Diese Aktion kann nicht rückgängig gemacht werden." :close="false">
       <template #body>
         <p class="text-sm text-gray-600 dark:text-gray-300">
-          Sind Sie sicher, dass Sie die Schülerin '{{ studentToDelete?.name || '' }}' löschen möchten?
+          Bist du sicher, dass du die Schülerin '{{ studentToDelete?.name || '' }}' löschen möchtest?
         </p>
       </template>
       <template #footer>
