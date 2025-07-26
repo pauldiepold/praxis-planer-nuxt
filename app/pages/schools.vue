@@ -15,6 +15,11 @@ definePageMeta({
   middleware: 'auth'
 })
 
+// Seitenspezifischer Titel
+useHead({
+  title: 'Pflegeschulen'
+})
+
 // Entities Composable verwenden
 const { 
   schools, 

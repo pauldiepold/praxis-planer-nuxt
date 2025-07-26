@@ -8,6 +8,16 @@ import type { Student } from '../../types/database'
 const UButton = resolveComponent('UButton')
 const UDropdownMenu = resolveComponent('UDropdownMenu')
 
+definePageMeta({
+  name: 'students-management-page',
+  middleware: 'auth'
+})
+
+// Seitenspezifischer Titel
+useHead({
+  title: 'Schülerinnen'
+})
+
 // Entities Composable verwenden
 const { 
   students, 

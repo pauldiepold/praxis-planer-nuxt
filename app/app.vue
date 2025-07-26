@@ -1,16 +1,11 @@
 <script setup lang="ts">
 import { de } from '@nuxt/ui/locale'
 
-useSeoMeta({
-  description:
-    'Pflege Planer für die Praxis.',
-  ogTitle: 'Praxis-Pflege-Planer'
-})
-
 useHead({
   htmlAttrs: {
     lang: 'de'
-  }
+  },
+  title: 'Praxis Pflege Planer'
 })
 </script>
 

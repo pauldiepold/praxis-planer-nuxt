@@ -183,6 +183,11 @@ definePageMeta({
   colorMode: 'dark',
   layout: 'fullwidth'
 })
+
+// Seitenspezifischer Titel
+useHead({
+  title: 'Startseite'
+})
 </script>
 
 <template>

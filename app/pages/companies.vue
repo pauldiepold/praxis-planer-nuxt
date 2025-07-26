@@ -13,6 +13,11 @@ definePageMeta({
   middleware: 'auth'
 })
 
+// Seitenspezifischer Titel
+useHead({
+  title: 'Betriebe'
+})
+
 // Entities Composable verwenden
 const { 
   companies, 

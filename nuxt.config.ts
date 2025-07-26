@@ -18,6 +18,12 @@ export default defineNuxtConfig({
     allowedUsers: process.env.NUXT_ALLOWED_USERS || ''
   },
 
+  app: {
+    head: {
+      title: 'Praxis Pflege Planer'
+    }
+  },
+
   compatibilityDate: '2025-07-16',
 
   nitro: {
