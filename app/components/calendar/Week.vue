@@ -158,8 +158,8 @@ const statusOptions = [
       
       <!-- Schüler und Pflegeschule in der Mitte (rechtsbündig) -->
       <div class="flex flex-col flex-1 min-w-0 text-right">
-        <span class="text-sm font-medium truncate">{{ week.studentName || '–' }}</span>
-        <span class="text-xs text-muted truncate">{{ week.schoolName || '–' }}</span>
+        <span class="text-sm font-medium truncate">{{ week.studentName }}</span>
+        <span class="text-xs text-muted truncate">{{ week.schoolName }}</span>
       </div>
       
       <!-- Badge rechts -->
@@ -190,7 +190,7 @@ const statusOptions = [
           <!-- Woche Info -->
           <div class="bg-muted rounded-lg p-4">
             <div class="flex items-center justify-between">
-              <div class="font-medium text-lg">
+              <div class="font-medium">
                 KW {{ getISOWeek(new Date(week.weekStartDate)) }} - {{ getWeekYear(week.weekStartDate) }}
               </div>
               <div class="text-sm text-muted">
@@ -242,7 +242,7 @@ const statusOptions = [
               placeholder="Optionale Notizen zur Woche..."
               size="lg"
               class="w-full"
-              rows="3"
+              :rows="3"
             />
           </UFormField>
           

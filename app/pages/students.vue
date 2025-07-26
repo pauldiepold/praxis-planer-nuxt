@@ -435,7 +435,7 @@ const handleDeleteCancel = () => {
               color="neutral"
               variant="outline"
               trailing-icon="i-lucide-chevron-down"
-              class="flex-1 min-w-0"
+              class="w-full md:w-auto"
               aria-label="Sortier-Auswahl Dropdown"
             />
             <template v-for="option in sortOptions" #[`sort-${option.value}-trailing`] :key="option.value">
