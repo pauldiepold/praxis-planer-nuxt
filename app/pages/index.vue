@@ -180,7 +180,8 @@ onMounted(async () => {
 
 definePageMeta({
   title: 'Startseite',
-  colorMode: 'dark'
+  colorMode: 'dark',
+  layout: 'fullwidth'
 })
 </script>
 

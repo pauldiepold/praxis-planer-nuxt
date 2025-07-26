@@ -138,7 +138,7 @@ const statusOptions = [
   <div>
     <!-- Woche Card (klickbar) -->
     <div 
-      class="flex items-center gap-4 bg-default rounded-lg p-3 hover:bg-muted/50 transition-colors duration-200 cursor-pointer"
+      class="flex items-center gap-4 bg-default rounded-lg p-3 hover:bg-muted/50 hover:ring hover:ring-yellow-400/60 hover:scale-[1.02] transition-all duration-300 ease-out cursor-pointer border border-transparent hover:border-yellow-300/40"
       @click="openEditModal"
     >
       <!-- KW und Datum links -->
@@ -165,6 +165,14 @@ const statusOptions = [
         </UBadge>
       </div>
     </div>
+    <!-- Notizen innerhalb der Card, eigene Zeile, nur wenn vorhanden -->
+    <template v-if="week.notes && week.notes.trim() !== ''">
+      <div class="bg-default rounded-b-lg border-t border-muted -mt-1 px-3 pb-2 pt-2">
+        <div class="text-xs text-muted break-words whitespace-pre-line">
+          {{ week.notes }}
+        </div>
+      </div>
+    </template>
 
     <!-- Edit Modal -->
     <UModal v-model:open="isEditModalOpen" title="Woche bearbeiten" description="Bearbeite die Informationen der ausgewählten Woche." :close="false">
