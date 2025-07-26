@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 
+// Authentifizierung prüfen
+const { loggedIn } = useUserSession()
+
 const nextYear = ref<number|null>(null)
 const isLoading = ref(false)
 const isSuccess = ref(false)
@@ -191,7 +194,36 @@ useHead({
 </script>
 
 <template>
-  <div class="mx-auto p-6">
+  <!-- Nicht angemeldete Benutzer sehen nur die Willkommensseite -->
+  <div v-if="!loggedIn" class="mx-auto p-6">
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="mb-8">
+        <img
+          src="~/assets/images/praxis-logo.png"
+          alt="Praxis Logo"
+          class="mx-auto bg-gray-200 p-1 rounded-lg h-24 w-auto mb-6"
+        >
+        <h1 class="text-4xl font-bold mb-4">Praxis Pflege Planer</h1>
+        <p class="text-lg text-muted mb-8">
+          Willkommen beim Praxis Pflege Planer. Bitte melden Sie sich an, um auf die Anwendung zuzugreifen.
+        </p>
+      </div>
+      
+      <UButton
+        href="/auth/github"
+        variant="solid"
+        color="primary"
+        size="lg"
+        icon="i-lucide-github"
+        class="text-lg px-8 py-4"
+      >
+        Mit GitHub anmelden
+      </UButton>
+    </div>
+  </div>
+
+  <!-- Angemeldete Benutzer sehen den Jahresplaner -->
+  <div v-else class="mx-auto p-6">
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-3xl font-bold">Jahresplaner</h1>
       <div class="flex items-center gap-4">

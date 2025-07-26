@@ -93,9 +93,15 @@ async function handleEditSubmit(event: { data: WeekSchema }) {
   isSubmitting.value = true
 
   try {
+    // Wenn Status 'free' ist, studentId auf null setzen
+    const submitData = {
+      ...event.data,
+      studentId: event.data.status === 'free' ? null : event.data.studentId
+    }
+
     const updatedWeek = await $fetch(`/api/weeks/${props.week.id}`, {
       method: 'PATCH',
-      body: event.data
+      body: submitData
     })
 
     toast.add({
@@ -104,11 +110,14 @@ async function handleEditSubmit(event: { data: WeekSchema }) {
       icon: 'i-lucide-check-circle'
     })
 
+    // Aktuelle Schülerin- und Schulinformationen aus dem Store holen
+    const currentStudent = studentOptionsWithSchool.value.find(s => s.id === updatedWeek.studentId)
+    
     // Emit für Parent-Komponente
     emit('updated', {
       ...updatedWeek,
-      studentName: props.week.studentName,
-      schoolName: props.week.schoolName
+      studentName: currentStudent?.name || null,
+      schoolName: currentStudent?.school || null
     })
     
     // Modal schließen

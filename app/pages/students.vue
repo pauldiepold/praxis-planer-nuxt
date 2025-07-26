@@ -160,7 +160,7 @@ const columns: TableColumn<Student>[] = [
     header: 'Aktionen',
     enableHiding: false,
     cell: ({ row }) => {
-      return h('div', { class: 'flex items-center gap-2 justify-end' }, [
+      return h('div', { class: 'flex items-center gap-2' }, [
         h(UButton, {
           'icon': 'i-lucide-edit',
           'color': 'primary',
