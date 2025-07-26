@@ -151,7 +151,7 @@ function handleWeekUpdated(updatedWeek: { id: number; status: 'free' | 'booked' 
 }
 
 // Entities Composable verwenden
-const { students, schools } = useEntities()
+const { students, schools, isLoading: entitiesLoading } = useEntities()
 
 // Funktion zum Laden der Schülerin-Details
 async function loadStudentDetails(studentId: number, weekIndex: number) {
@@ -211,6 +211,7 @@ useHead({
       
       <UButton
         href="/auth/github"
+        external
         variant="solid"
         color="primary"
         size="lg"
@@ -244,26 +245,37 @@ useHead({
 
     <!-- Legend -->
     <div class="bg-muted rounded-lg shadow-md mb-6">
-      <div class="p-6">
+      <div class="py-3 px-6">
         <div class="flex justify-center gap-8">
           <div class="flex items-center gap-2">
             <div class="w-4 h-4 bg-success rounded"/>
-            <span>Frei</span>
+            <span class="text-sm">Frei</span>
           </div>
           <div class="flex items-center gap-2">
             <div class="w-4 h-4 bg-error rounded"/>
-            <span>Belegt</span>
+            <span class="text-sm">Belegt</span>
           </div>
           <div class="flex items-center gap-2">
             <div class="w-4 h-4 bg-warning rounded"/>
-            <span>Urlaub</span>
+            <span class="text-sm">Urlaub</span>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Loading Indicator -->
+    <div v-if="isWeeksLoading || entitiesLoading.schools || entitiesLoading.students || entitiesLoading.companies" class="flex justify-center items-center py-20">
+      <div class="text-center">
+        <UIcon
+          name="i-lucide-loader-2"
+          class="w-16 h-16 text-primary animate-spin mx-auto mb-4"
+        />
+        <p class="text-lg text-muted">Lade Jahresplaner...</p>
+      </div>
+    </div>
+    
     <!-- Calendar Container -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div v-else-if="!isWeeksLoading && !entitiesLoading.schools && !entitiesLoading.students && !entitiesLoading.companies" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
       <div v-for="month in 12" :key="month" class="bg-muted rounded-lg shadow-xl border-t-4 border-primary hover:shadow-2xl transition-all duration-200 cursor-pointer">
         <div class="p-4">
           <h2 class="text-2xl font-bold text-center mb-4">
@@ -285,7 +297,7 @@ useHead({
     </div>
     
     <!-- Trennelement -->
-    <div class="border-t border-border my-8"/>
+    <div class="border-t border-neutral-600 my-8"/>
     
     <!-- Jahr hinzufügen Button -->
     <div class="flex justify-center">
