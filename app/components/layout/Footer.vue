@@ -34,10 +34,6 @@
           zum GitHub-Repo
         </UButton>
       </div>
-
-      <p class="text-muted text-sm text-center mt-4">
-        Johanna stinkt
-      </p>
     </div>
   </footer>
 </template>

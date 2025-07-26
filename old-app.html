@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Praxis-Pflege-Planer - Kinderarztpraxis Holstein-Diepold</title>
+    <script src="assets/tailwind.min.css"></script>
+    <link href="assets/daisyui.min.css" rel="stylesheet" type="text/css" />
+    <script>
+      // Fallback für lokale Dateien
+      window.addEventListener('error', function(e) {
+        if (e.target.tagName === 'LINK' || e.target.tagName === 'SCRIPT') {
+          console.log('Ressource nicht gefunden:', e.target.src || e.target.href);
+        }
+      }, true);
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen bg-base-100">
+    <!-- Navigation -->
+    <div class="navbar bg-base-200 shadow-lg">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+                    </svg>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                    <li><a onclick="showPage('calendar')" class="nav-link" data-page="calendar">Kalender</a></li>
+                    <li><a onclick="showPage('students')" class="nav-link" data-page="students">Schülerinnen</a></li>
+                    <li><a onclick="showPage('schools')" class="nav-link" data-page="schools">Pflegeschulen</a></li>
+                    <li><a onclick="showPage('companies')" class="nav-link" data-page="companies">Betriebe</a></li>
+                </ul>
+            </div>
+            <div class="flex items-center gap-3">
+                <div style="background-color: #374151; border-radius: 8px; padding: 8px;">
+                    <img src="assets/praxis-logo.svg" alt="Logo" class="w-10 h-10">
+                </div>
+                <div>
+                    <div class="font-bold text-lg">Praxis-Pflege-Planer</div>
+                    <div class="text-sm opacity-70">Kinderarztpraxis Holstein-Diepold / Dr. Diepold</div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1">
+                <li><a onclick="showPage('calendar')" class="nav-link" data-page="calendar">Kalender</a></li>
+                <li><a onclick="showPage('students')" class="nav-link" data-page="students">Schülerinnen</a></li>
+                <li><a onclick="showPage('schools')" class="nav-link" data-page="schools">Pflegeschulen</a></li>
+                <li><a onclick="showPage('companies')" class="nav-link" data-page="companies">Betriebe</a></li>
+            </ul>
+        </div>
+        <div class="navbar-end">
+            <!-- Leer für bessere Balance -->
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-6">
+        <!-- Kalender Seite -->
+        <div id="calendar-page" class="page-content">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold">Jahresplaner</h1>
+                <div class="flex items-center gap-4">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Jahr</span>
+                        </label>
+                        <select id="yearSelector" onchange="updateYear()" class="select select-bordered">
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="card bg-base-200 mb-6">
+                <div class="card-body">
+                    <div class="flex justify-center gap-8">
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-success rounded"></div>
+                            <span>Frei</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-error rounded"></div>
+                            <span>Belegt</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-warning rounded"></div>
+                            <span>Urlaub</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Container -->
+            <div id="calendarContainer" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Kalender wird hier dynamisch generiert -->
+            </div>
+            
+            <!-- Trennelement -->
+            <div class="divider my-8"></div>
+            
+            <!-- Jahr hinzufügen Button -->
+            <div class="flex justify-center">
+                <button onclick="addYear()" class="btn btn-outline btn-primary" id="addYearButton">
+                    <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    Jahr hinzufügen
+                </button>
+            </div>
+        </div>
+
+    </dialog>
+
+    <script src="renderer.js"></script>
+</body>
+</html> 

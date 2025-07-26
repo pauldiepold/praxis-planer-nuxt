@@ -13,7 +13,12 @@ definePageMeta({
   middleware: 'auth'
 })
 
-const { data: companies, pending, refresh } = await useFetch<Company[]>('/api/companies')
+// Entities Store verwenden
+const entitiesStore = useEntitiesStore()
+
+const { data: companies, pending, refresh } = await useFetch<Company[]>('/api/companies', {
+  default: () => entitiesStore.companies
+})
 
 const toast = useToast()
 
@@ -251,10 +256,7 @@ const handleEditSubmit = async (event: FormSubmitEvent<CompanySchema>) => {
   isSubmitting.value = true
 
   try {
-    await $fetch(`/api/companies/${companyToEdit.value.id}`, {
-      method: 'PATCH',
-      body: event.data
-    })
+    await entitiesStore.updateCompany(companyToEdit.value.id, event.data)
 
     toast.add({
       title: 'Betrieb erfolgreich bearbeitet',
@@ -276,10 +278,7 @@ const handleAddSubmit = async (event: FormSubmitEvent<CompanySchema>) => {
   isSubmitting.value = true
 
   try {
-    await $fetch('/api/companies', {
-      method: 'POST',
-      body: event.data
-    })
+    await entitiesStore.addCompany(event.data)
 
     toast.add({
       title: 'Betrieb erfolgreich erstellt',
@@ -314,9 +313,7 @@ const handleDeleteConfirm = async () => {
   isDeleting.value = true
 
   try {
-    await $fetch(`/api/companies/${companyToDelete.value.id}`, {
-      method: 'DELETE'
-    })
+    await entitiesStore.deleteCompany(companyToDelete.value.id)
 
     toast.add({
       title: 'Betrieb erfolgreich gelöscht',

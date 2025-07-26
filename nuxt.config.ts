@@ -4,7 +4,8 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/eslint',
     '@nuxthub/core',
-    'nuxt-auth-utils'
+    'nuxt-auth-utils',
+    '@pinia/nuxt'
   ],
 
   ssr: false,

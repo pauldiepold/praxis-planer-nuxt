@@ -1,19 +1,29 @@
 <script setup lang="ts">
-import { h, resolveComponent, onMounted, ref, computed } from 'vue'
+import { h, resolveComponent, ref, computed } from 'vue'
 import type { TableColumn, FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
 
-import type { Student, School, Company } from '../../types/database'
+import type { Student } from '../../types/database'
 
 const UButton = resolveComponent('UButton')
 const UDropdownMenu = resolveComponent('UDropdownMenu')
 
-// Schulen und Betriebe State
-const schools = ref<School[]>([])
-const companies = ref<Company[]>([])
+// Entities Composable verwenden
+const { 
+  students, 
+  schools,
+  companies,
+  schoolOptions, 
+  companyOptions, 
+  addStudent, 
+  updateStudent, 
+  deleteStudent 
+} = useEntities()
 
-// Schülerinnen laden
-const { data: students, pending, refresh } = await useFetch<Student[]>('/api/students')
+// Schülerinnen laden (falls noch nicht geladen)
+const { data: studentsData, pending, refresh } = await useFetch<Student[]>('/api/students', {
+  default: () => students.value
+})
 
 const toast = useToast()
 
@@ -95,20 +105,20 @@ const sortDropdownItems = computed(() => [
 ])
 
 const tableData = computed(() => {
-  let data = students.value || []
+  let data = studentsData.value || []
   if (globalFilter.value) {
     const searchTerm = globalFilter.value.toLowerCase()
-    data = data.filter(student => {
-      const school = schools.value.find(s => s.id === student.schoolId)
-      const company = companies.value.find(c => c.id === student.companyId)
-      return (
-        student.name.toLowerCase().includes(searchTerm) ||
-        (student.phone && student.phone.toLowerCase().includes(searchTerm)) ||
-        (student.email && student.email.toLowerCase().includes(searchTerm)) ||
-        (school && school.name.toLowerCase().includes(searchTerm)) ||
-        (company && company.name.toLowerCase().includes(searchTerm))
-      )
-    })
+      data = data.filter(student => {
+    const school = schools.value.find(s => s.id === student.schoolId)
+    const company = companies.value.find(c => c.id === student.companyId)
+    return (
+      student.name.toLowerCase().includes(searchTerm) ||
+      (student.phone && student.phone.toLowerCase().includes(searchTerm)) ||
+      (student.email && student.email.toLowerCase().includes(searchTerm)) ||
+      (school && school.name.toLowerCase().includes(searchTerm)) ||
+      (company && company.name.toLowerCase().includes(searchTerm))
+    )
+  })
   }
 
   // Sortierung anwenden
@@ -273,10 +283,7 @@ const handleEditSubmit = async (event: FormSubmitEvent<StudentSchema>) => {
   if (!studentToEdit.value) return
   isSubmitting.value = true
   try {
-    await $fetch(`/api/students/${studentToEdit.value.id}`, {
-      method: 'PATCH',
-      body: event.data
-    })
+    await updateStudent(studentToEdit.value.id, event.data)
     toast.add({
       title: 'Schülerin erfolgreich bearbeitet',
       color: 'success',
@@ -295,10 +302,7 @@ const handleEditSubmit = async (event: FormSubmitEvent<StudentSchema>) => {
 const handleAddSubmit = async (event: FormSubmitEvent<StudentSchema>) => {
   isSubmitting.value = true
   try {
-    await $fetch('/api/students', {
-      method: 'POST',
-      body: event.data
-    })
+    await addStudent(event.data)
     toast.add({
       title: 'Schülerin erfolgreich erstellt',
       color: 'success',
@@ -329,9 +333,7 @@ const handleDeleteConfirm = async () => {
   if (!studentToDelete.value) return
   isDeleting.value = true
   try {
-    await $fetch(`/api/students/${studentToDelete.value.id}`, {
-      method: 'DELETE'
-    })
+    await deleteStudent(studentToDelete.value.id)
     toast.add({
       title: 'Schülerin erfolgreich gelöscht',
       color: 'success',
@@ -360,14 +362,7 @@ const handleDeleteCancel = () => {
   studentToDelete.value = null
 }
 
-onMounted(async () => {
-  // Schulen und Betriebe laden
-  schools.value = await $fetch('/api/schools')
-  companies.value = await $fetch('/api/companies')
-})
-
-const schoolOptions = computed(() => schools.value.map(s => ({ label: s.name, id: s.id })))
-const companyOptions = computed(() => companies.value.map(c => ({ label: c.name, id: c.id })))
+// Store-Optionen werden bereits aus dem Composable geladen
 </script>
 
 <template>

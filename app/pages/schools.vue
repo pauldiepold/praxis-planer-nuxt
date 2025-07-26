@@ -15,7 +15,12 @@ definePageMeta({
   middleware: 'auth'
 })
 
-const { data: schools, pending, refresh } = await useFetch<School[]>('/api/schools')
+// Entities Store verwenden
+const entitiesStore = useEntitiesStore()
+
+const { data: schools, pending, refresh } = await useFetch<School[]>('/api/schools', {
+  default: () => entitiesStore.schools
+})
 
 const toast = useToast()
 
@@ -243,10 +248,7 @@ const handleEditSubmit = async (event: FormSubmitEvent<SchoolSchema>) => {
   isSubmitting.value = true
 
   try {
-    await $fetch(`/api/schools/${schoolToEdit.value.id}`, {
-      method: 'PATCH',
-      body: event.data
-    })
+    await entitiesStore.updateSchool(schoolToEdit.value.id, event.data)
 
     toast.add({
       title: 'Schule erfolgreich bearbeitet',
@@ -268,10 +270,7 @@ const handleAddSubmit = async (event: FormSubmitEvent<SchoolSchema>) => {
   isSubmitting.value = true
 
   try {
-    await $fetch('/api/schools', {
-      method: 'POST',
-      body: event.data
-    })
+    await entitiesStore.addSchool(event.data)
 
     toast.add({
       title: 'Schule erfolgreich erstellt',
@@ -306,9 +305,7 @@ const handleDeleteConfirm = async () => {
   isDeleting.value = true
 
   try {
-    await $fetch(`/api/schools/${schoolToDelete.value.id}`, {
-      method: 'DELETE'
-    })
+    await entitiesStore.deleteSchool(schoolToDelete.value.id)
 
     toast.add({
       title: 'Schule erfolgreich gelöscht',
