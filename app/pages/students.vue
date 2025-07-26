@@ -146,6 +146,44 @@ const tableData = computed(() => {
 
 const columns: TableColumn<Student>[] = [
   {
+    id: 'actions',
+    header: 'Aktionen',
+    enableHiding: false,
+    cell: ({ row }) => {
+      return h('div', { class: 'flex items-center gap-2 justify-end' }, [
+        h(UButton, {
+          'icon': 'i-lucide-edit',
+          'color': 'primary',
+          'variant': 'ghost',
+          'size': 'sm',
+          'aria-label': 'Schülerin bearbeiten',
+          onClick() {
+            studentToEdit.value = row.original
+            Object.assign(editForm, {
+              name: row.original.name,
+              schoolId: row.original.schoolId,
+              companyId: row.original.companyId,
+              phone: row.original.phone || '',
+              email: row.original.email || ''
+            })
+            isEditModalOpen.value = true
+          }
+        }),
+        h(UButton, {
+          'icon': 'i-lucide-trash-2',
+          'color': 'error',
+          'variant': 'ghost',
+          'size': 'sm',
+          'aria-label': 'Schülerin löschen',
+          onClick() {
+            studentToDelete.value = row.original
+            isDeleteModalOpen.value = true
+          }
+        })
+      ])
+    }
+  },
+  {
     accessorKey: 'id',
     header: '#',
     cell: ({ row }) => row.getValue('id'),
@@ -207,44 +245,6 @@ const columns: TableColumn<Student>[] = [
     cell: ({ row }) => formatGermanDate(row.getValue('updatedAt')),
     enableHiding: true,
     enableSorting: true
-  },
-  {
-    id: 'actions',
-    header: 'Aktionen',
-    enableHiding: false,
-    cell: ({ row }) => {
-      return h('div', { class: 'flex items-center gap-2 justify-end' }, [
-        h(UButton, {
-          'icon': 'i-lucide-edit',
-          'color': 'primary',
-          'variant': 'ghost',
-          'size': 'sm',
-          'aria-label': 'Schülerin bearbeiten',
-          onClick() {
-            studentToEdit.value = row.original
-            Object.assign(editForm, {
-              name: row.original.name,
-              schoolId: row.original.schoolId,
-              companyId: row.original.companyId,
-              phone: row.original.phone || '',
-              email: row.original.email || ''
-            })
-            isEditModalOpen.value = true
-          }
-        }),
-        h(UButton, {
-          'icon': 'i-lucide-trash-2',
-          'color': 'error',
-          'variant': 'ghost',
-          'size': 'sm',
-          'aria-label': 'Schülerin löschen',
-          onClick() {
-            studentToDelete.value = row.original
-            isDeleteModalOpen.value = true
-          }
-        })
-      ])
-    }
   }
 ]
 
