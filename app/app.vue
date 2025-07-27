@@ -13,7 +13,7 @@ useHead({
   <UApp
     :locale="de"
     :toaster="{
-      position: 'top-center',
+      position: 'top-right',
       duration: 3000
     }"
   >
