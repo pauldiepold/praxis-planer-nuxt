@@ -5,7 +5,7 @@ import { ref, computed, watch, onMounted } from 'vue'
 const { loggedIn } = useUserSession()
 
 const nextYear = ref<number|null>(null)
-const isLoading = ref(false)
+const isLoading = ref(true)
 const isSuccess = ref(false)
 const isError = ref(false)
 const feedbackMsg = ref('')
@@ -17,7 +17,7 @@ const isWeeksError = ref(false)
 const selectedYear = ref(new Date().getFullYear())
 
 const years = ref<number[]>([])
-const isLoadingYears = ref(false)
+const isLoadingYears = ref(true)
 
 interface WeekEntry {
   id: number
@@ -205,7 +205,7 @@ useHead({
         >
         <h1 class="text-4xl font-bold mb-4">Praxis Pflege Planer</h1>
         <p class="text-lg text-muted mb-8">
-          Willkommen beim Praxis Pflege Planer. Bitte melden Sie sich an, um auf die Anwendung zuzugreifen.
+          Bitte melden dich an, um auf die Anwendung zuzugreifen.
         </p>
       </div>
       
@@ -216,7 +216,7 @@ useHead({
         color="primary"
         size="lg"
         icon="i-lucide-github"
-        class="text-lg px-8 py-4"
+        class="text-lg px-4 py-2"
       >
         Mit GitHub anmelden
       </UButton>
@@ -264,7 +264,7 @@ useHead({
     </div>
 
     <!-- Loading Indicator -->
-    <div v-if="isWeeksLoading || entitiesLoading.schools || entitiesLoading.students || entitiesLoading.companies" class="flex justify-center items-center py-20">
+    <div v-if="isLoading ||isWeeksLoading || entitiesLoading.schools || entitiesLoading.students || entitiesLoading.companies" class="flex justify-center items-center py-20">
       <div class="text-center">
         <UIcon
           name="i-lucide-loader-2"
@@ -275,7 +275,7 @@ useHead({
     </div>
     
     <!-- Calendar Container -->
-    <div v-else-if="!isWeeksLoading && !entitiesLoading.schools && !entitiesLoading.students && !entitiesLoading.companies" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div v-else-if="!isLoading && !isWeeksLoading && !entitiesLoading.schools && !entitiesLoading.students && !entitiesLoading.companies" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
       <div v-for="month in 12" :key="month" class="bg-muted rounded-lg shadow-xl border-t-4 border-primary hover:shadow-2xl transition-all duration-200 cursor-pointer">
         <div class="p-4">
           <h2 class="text-2xl font-bold text-center mb-4">
