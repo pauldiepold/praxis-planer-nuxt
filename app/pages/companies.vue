@@ -210,7 +210,13 @@ const columns: TableColumn<Company>[] = [
   {
     accessorKey: 'email',
     header: 'E-Mail',
-    cell: ({ row }) => row.getValue('email') || '-',
+    cell: ({ row }) => {
+      const email = row.getValue('email')
+      if (!email) return '-'
+      return h('div', {
+        innerHTML: `<a href="mailto:${email}" class="underline transition-colors" target="_blank" rel="noopener noreferrer">${email}</a>`
+      })
+    },
     enableHiding: true,
     enableSorting: true
   },
