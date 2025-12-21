@@ -4,7 +4,7 @@ import type {Ref} from 'vue';
 import type { TableColumn, FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
 
-import type { School } from '../../types/database'
+import type { School } from '#shared/types/database'
 
 
 const UButton = resolveComponent('UButton')

@@ -1,3 +1,5 @@
+import { db, schema } from 'hub:db'
+
 export default defineTask({
   meta: {
     name: 'db:seed',
@@ -9,11 +11,10 @@ export default defineTask({
     try {
       // First, let's check if tables exist
       console.log('Checking if tables exist...')
-      const db = useDrizzle()
 
       // Try to select from tables to see if they exist
       try {
-        await db.select().from(tables.schools).limit(1)
+        await db.select().from(schema.schools).limit(1)
         console.log('Schools table exists')
       }
       catch (error) {
@@ -26,7 +27,7 @@ export default defineTask({
       
       try {
         // Clear weeks table first (depends on students)
-        await db.delete(tables.weeks)
+        await db.delete(schema.weeks)
         console.log('Cleared weeks table')
       }
       catch {
@@ -35,7 +36,7 @@ export default defineTask({
 
       try {
         // Clear students table (depends on schools and companies)
-        await db.delete(tables.students)
+        await db.delete(schema.students)
         console.log('Cleared students table')
       }
       catch {
@@ -44,7 +45,7 @@ export default defineTask({
 
       try {
         // Clear companies table
-        await db.delete(tables.companies)
+        await db.delete(schema.companies)
         console.log('Cleared companies table')
       }
       catch {
@@ -53,7 +54,7 @@ export default defineTask({
 
       try {
         // Clear schools table
-        await db.delete(tables.schools)
+        await db.delete(schema.schools)
         console.log('Cleared schools table')
       }
       catch {
@@ -148,7 +149,7 @@ export default defineTask({
       ]
 
       console.log('Inserting schools...')
-      const insertedSchools = await db.insert(tables.schools).values(schools).returning()
+      const insertedSchools = await db.insert(schema.schools).values(schools).returning()
       console.log(`Successfully inserted ${insertedSchools.length} schools`)
 
       // Seed Companies (Betriebe)
@@ -236,7 +237,7 @@ export default defineTask({
       ]
 
       console.log('Inserting companies...')
-      const insertedCompanies = await db.insert(tables.companies).values(companies).returning()
+      const insertedCompanies = await db.insert(schema.companies).values(companies).returning()
       console.log(`Successfully inserted ${insertedCompanies.length} companies`)
 
       // Seed Students (Schülerinnen) with references to schools and companies
@@ -430,7 +431,7 @@ export default defineTask({
       for (let i = 0; i < students.length; i++) {
         try {
           console.log(`Inserting student ${i + 1}/${students.length}: ${students[i].name}`)
-          const student = await db.insert(tables.students).values(students[i]).returning().get()
+          const student = await db.insert(schema.students).values(students[i]).returning().get()
           insertedStudents.push(student)
           console.log(`Successfully inserted: ${student.name}`)
         }

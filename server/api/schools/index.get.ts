@@ -1,4 +1,5 @@
+import { db, schema } from 'hub:db'
+
 export default eventHandler(async () => {
-  const schools = await useDrizzle().select().from(tables.schools).all()
-  return schools
+  return await db.select().from(schema.schools).all()
 })

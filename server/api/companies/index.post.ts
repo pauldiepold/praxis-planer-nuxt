@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { db, schema } from 'hub:db'
 
 const createCompanySchema = z.object({
   name: z.string().min(1, 'Name ist erforderlich').max(255, 'Name kann maximal 255 Zeichen haben'),
@@ -27,7 +28,7 @@ export default eventHandler(async (event) => {
 
   const validatedData = validationResult.data
 
-  const newCompany = await useDrizzle().insert(tables.companies).values({
+  return await db.insert(schema.companies).values({
     name: validatedData.name,
     contactPerson: validatedData.contactPerson,
     phone: validatedData.phone,
@@ -35,6 +36,4 @@ export default eventHandler(async (event) => {
     createdAt: new Date(),
     updatedAt: new Date()
   }).returning().get()
-
-  return newCompany
-}) 
+})

@@ -42,12 +42,12 @@ export function getYearsWithMissingWeeks(existingWeekStartDates: string[], start
  * Legt alle fehlenden Wochen für das nächste Jahr mit fehlenden Wochen an.
  * Gibt das Jahr und die Anzahl der neu angelegten Wochen zurück.
  * @param db Drizzle-DB-Instanz
- * @param tables Tabellen-Objekt
+ * @param schema Tabellen-Objekt
  * @param maxYears Maximale Jahre im Voraus
  */
-export async function fillNextMissingWeeks(db: any, tables: any, maxYears = 5) {
+export async function fillNextMissingWeeks(db: any, schema: any, maxYears = 5) {
   const currentYear = new Date().getFullYear()
-  const weeks = await db.select({ weekStartDate: tables.weeks.weekStartDate }).from(tables.weeks).all()
+  const weeks = await db.select({ weekStartDate: schema.weeks.weekStartDate }).from(schema.weeks).all()
   const weekStartDates = weeks.map((w: any) => w.weekStartDate)
   const yearsWithMissing = getYearsWithMissingWeeks(weekStartDates, currentYear, maxYears)
   if (yearsWithMissing.length === 0) {
@@ -69,8 +69,8 @@ export async function fillNextMissingWeeks(db: any, tables: any, maxYears = 5) {
   if (newWeeks.length > 0) {
     for (let i = 0; i < newWeeks.length; i += batchSize) {
       const batch = newWeeks.slice(i, i + batchSize)
-      await db.insert(tables.weeks).values(batch)
+      await db.insert(schema.weeks).values(batch)
     }
   }
   return { year, created: newWeeks.length }
-} 
+}

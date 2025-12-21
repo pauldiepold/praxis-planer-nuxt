@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import { db, schema } from 'hub:db'
+import { eq } from 'drizzle-orm'
 
 const updateSchoolSchema = z.object({
   name: z.string().min(1, 'Name ist erforderlich').max(255, 'Name kann maximal 255 Zeichen haben'),
@@ -28,13 +30,13 @@ export default eventHandler(async (event) => {
 
   const validatedData = validationResult.data
 
-  const updatedSchool = await useDrizzle().update(tables.schools).set({
+  const updatedSchool = await db.update(schema.schools).set({
     name: validatedData.name,
     contactPerson: validatedData.contactPerson,
     phone: validatedData.phone,
     email: validatedData.email,
     updatedAt: new Date()
-  }).where(eq(tables.schools.id, Number(id))).returning().get()
+  }).where(eq(schema.schools.id, Number(id))).returning().get()
 
   if (!updatedSchool) {
     throw createError({

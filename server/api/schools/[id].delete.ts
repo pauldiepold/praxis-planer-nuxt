@@ -1,9 +1,12 @@
+import { db, schema } from 'hub:db'
+import { eq } from 'drizzle-orm'
+
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event)
   const schoolId = Number(id)
 
   // First check if the school exists
-  const school = await useDrizzle().select().from(tables.schools).where(eq(tables.schools.id, schoolId)).get()
+  const school = await db.select().from(schema.schools).where(eq(schema.schools.id, schoolId)).get()
   
   if (!school) {
     throw createError({
@@ -13,10 +16,10 @@ export default eventHandler(async (event) => {
   }
 
   // Check if there are any students referencing this school
-  const studentsWithSchool = await useDrizzle()
+  const studentsWithSchool = await db
     .select()
-    .from(tables.students)
-    .where(eq(tables.students.schoolId, schoolId))
+    .from(schema.students)
+    .where(eq(schema.students.schoolId, schoolId))
     .all()
 
   if (studentsWithSchool.length > 0) {
@@ -27,11 +30,9 @@ export default eventHandler(async (event) => {
   }
 
   // If no students are referencing this school, we can safely delete it
-  const deletedSchool = await useDrizzle()
-    .delete(tables.schools)
-    .where(eq(tables.schools.id, schoolId))
+  return await db
+    .delete(schema.schools)
+    .where(eq(schema.schools.id, schoolId))
     .returning()
     .get()
-
-  return deletedSchool
 })

@@ -1,13 +1,11 @@
-import { useDrizzle, tables } from '../../utils/drizzle'
+import { db, schema } from 'hub:db'
 import { getYearsWithMissingWeeks } from '../../utils/date'
-
 export default eventHandler(async () => {
-  const db = useDrizzle()
   const currentYear = new Date().getFullYear()
   const maxYears = 5
 
   // Alle weekStartDates aus der DB holen
-  const weeks = await db.select({ weekStartDate: tables.weeks.weekStartDate }).from(tables.weeks).all()
+  const weeks = await db.select({ weekStartDate: schema.weeks.weekStartDate }).from(schema.weeks).all()
   const weekStartDates = weeks.map(w => w.weekStartDate)
 
   // Fehlende Jahre ermitteln

@@ -3,7 +3,7 @@ import { h, resolveComponent, ref, computed } from 'vue'
 import type { TableColumn, FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
 
-import type { Company } from '../../types/database'
+import type { Company } from '#shared/types/database'
 
 const UButton = resolveComponent('UButton')
 const UDropdownMenu = resolveComponent('UDropdownMenu')

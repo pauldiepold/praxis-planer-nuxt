@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { useDrizzle, tables } from '../../utils/drizzle'
+import { db, schema } from 'hub:db'
 import { eq } from 'drizzle-orm'
 
 const updateWeekSchema = z.object({
@@ -45,12 +45,12 @@ export default eventHandler(async (event) => {
     })
   }
 
-  const updatedWeek = await useDrizzle().update(tables.weeks).set({
+  const updatedWeek = await db.update(schema.weeks).set({
     status: validatedData.status,
     studentId: validatedData.studentId,
     notes: validatedData.notes,
     updatedAt: new Date()
-  }).where(eq(tables.weeks.id, Number(id))).returning().get()
+  }).where(eq(schema.weeks.id, Number(id))).returning().get()
 
   if (!updatedWeek) {
     throw createError({

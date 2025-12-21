@@ -43,7 +43,7 @@ export default defineOAuthGitHubEventHandler({
       return sendRedirect(event, '/')
     }
   },
-  // Optional, will return a json error and 401 status code by default
+  // Optional, will return a JSON error and 401 statuscode by default
   onError(event, error) {
     console.error('GitHub OAuth error:', error)
     return sendRedirect(event, '/')

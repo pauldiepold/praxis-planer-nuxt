@@ -1,9 +1,12 @@
+import { db, schema } from 'hub:db'
+
+import { eq } from 'drizzle-orm'
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event)
   const companyId = Number(id)
 
-  // First check if the company exists
-  const company = await useDrizzle().select().from(tables.companies).where(eq(tables.companies.id, companyId)).get()
+  // First, check if the company exists
+  const company = await db.select().from(schema.companies).where(eq(schema.companies.id, companyId)).get()
   
   if (!company) {
     throw createError({
@@ -13,10 +16,10 @@ export default eventHandler(async (event) => {
   }
 
   // Check if there are any students referencing this company
-  const studentsWithCompany = await useDrizzle()
+  const studentsWithCompany = await db
     .select()
-    .from(tables.students)
-    .where(eq(tables.students.companyId, companyId))
+    .from(schema.students)
+    .where(eq(schema.students.companyId, companyId))
     .all()
 
   if (studentsWithCompany.length > 0) {
@@ -27,11 +30,9 @@ export default eventHandler(async (event) => {
   }
 
   // If no students are referencing this company, we can safely delete it
-  const deletedCompany = await useDrizzle()
-    .delete(tables.companies)
-    .where(eq(tables.companies.id, companyId))
+  return await db
+    .delete(schema.companies)
+    .where(eq(schema.companies.id, companyId))
     .returning()
     .get()
-
-  return deletedCompany
-}) 
+})

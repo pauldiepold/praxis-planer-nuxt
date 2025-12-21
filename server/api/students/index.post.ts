@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { db, schema } from 'hub:db'
 
 const createStudentSchema = z.object({
   name: z.string().min(1, 'Name ist erforderlich').max(255, 'Name kann maximal 255 Zeichen haben'),
@@ -28,7 +29,7 @@ export default eventHandler(async (event) => {
 
   const validatedData = validationResult.data
 
-  const newStudent = await useDrizzle().insert(tables.students).values({
+  return await db.insert(schema.students).values({
     name: validatedData.name,
     schoolId: validatedData.schoolId,
     companyId: validatedData.companyId,
@@ -37,6 +38,4 @@ export default eventHandler(async (event) => {
     createdAt: new Date(),
     updatedAt: new Date()
   }).returning().get()
-
-  return newStudent
 }) 

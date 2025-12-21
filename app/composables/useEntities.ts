@@ -1,5 +1,3 @@
-import type { School, Student, Company } from '../../types/database'
-
 export const useEntities = () => {
   const store = useEntitiesStore()
 

@@ -1,5 +1,3 @@
-import type { School, Student, Company } from '../../types/database'
-
 export const useEntitiesStore = defineStore('entities', {
   state: () => ({
     schools: [] as School[],
@@ -250,6 +248,7 @@ export const useEntitiesStore = defineStore('entities', {
         throw error
       }
     },
+
 
     // Store zurücksetzen
     reset() {

@@ -1,14 +1,14 @@
-import { useDrizzle, tables } from '../../utils/drizzle'
+import { db, schema } from 'hub:db'
 import { eq } from 'drizzle-orm'
 
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event)
   const schoolId = Number(id)
 
-  const school = await useDrizzle()
+  const school = await db
     .select()
-    .from(tables.schools)
-    .where(eq(tables.schools.id, schoolId))
+    .from(schema.schools)
+    .where(eq(schema.schools.id, schoolId))
     .get()
 
   if (!school) {
