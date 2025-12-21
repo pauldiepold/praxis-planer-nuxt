@@ -249,7 +249,6 @@ export const useEntitiesStore = defineStore('entities', {
       }
     },
 
-
     // Store zurücksetzen
     reset() {
       this.schools = []
