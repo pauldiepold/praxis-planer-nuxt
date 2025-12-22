@@ -5,34 +5,40 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxthub/core',
     'nuxt-auth-utils',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
   ],
 
   ssr: false,
 
   devtools: { enabled: true },
 
+  app: {
+    head: {
+      title: 'Praxis Pflege Planer',
+    },
+  },
+
   css: ['~/assets/css/main.css'],
 
   runtimeConfig: {
-    allowedUsers: process.env.NUXT_ALLOWED_USERS || ''
+    allowedUsers: process.env.NUXT_ALLOWED_USERS || '',
   },
 
-  app: {
-    head: {
-      title: 'Praxis Pflege Planer'
-    }
-  },
-
-  compatibilityDate: '2025-07-16',
+  compatibilityDate: '2025-12-11',
 
   nitro: {
     experimental: {
-      tasks: true
-    }
+      tasks: true,
+    },
   },
 
   hub: {
-    db: 'sqlite'
-  }
+    db: 'sqlite',
+  },
+
+  eslint: {
+    config: {
+      stylistic: true,
+    },
+  },
 })

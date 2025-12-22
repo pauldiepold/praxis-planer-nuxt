@@ -12,4 +12,4 @@ export default eventHandler(async () => {
   const availableYears = years.map(y => parseInt(y)).sort((a, b) => a - b)
 
   return { years: availableYears }
-}) 
+})

@@ -7,7 +7,7 @@ export const schools = sqliteTable('schools', {
   phone: text('phone'),
   email: text('email'),
   createdAt: integer('createdAt', { mode: 'timestamp' }).notNull(),
-  updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull()
+  updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull(),
 })
 
 export const companies = sqliteTable('companies', {
@@ -17,7 +17,7 @@ export const companies = sqliteTable('companies', {
   phone: text('phone'),
   email: text('email'),
   createdAt: integer('createdAt', { mode: 'timestamp' }).notNull(),
-  updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull()
+  updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull(),
 })
 
 export const students = sqliteTable('students', {
@@ -28,7 +28,7 @@ export const students = sqliteTable('students', {
   phone: text('phone'),
   email: text('email'),
   createdAt: integer('createdAt', { mode: 'timestamp' }).notNull(),
-  updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull()
+  updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull(),
 })
 
 export const weeks = sqliteTable('weeks', {
@@ -38,5 +38,5 @@ export const weeks = sqliteTable('weeks', {
   studentId: integer('student_id').references(() => students.id),
   notes: text('notes'),
   createdAt: integer('createdAt', { mode: 'timestamp' }).notNull(),
-  updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull()
+  updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull(),
 })

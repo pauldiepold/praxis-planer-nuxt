@@ -6,7 +6,7 @@ const updateCompanySchema = z.object({
   name: z.string().min(1, 'Name ist erforderlich').max(255, 'Name kann maximal 255 Zeichen haben'),
   contactPerson: z.string().max(255, 'Ansprechpartner kann maximal 255 Zeichen haben').optional().or(z.literal('')).nullish(),
   phone: z.string().max(50, 'Telefonnummer kann maximal 50 Zeichen haben').optional().or(z.literal('')).nullish(),
-  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail kann maximal 255 Zeichen haben').optional().or(z.literal('')).nullish()
+  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail kann maximal 255 Zeichen haben').optional().or(z.literal('')).nullish(),
 })
 
 export default eventHandler(async (event) => {
@@ -20,11 +20,11 @@ export default eventHandler(async (event) => {
       statusCode: 400,
       message: 'Validierungsfehler',
       data: {
-        errors: validationResult.error.errors.map(err => ({
+        errors: validationResult.error.issues.map(err => ({
           field: err.path.join('.'),
-          message: err.message
-        }))
-      }
+          message: err.message,
+        })),
+      },
     })
   }
 
@@ -35,15 +35,15 @@ export default eventHandler(async (event) => {
     contactPerson: validatedData.contactPerson,
     phone: validatedData.phone,
     email: validatedData.email,
-    updatedAt: new Date()
+    updatedAt: new Date(),
   }).where(eq(schema.companies.id, Number(id))).returning().get()
 
   if (!updatedCompany) {
     throw createError({
       statusCode: 404,
-      message: 'Company not found'
+      message: 'Company not found',
     })
   }
 
   return updatedCompany
-}) 
+})

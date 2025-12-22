@@ -7,11 +7,11 @@ export default eventHandler(async (event) => {
 
   // First check if the student exists
   const student = await db.select().from(schema.students).where(eq(schema.students.id, studentId)).get()
-  
+
   if (!student) {
     throw createError({
       statusCode: 404,
-      message: 'Student not found'
+      message: 'Student not found',
     })
   }
 
@@ -21,4 +21,4 @@ export default eventHandler(async (event) => {
     .where(eq(schema.students.id, studentId))
     .returning()
     .get()
-}) 
+})

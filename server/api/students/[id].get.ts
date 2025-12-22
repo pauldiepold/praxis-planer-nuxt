@@ -14,9 +14,9 @@ export default eventHandler(async (event) => {
   if (!student) {
     throw createError({
       statusCode: 404,
-      message: 'Schülerin nicht gefunden'
+      message: 'Schülerin nicht gefunden',
     })
   }
 
   return student
-}) 
+})

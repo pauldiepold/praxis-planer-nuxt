@@ -12,6 +12,15 @@ interface User {
 
 // Nuxt Auth Utils Modul-Definition
 declare module '#auth-utils' {
+  interface User {
+    provider: string
+    id: string
+    name: string
+    avatar?: string
+    url?: string
+    email?: string
+  }
+
   interface UserSession {
     // Session wird automatisch von nuxt-auth-utils verwaltet
     _placeholder?: never
@@ -34,4 +43,4 @@ declare global {
   }
 }
 
-export {} 
+export {}

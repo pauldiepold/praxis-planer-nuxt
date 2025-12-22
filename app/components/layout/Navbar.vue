@@ -9,16 +9,17 @@ const handleLogout = async () => {
     toast.add({
       title: 'Erfolgreich abgemeldet',
       color: 'success',
-      icon: 'i-lucide-check-circle'
+      icon: 'i-lucide-check-circle',
     })
     // Zur Startseite weiterleiten
     await navigateTo('/')
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Logout error:', error)
     toast.add({
       title: 'Fehler beim Abmelden',
       color: 'error',
-      icon: 'i-lucide-alert-circle'
+      icon: 'i-lucide-alert-circle',
     })
   }
 }
@@ -48,7 +49,10 @@ const toggleMenu = () => {
         </NuxtLink>
 
         <!-- Desktop Navigation -->
-        <nav v-if="loggedIn" class="hidden lg:block">
+        <nav
+          v-if="loggedIn"
+          class="hidden lg:block"
+        >
           <ul class="flex space-x-6">
             <LayoutHeaderLink
               to="/"

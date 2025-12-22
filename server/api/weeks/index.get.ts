@@ -21,4 +21,4 @@ export default eventHandler(async (event) => {
     .where(sql`${schema.weeks.weekStartDate} LIKE ${year + '-%'}`)
     .orderBy(schema.weeks.weekStartDate)
     .all()
-}) 
+})

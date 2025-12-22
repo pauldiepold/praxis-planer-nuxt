@@ -3,7 +3,7 @@ import { db, schema } from 'hub:db'
 export default defineTask({
   meta: {
     name: 'db:seed',
-    description: 'Run database seed task for nursing planner'
+    description: 'Run database seed task for nursing planner',
   },
   async run() {
     console.log('Running DB seed task for nursing planner...')
@@ -24,7 +24,7 @@ export default defineTask({
 
       // Clear all tables first (in reverse order of dependencies)
       console.log('Clearing existing data from all tables...')
-      
+
       try {
         // Clear weeks table first (depends on students)
         await db.delete(schema.weeks)
@@ -72,7 +72,7 @@ export default defineTask({
           phone: '089 12345678',
           email: 'info@krankenpflegeschule-muenchen.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Krankenpflegeschule am Klinikum Augsburg',
@@ -80,7 +80,7 @@ export default defineTask({
           phone: '0821 98765432',
           email: 'kontakt@kps-augsburg.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Berufsfachschule für Gesundheits- und Krankenpflege Nürnberg',
@@ -88,7 +88,7 @@ export default defineTask({
           phone: '0911 55556666',
           email: 'weber@kps-nuernberg.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Krankenpflegeschule der Caritas',
@@ -96,7 +96,7 @@ export default defineTask({
           phone: '089 87654321',
           email: 'fischer@caritas-kps.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Berufsfachschule für Krankenpflege am Rotkreuzklinikum',
@@ -104,7 +104,7 @@ export default defineTask({
           phone: '089 11112222',
           email: 'wagner@rk-kps.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Krankenpflegeschule der Diakonie',
@@ -112,7 +112,7 @@ export default defineTask({
           phone: '089 33334444',
           email: 'meyer@diakonie-kps.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Berufsfachschule für Gesundheits- und Kinderkrankenpflege',
@@ -120,7 +120,7 @@ export default defineTask({
           phone: '089 55556666',
           email: 'schulz@kinderkps.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Krankenpflegeschule am Universitätsklinikum',
@@ -128,7 +128,7 @@ export default defineTask({
           phone: '089 77778888',
           email: 'hoffmann@uk-kps.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Berufsfachschule für Altenpflege München',
@@ -136,7 +136,7 @@ export default defineTask({
           phone: '089 99990000',
           email: 'klein@altenpflege-muenchen.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Krankenpflegeschule der Barmherzigen Brüder',
@@ -144,8 +144,8 @@ export default defineTask({
           phone: '089 12345678',
           email: 'bauer@bb-kps.de',
           createdAt: now,
-          updatedAt: now
-        }
+          updatedAt: now,
+        },
       ]
 
       console.log('Inserting schools...')
@@ -160,7 +160,7 @@ export default defineTask({
           phone: '089 12345678',
           email: 'info@kinderarzt-muenchen.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Praxis für Kinder- und Jugendmedizin Dr. Schmidt',
@@ -168,7 +168,7 @@ export default defineTask({
           phone: '089 87654321',
           email: 'schmidt@kinderarzt.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Kinderarztpraxis am Marienplatz',
@@ -176,7 +176,7 @@ export default defineTask({
           phone: '089 11112222',
           email: 'weber@kinderarzt-marienplatz.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Praxis für Kinderheilkunde Dr. Fischer',
@@ -184,7 +184,7 @@ export default defineTask({
           phone: '089 33334444',
           email: 'fischer@kinderheilkunde.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Kinderarztpraxis Schwabing',
@@ -192,7 +192,7 @@ export default defineTask({
           phone: '089 55556666',
           email: 'wagner@kinderarzt-schwabing.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Praxis für Kinder- und Jugendmedizin am Englischen Garten',
@@ -200,7 +200,7 @@ export default defineTask({
           phone: '089 77778888',
           email: 'meyer@kinderarzt-englischer-garten.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Kinderarztpraxis Dr. Schulz',
@@ -208,7 +208,7 @@ export default defineTask({
           phone: '089 99990000',
           email: 'schulz@kinderarzt.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Praxis für Kinderheilkunde in Haidhausen',
@@ -216,7 +216,7 @@ export default defineTask({
           phone: '089 12345678',
           email: 'hoffmann@kinderarzt-haidhausen.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Kinderarztpraxis Dr. Klein',
@@ -224,7 +224,7 @@ export default defineTask({
           phone: '089 87654321',
           email: 'klein@kinderarzt.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Praxis für Kinder- und Jugendmedizin am Viktualienmarkt',
@@ -232,8 +232,8 @@ export default defineTask({
           phone: '089 11112222',
           email: 'bauer@kinderarzt-viktualienmarkt.de',
           createdAt: now,
-          updatedAt: now
-        }
+          updatedAt: now,
+        },
       ]
 
       console.log('Inserting companies...')
@@ -249,7 +249,7 @@ export default defineTask({
           phone: '0170 1234567',
           email: 'anna.schmidt@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Lisa Müller',
@@ -258,7 +258,7 @@ export default defineTask({
           phone: '0170 2345678',
           email: 'lisa.mueller@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Sarah Weber',
@@ -267,7 +267,7 @@ export default defineTask({
           phone: '0170 3456789',
           email: 'sarah.weber@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Maria Fischer',
@@ -276,7 +276,7 @@ export default defineTask({
           phone: '0170 4567890',
           email: 'maria.fischer@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Julia Wagner',
@@ -285,7 +285,7 @@ export default defineTask({
           phone: '0170 5678901',
           email: 'julia.wagner@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Nina Meyer',
@@ -294,7 +294,7 @@ export default defineTask({
           phone: '0170 6789012',
           email: 'nina.meyer@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Sophie Schulz',
@@ -303,7 +303,7 @@ export default defineTask({
           phone: '0170 7890123',
           email: 'sophie.schulz@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Laura Hoffmann',
@@ -312,7 +312,7 @@ export default defineTask({
           phone: '0170 8901234',
           email: 'laura.hoffmann@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Emma Klein',
@@ -321,7 +321,7 @@ export default defineTask({
           phone: '0170 9012345',
           email: 'emma.klein@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Lea Bauer',
@@ -330,7 +330,7 @@ export default defineTask({
           phone: '0170 0123456',
           email: 'lea.bauer@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Hannah Schmidt',
@@ -339,7 +339,7 @@ export default defineTask({
           phone: '0170 1234568',
           email: 'hannah.schmidt@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Mia Müller',
@@ -348,7 +348,7 @@ export default defineTask({
           phone: '0170 2345679',
           email: 'mia.mueller@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Lena Weber',
@@ -357,7 +357,7 @@ export default defineTask({
           phone: '0170 3456780',
           email: 'lena.weber@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Clara Fischer',
@@ -366,7 +366,7 @@ export default defineTask({
           phone: '0170 4567891',
           email: 'clara.fischer@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Ella Wagner',
@@ -375,7 +375,7 @@ export default defineTask({
           phone: '0170 5678902',
           email: 'ella.wagner@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Maya Meyer',
@@ -384,7 +384,7 @@ export default defineTask({
           phone: '0170 6789013',
           email: 'maya.meyer@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Zoe Schulz',
@@ -393,7 +393,7 @@ export default defineTask({
           phone: '0170 7890124',
           email: 'zoe.schulz@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Luna Hoffmann',
@@ -402,7 +402,7 @@ export default defineTask({
           phone: '0170 8901235',
           email: 'luna.hoffmann@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Ava Klein',
@@ -411,7 +411,7 @@ export default defineTask({
           phone: '0170 9012346',
           email: 'ava.klein@email.de',
           createdAt: now,
-          updatedAt: now
+          updatedAt: now,
         },
         {
           name: 'Isabella Bauer',
@@ -420,8 +420,8 @@ export default defineTask({
           phone: '0170 0123457',
           email: 'isabella.bauer@email.de',
           createdAt: now,
-          updatedAt: now
-        }
+          updatedAt: now,
+        },
       ]
 
       console.log('Inserting students...')
@@ -451,13 +451,13 @@ export default defineTask({
         summary: {
           schools: insertedSchools.length,
           companies: insertedCompanies.length,
-          students: insertedStudents.length
-        }
+          students: insertedStudents.length,
+        },
       }
     }
     catch (error) {
       console.error('Seeding failed:', error)
       throw error
     }
-  }
+  },
 })

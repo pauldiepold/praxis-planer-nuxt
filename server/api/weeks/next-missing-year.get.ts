@@ -1,5 +1,6 @@
 import { db, schema } from 'hub:db'
 import { getYearsWithMissingWeeks } from '../../utils/date'
+
 export default eventHandler(async () => {
   const currentYear = new Date().getFullYear()
   const maxYears = 5
@@ -13,4 +14,4 @@ export default eventHandler(async () => {
   const nextYear = yearsWithMissing.length > 0 ? yearsWithMissing[0] : null
 
   return { nextYear }
-}) 
+})

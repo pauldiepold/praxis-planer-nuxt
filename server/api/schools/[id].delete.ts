@@ -7,11 +7,11 @@ export default eventHandler(async (event) => {
 
   // First check if the school exists
   const school = await db.select().from(schema.schools).where(eq(schema.schools.id, schoolId)).get()
-  
+
   if (!school) {
     throw createError({
       statusCode: 404,
-      message: 'School not found'
+      message: 'School not found',
     })
   }
 
@@ -25,7 +25,7 @@ export default eventHandler(async (event) => {
   if (studentsWithSchool.length > 0) {
     throw createError({
       statusCode: 400,
-      message: `Die Schule "${school.name}" kann nicht gelöscht werden, da sie noch mit ${studentsWithSchool.length} Schüler(inne)n verknüpft ist. Bitte entfernen oder weisen Sie diese Schüler zuerst neu zu.`
+      message: `Die Schule "${school.name}" kann nicht gelöscht werden, da sie noch mit ${studentsWithSchool.length} Schüler(inne)n verknüpft ist. Bitte entfernen oder weisen Sie diese Schüler zuerst neu zu.`,
     })
   }
 

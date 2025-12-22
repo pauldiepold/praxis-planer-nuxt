@@ -3,28 +3,26 @@ import { h, resolveComponent, ref, computed } from 'vue'
 import type { TableColumn, FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
 
-import type { Company } from '#shared/types/database'
-
 const UButton = resolveComponent('UButton')
 const UDropdownMenu = resolveComponent('UDropdownMenu')
 
 definePageMeta({
   name: 'companies-management-page',
-  middleware: 'auth'
+  middleware: 'auth',
 })
 
 // Seitenspezifischer Titel
 useHead({
-  title: 'Betriebe'
+  title: 'Betriebe',
 })
 
 // Entities Composable verwenden
-const { 
-  companies, 
-  addCompany, 
-  updateCompany, 
+const {
+  companies,
+  addCompany,
+  updateCompany,
   deleteCompany,
-  isLoading
+  isLoading,
 } = useEntities()
 
 const toast = useToast()
@@ -47,9 +45,9 @@ const isDeleting = ref(false)
 // Zod schema for form validation
 const companySchema = z.object({
   name: z.string().min(1, 'Name ist erforderlich').max(255, 'Name kann maximal 255 Zeichen haben'),
-  contactPerson: z.string().max(255, 'Ansprechpartner kann maximal 255 Zeichen haben').optional().or(z.literal('')).nullish(),
-  phone: z.string().max(50, 'Telefonnummer kann maximal 50 Zeichen haben').optional().or(z.literal('')).nullish(),
-  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail kann maximal 255 Zeichen haben').optional().or(z.literal('')).nullish()
+  contactPerson: z.string().max(255, 'Ansprechpartner kann maximal 255 Zeichen haben').nullable().default(null),
+  phone: z.string().max(50, 'Telefonnummer kann maximal 50 Zeichen haben').nullable().default(null),
+  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail kann maximal 255 Zeichen haben').nullable().default(null),
 })
 
 type CompanySchema = z.output<typeof companySchema>
@@ -59,14 +57,14 @@ const editForm = reactive<Partial<CompanySchema>>({
   name: '',
   contactPerson: '',
   phone: '',
-  email: ''
+  email: '',
 })
 
 const addForm = reactive<Partial<CompanySchema>>({
   name: '',
   contactPerson: '',
   phone: '',
-  email: ''
+  email: '',
 })
 
 const globalFilter = ref('')
@@ -81,7 +79,7 @@ const sortOptions = [
   { value: 'phone', label: 'Telefon' },
   { value: 'email', label: 'E-Mail' },
   { value: 'createdAt', label: 'Erstellt am' },
-  { value: 'updatedAt', label: 'Aktualisiert am' }
+  { value: 'updatedAt', label: 'Aktualisiert am' },
 ]
 
 const sortDropdownItems = computed(() => [
@@ -98,8 +96,8 @@ const sortDropdownItems = computed(() => [
     icon: sortDirection.value === 'asc' ? 'i-lucide-arrow-up' : 'i-lucide-arrow-down',
     type: 'item' as const,
     active: true,
-    onSelect() { sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc' }
-  }
+    onSelect() { sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc' },
+  },
 ])
 
 const tableData = computed(() => {
@@ -107,10 +105,10 @@ const tableData = computed(() => {
   if (globalFilter.value) {
     const searchTerm = globalFilter.value.toLowerCase()
     data = data.filter(company =>
-      company.name.toLowerCase().includes(searchTerm) ||
-      (company.contactPerson && company.contactPerson.toLowerCase().includes(searchTerm)) ||
-      (company.phone && company.phone.toLowerCase().includes(searchTerm)) ||
-      (company.email && company.email.toLowerCase().includes(searchTerm))
+      company.name.toLowerCase().includes(searchTerm)
+      || (company.contactPerson && company.contactPerson.toLowerCase().includes(searchTerm))
+      || (company.phone && company.phone.toLowerCase().includes(searchTerm))
+      || (company.email && company.email.toLowerCase().includes(searchTerm)),
     )
   }
 
@@ -161,10 +159,10 @@ const columns: TableColumn<Company>[] = [
               name: row.original.name,
               contactPerson: row.original.contactPerson || '',
               phone: row.original.phone || '',
-              email: row.original.email || ''
+              email: row.original.email || '',
             })
             isEditModalOpen.value = true
-          }
+          },
         }),
         h(UButton, {
           'icon': 'i-lucide-trash-2',
@@ -175,37 +173,37 @@ const columns: TableColumn<Company>[] = [
           onClick() {
             companyToDelete.value = row.original
             isDeleteModalOpen.value = true
-          }
-        })
+          },
+        }),
       ])
-    }
+    },
   },
   {
     accessorKey: 'id',
     header: '#',
     cell: ({ row }) => row.getValue('id'),
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'name',
     header: 'Name',
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'contactPerson',
     header: 'Ansprechpartner',
     cell: ({ row }) => row.getValue('contactPerson') || '-',
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'phone',
     header: 'Telefon',
     cell: ({ row }) => row.getValue('phone') || '-',
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'email',
@@ -214,26 +212,26 @@ const columns: TableColumn<Company>[] = [
       const email = row.getValue('email')
       if (!email) return '-'
       return h('div', {
-        innerHTML: `<a href="mailto:${email}" class="underline transition-colors" target="_blank" rel="noopener noreferrer">${email}</a>`
+        innerHTML: `<a href="mailto:${email}" class="underline transition-colors" target="_blank" rel="noopener noreferrer">${email}</a>`,
       })
     },
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'createdAt',
     header: 'Erstellt am',
     cell: ({ row }) => formatGermanDate(row.getValue('createdAt')),
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'updatedAt',
     header: 'Aktualisiert am',
     cell: ({ row }) => formatGermanDate(row.getValue('updatedAt')),
     enableHiding: true,
-    enableSorting: true
-  }
+    enableSorting: true,
+  },
 ]
 
 const table = useTemplateRef('table')
@@ -247,7 +245,7 @@ const getColumnLabel = (columnId: string): string => {
     phone: 'Telefon',
     email: 'E-Mail',
     createdAt: 'Erstellt am',
-    updatedAt: 'Aktualisiert am'
+    updatedAt: 'Aktualisiert am',
   }
   return labels[columnId] || columnId
 }
@@ -260,7 +258,7 @@ const defaultColumnVisibility = {
   phone: true,
   email: true,
   createdAt: false,
-  updatedAt: false
+  updatedAt: false,
 }
 
 const handleEditSubmit = async (event: FormSubmitEvent<CompanySchema>) => {
@@ -269,19 +267,27 @@ const handleEditSubmit = async (event: FormSubmitEvent<CompanySchema>) => {
   isSubmitting.value = true
 
   try {
-    await updateCompany(companyToEdit.value.id, event.data)
+    const data = {
+      ...event.data,
+      contactPerson: event.data.contactPerson || null,
+      phone: event.data.phone || null,
+      email: event.data.email || null,
+    }
+    await updateCompany(companyToEdit.value.id, data)
 
     toast.add({
       title: 'Betrieb erfolgreich bearbeitet',
       color: 'success',
-      icon: 'i-lucide-check-circle'
+      icon: 'i-lucide-check-circle',
     })
 
     handleEditCancel()
-  } catch (error: unknown) {
+  }
+  catch (error: unknown) {
     const errorToasts = handleApiError(error, 'Fehler beim Bearbeiten des Betriebs')
-    errorToasts.forEach((toastData) => toast.add(toastData))
-  } finally {
+    errorToasts.forEach(toastData => toast.add(toastData))
+  }
+  finally {
     isSubmitting.value = false
   }
 }
@@ -290,19 +296,27 @@ const handleAddSubmit = async (event: FormSubmitEvent<CompanySchema>) => {
   isSubmitting.value = true
 
   try {
-    await addCompany(event.data)
+    const data = {
+      ...event.data,
+      contactPerson: event.data.contactPerson || null,
+      phone: event.data.phone || null,
+      email: event.data.email || null,
+    }
+    await addCompany(data)
 
     toast.add({
       title: 'Betrieb erfolgreich erstellt',
       color: 'success',
-      icon: 'i-lucide-check-circle'
+      icon: 'i-lucide-check-circle',
     })
 
     handleAddCancel()
-  } catch (error: unknown) {
+  }
+  catch (error: unknown) {
     const errorToasts = handleApiError(error, 'Fehler beim Erstellen des Betriebs')
-    errorToasts.forEach((toastData) => toast.add(toastData))
-  } finally {
+    errorToasts.forEach(toastData => toast.add(toastData))
+  }
+  finally {
     isSubmitting.value = false
   }
 }
@@ -329,22 +343,22 @@ const handleDeleteConfirm = async () => {
     toast.add({
       title: 'Betrieb erfolgreich gelöscht',
       color: 'success',
-      icon: 'i-lucide-check-circle'
+      icon: 'i-lucide-check-circle',
     })
-
-
-  } catch (error: unknown) {
-    const errorMessage = error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'message' in error.data 
-      ? String(error.data.message) 
+  }
+  catch (error: unknown) {
+    const errorMessage = error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'message' in error.data
+      ? String(error.data.message)
       : 'Bitte versuche es erneut'
-    
+
     toast.add({
       title: 'Fehler beim Löschen des Betriebs',
       description: errorMessage,
       color: 'error',
-      icon: 'i-lucide-alert-circle'
+      icon: 'i-lucide-alert-circle',
     })
-  } finally {
+  }
+  finally {
     // Modal immer schließen
     isDeleteModalOpen.value = false
     companyToDelete.value = null
@@ -385,52 +399,68 @@ const handleDeleteCancel = () => {
           />
 
           <div class="flex gap-2 w-full md:w-auto md:ml-auto">
-          <UDropdownMenu
-            :items="table?.tableApi?.getAllColumns().filter(column => column.getCanHide()).map(column => ({
-              label: getColumnLabel(column.id),
-              value: column.id,
-              type: 'checkbox' as const,
-              checked: column.getIsVisible(),
-              onUpdateChecked(checked: boolean) {
-                table?.tableApi?.getColumn(column.id)?.toggleVisibility(!!checked)
-              },
-              onSelect(e?: Event) {
-                e?.preventDefault()
-              },
-              slot: `col-${column.id}`
-            }))"
-            :content="{ align: 'end' }"
-            :ui="{ content: 'min-w-[12rem]' }"
-          >
-            <UButton
-              label="Spalten"
-              color="neutral"
-              variant="outline"
-              trailing-icon="i-lucide-chevron-down"
-              class="w-full md:w-auto"
-              aria-label="Spalten-Auswahl Dropdown"
-            />
-            <template v-for="column in table?.tableApi?.getAllColumns().filter(c => c.getCanHide())" #[`col-${column.id}-trailing`] :key="column.id">
-              <UIcon v-if="column.getIsVisible()" name="i-lucide-check" class="shrink-0 size-5 text-primary" />
-            </template>
-          </UDropdownMenu>
-          <UDropdownMenu
-            :items="sortDropdownItems"
-            :content="{ align: 'end' }"
-            :ui="{ content: 'min-w-[12rem]', item: { icon: 'order-last' } }"
-          >
-            <UButton
-              label="Sortieren"
-              color="neutral"
-              variant="outline"
-              trailing-icon="i-lucide-chevron-down"
+            <UDropdownMenu
+              :items="table?.tableApi?.getAllColumns().filter(column => column.getCanHide()).map(column => ({
+                label: getColumnLabel(column.id),
+                value: column.id,
+                type: 'checkbox' as const,
+                checked: column.getIsVisible(),
+                onUpdateChecked(checked: boolean) {
+                  table?.tableApi?.getColumn(column.id)?.toggleVisibility(checked)
+                },
+                onSelect(e?: Event) {
+                  e?.preventDefault()
+                },
+                slot: `col-${column.id}`,
+              }))"
+              :content="{ align: 'end' }"
+              :ui="{ content: 'min-w-[12rem]' }"
+            >
+              <UButton
+                label="Spalten"
+                color="neutral"
+                variant="outline"
+                trailing-icon="i-lucide-chevron-down"
                 class="w-full md:w-auto"
-              aria-label="Sortier-Auswahl Dropdown"
-            />
-            <template v-for="option in sortOptions" #[`sort-${option.value}-trailing`] :key="option.value">
-              <UIcon v-if="sortColumn === option.value" name="i-lucide-check" class="shrink-0 size-5 text-primary" />
-            </template>
-          </UDropdownMenu>
+                aria-label="Spalten-Auswahl Dropdown"
+              />
+              <template
+                v-for="column in table?.tableApi?.getAllColumns().filter(c => c.getCanHide())"
+                #[`col-${column.id}-trailing`]
+                :key="column.id"
+              >
+                <UIcon
+                  v-if="column.getIsVisible()"
+                  name="i-lucide-check"
+                  class="shrink-0 size-5 text-primary"
+                />
+              </template>
+            </UDropdownMenu>
+            <UDropdownMenu
+              :items="sortDropdownItems"
+              :content="{ align: 'end' }"
+              :ui="{ content: 'min-w-[12rem]', item: { icon: 'order-last' } }"
+            >
+              <UButton
+                label="Sortieren"
+                color="neutral"
+                variant="outline"
+                trailing-icon="i-lucide-chevron-down"
+                class="w-full md:w-auto"
+                aria-label="Sortier-Auswahl Dropdown"
+              />
+              <template
+                v-for="option in sortOptions"
+                #[`sort-${option.value}-trailing`]
+                :key="option.value"
+              >
+                <UIcon
+                  v-if="sortColumn === option.value"
+                  name="i-lucide-check"
+                  class="shrink-0 size-5 text-primary"
+                />
+              </template>
+            </UDropdownMenu>
           </div>
         </div>
 
@@ -459,10 +489,23 @@ const handleDeleteCancel = () => {
     </UCard>
 
     <!-- Edit Modal -->
-    <UModal v-model:open="isEditModalOpen" title="Betrieb bearbeiten" description="Bearbeite die Informationen des ausgewählten Betriebs." :close="false">
+    <UModal
+      v-model:open="isEditModalOpen"
+      title="Betrieb bearbeiten"
+      description="Bearbeite die Informationen des ausgewählten Betriebs."
+      :close="false"
+    >
       <template #body>
-        <UForm :schema="companySchema" :state="editForm" class="space-y-6" @submit="handleEditSubmit">
-          <UFormField label="Betriebsname" name="name">
+        <UForm
+          :schema="companySchema"
+          :state="editForm"
+          class="space-y-6"
+          @submit="handleEditSubmit"
+        >
+          <UFormField
+            label="Betriebsname"
+            name="name"
+          >
             <UInput
               v-model="editForm.name"
               placeholder="z.B. Pflegebetrieb Musterstadt"
@@ -470,8 +513,11 @@ const handleDeleteCancel = () => {
               class="w-full"
             />
           </UFormField>
-          
-          <UFormField label="Ansprechpartner/in" name="contactPerson">
+
+          <UFormField
+            label="Ansprechpartner/in"
+            name="contactPerson"
+          >
             <UInput
               v-model="editForm.contactPerson"
               placeholder="z.B. Max Mustermann"
@@ -479,8 +525,11 @@ const handleDeleteCancel = () => {
               class="w-full"
             />
           </UFormField>
-          
-          <UFormField label="Telefonnummer" name="phone">
+
+          <UFormField
+            label="Telefonnummer"
+            name="phone"
+          >
             <UInput
               v-model="editForm.phone"
               placeholder="z.B. +49 123 456789"
@@ -489,8 +538,11 @@ const handleDeleteCancel = () => {
               class="w-full"
             />
           </UFormField>
-          
-          <UFormField label="E-Mail-Adresse" name="email">
+
+          <UFormField
+            label="E-Mail-Adresse"
+            name="email"
+          >
             <UInput
               v-model="editForm.email"
               placeholder="z.B. kontakt@pflegebetrieb.de"
@@ -499,7 +551,7 @@ const handleDeleteCancel = () => {
               class="w-full"
             />
           </UFormField>
-          
+
           <div class="flex justify-end gap-3 pt-4">
             <UButton
               color="neutral"
@@ -522,10 +574,23 @@ const handleDeleteCancel = () => {
     </UModal>
 
     <!-- Add Modal -->
-    <UModal v-model:open="isAddModalOpen" title="Neuen Betrieb hinzufügen" description="Füge einen neuen Betrieb hinzu." :close="false">
+    <UModal
+      v-model:open="isAddModalOpen"
+      title="Neuen Betrieb hinzufügen"
+      description="Füge einen neuen Betrieb hinzu."
+      :close="false"
+    >
       <template #body>
-        <UForm :schema="companySchema" :state="addForm" class="space-y-6" @submit="handleAddSubmit">
-          <UFormField label="Betriebsname" name="name">
+        <UForm
+          :schema="companySchema"
+          :state="addForm"
+          class="space-y-6"
+          @submit="handleAddSubmit"
+        >
+          <UFormField
+            label="Betriebsname"
+            name="name"
+          >
             <UInput
               v-model="addForm.name"
               placeholder="z.B. Pflegebetrieb Musterstadt"
@@ -533,8 +598,11 @@ const handleDeleteCancel = () => {
               class="w-full"
             />
           </UFormField>
-          
-          <UFormField label="Ansprechpartner/in" name="contactPerson">
+
+          <UFormField
+            label="Ansprechpartner/in"
+            name="contactPerson"
+          >
             <UInput
               v-model="addForm.contactPerson"
               placeholder="z.B. Max Mustermann"
@@ -542,8 +610,11 @@ const handleDeleteCancel = () => {
               class="w-full"
             />
           </UFormField>
-          
-          <UFormField label="Telefonnummer" name="phone">
+
+          <UFormField
+            label="Telefonnummer"
+            name="phone"
+          >
             <UInput
               v-model="addForm.phone"
               placeholder="z.B. +49 123 456789"
@@ -552,8 +623,11 @@ const handleDeleteCancel = () => {
               class="w-full"
             />
           </UFormField>
-          
-          <UFormField label="E-Mail-Adresse" name="email">
+
+          <UFormField
+            label="E-Mail-Adresse"
+            name="email"
+          >
             <UInput
               v-model="addForm.email"
               placeholder="z.B. kontakt@pflegebetrieb.de"
@@ -562,7 +636,7 @@ const handleDeleteCancel = () => {
               class="w-full"
             />
           </UFormField>
-          
+
           <div class="flex justify-end gap-3 pt-4">
             <UButton
               color="neutral"
@@ -585,7 +659,12 @@ const handleDeleteCancel = () => {
     </UModal>
 
     <!-- Delete Confirmation Modal -->
-    <UModal v-model:open="isDeleteModalOpen" title="Betrieb löschen" description="Diese Aktion kann nicht rückgängig gemacht werden." :close="false">
+    <UModal
+      v-model:open="isDeleteModalOpen"
+      title="Betrieb löschen"
+      description="Diese Aktion kann nicht rückgängig gemacht werden."
+      :close="false"
+    >
       <template #body>
         <p class="text-sm text-gray-600 dark:text-gray-300">
           Bist du sicher, dass du den Betrieb '{{ companyToDelete?.name || '' }}' löschen möchtest?
@@ -613,4 +692,4 @@ const handleDeleteCancel = () => {
       </template>
     </UModal>
   </div>
-</template> 
+</template>

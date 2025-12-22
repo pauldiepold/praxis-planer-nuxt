@@ -3,32 +3,30 @@ import { h, resolveComponent, ref, computed } from 'vue'
 import type { TableColumn, FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
 
-import type { Student } from '#shared/types/database'
-
 const UButton = resolveComponent('UButton')
 const UDropdownMenu = resolveComponent('UDropdownMenu')
 
 definePageMeta({
   name: 'students-management-page',
-  middleware: 'auth'
+  middleware: 'auth',
 })
 
 // Seitenspezifischer Titel
 useHead({
-  title: 'Schülerinnen'
+  title: 'Schülerinnen',
 })
 
 // Entities Composable verwenden
-const { 
-  students, 
+const {
+  students,
   schools,
   companies,
-  schoolOptions, 
-  companyOptions, 
-  addStudent, 
-  updateStudent, 
+  schoolOptions,
+  companyOptions,
+  addStudent,
+  updateStudent,
   deleteStudent,
-  isLoading
+  isLoading,
 } = useEntities()
 
 const toast = useToast()
@@ -53,8 +51,8 @@ const studentSchema = z.object({
   name: z.string().min(1, 'Name ist erforderlich').max(255, 'Name kann maximal 255 Zeichen haben'),
   schoolId: z.number().nullable(),
   companyId: z.number().nullable(),
-  phone: z.string().max(50, 'Telefonnummer kann maximal 50 Zeichen haben').optional().or(z.literal('')).nullish(),
-  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail kann maximal 255 Zeichen haben').optional().or(z.literal('')).nullish()
+  phone: z.string().max(50, 'Telefonnummer kann maximal 50 Zeichen haben').nullable().default(null),
+  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail kann maximal 255 Zeichen haben').nullable().default(null),
 })
 
 type StudentSchema = z.output<typeof studentSchema>
@@ -65,7 +63,7 @@ const editForm = reactive<Partial<StudentSchema>>({
   schoolId: null,
   companyId: null,
   phone: '',
-  email: ''
+  email: '',
 })
 
 const addForm = reactive<Partial<StudentSchema>>({
@@ -73,7 +71,7 @@ const addForm = reactive<Partial<StudentSchema>>({
   schoolId: null,
   companyId: null,
   phone: '',
-  email: ''
+  email: '',
 })
 
 const globalFilter = ref('')
@@ -89,7 +87,7 @@ const sortOptions = [
   { value: 'phone', label: 'Telefon' },
   { value: 'email', label: 'E-Mail' },
   { value: 'createdAt', label: 'Erstellt am' },
-  { value: 'updatedAt', label: 'Aktualisiert am' }
+  { value: 'updatedAt', label: 'Aktualisiert am' },
 ]
 
 const sortDropdownItems = computed(() => [
@@ -106,23 +104,23 @@ const sortDropdownItems = computed(() => [
     icon: sortDirection.value === 'asc' ? 'i-lucide-arrow-up' : 'i-lucide-arrow-down',
     type: 'item' as const,
     active: true,
-    onSelect() { sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc' }
-  }
+    onSelect() { sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc' },
+  },
 ])
 
 const tableData = computed(() => {
   let data = students.value || []
   if (globalFilter.value) {
     const searchTerm = globalFilter.value.toLowerCase()
-    data = data.filter(student => {
+    data = data.filter((student) => {
       const school = schools.value.find(s => s.id === student.schoolId)
       const company = companies.value.find(c => c.id === student.companyId)
       return (
-        student.name.toLowerCase().includes(searchTerm) ||
-        (student.phone && student.phone.toLowerCase().includes(searchTerm)) ||
-        (student.email && student.email.toLowerCase().includes(searchTerm)) ||
-        (school && school.name.toLowerCase().includes(searchTerm)) ||
-        (company && company.name.toLowerCase().includes(searchTerm))
+        student.name.toLowerCase().includes(searchTerm)
+        || (student.phone && student.phone.toLowerCase().includes(searchTerm))
+        || (student.email && student.email.toLowerCase().includes(searchTerm))
+        || (school && school.name.toLowerCase().includes(searchTerm))
+        || (company && company.name.toLowerCase().includes(searchTerm))
       )
     })
   }
@@ -131,23 +129,30 @@ const tableData = computed(() => {
   const col = sortColumn.value
   const dir = sortDirection.value
   data = [...data].sort((a, b) => {
-    let aVal: string | number | null
-    let bVal: string | number | null
+    let aVal: string | number | Date | null
+    let bVal: string | number | Date | null
     if (col === 'school') {
       aVal = schools.value.find(s => s.id === a.schoolId)?.name || ''
       bVal = schools.value.find(s => s.id === b.schoolId)?.name || ''
-    } else if (col === 'company') {
+    }
+    else if (col === 'company') {
       aVal = companies.value.find(c => c.id === a.companyId)?.name || ''
       bVal = companies.value.find(c => c.id === b.companyId)?.name || ''
-    } else {
+    }
+    else {
       aVal = a[col] || ''
       bVal = b[col] || ''
     }
+
     if (typeof aVal === 'string' && typeof bVal === 'string') {
       aVal = aVal.toLowerCase()
       bVal = bVal.toLowerCase()
     }
+
     if (aVal === bVal) return 0
+    if (aVal === null || aVal === undefined) return 1
+    if (bVal === null || bVal === undefined) return -1
+
     if (dir === 'asc') return aVal > bVal ? 1 : -1
     return aVal < bVal ? 1 : -1
   })
@@ -174,10 +179,10 @@ const columns: TableColumn<Student>[] = [
               schoolId: row.original.schoolId,
               companyId: row.original.companyId,
               phone: row.original.phone || '',
-              email: row.original.email || ''
+              email: row.original.email || '',
             })
             isEditModalOpen.value = true
-          }
+          },
         }),
         h(UButton, {
           'icon': 'i-lucide-trash-2',
@@ -188,23 +193,23 @@ const columns: TableColumn<Student>[] = [
           onClick() {
             studentToDelete.value = row.original
             isDeleteModalOpen.value = true
-          }
-        })
+          },
+        }),
       ])
-    }
+    },
   },
   {
     accessorKey: 'id',
     header: '#',
     cell: ({ row }) => row.getValue('id'),
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'name',
     header: 'Name',
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'schoolId',
@@ -215,7 +220,7 @@ const columns: TableColumn<Student>[] = [
       return school ? school.name : '-'
     },
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'companyId',
@@ -226,36 +231,36 @@ const columns: TableColumn<Student>[] = [
       return company ? company.name : '-'
     },
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'phone',
     header: 'Telefon',
     cell: ({ row }) => row.getValue('phone') || '-',
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'email',
     header: 'E-Mail',
     cell: ({ row }) => row.getValue('email') || '-',
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'createdAt',
     header: 'Erstellt am',
     cell: ({ row }) => formatGermanDate(row.getValue('createdAt')),
     enableHiding: true,
-    enableSorting: true
+    enableSorting: true,
   },
   {
     accessorKey: 'updatedAt',
     header: 'Aktualisiert am',
     cell: ({ row }) => formatGermanDate(row.getValue('updatedAt')),
     enableHiding: true,
-    enableSorting: true
-  }
+    enableSorting: true,
+  },
 ]
 
 const table = useTemplateRef('table')
@@ -269,7 +274,7 @@ const getColumnLabel = (columnId: string): string => {
     phone: 'Telefon',
     email: 'E-Mail',
     createdAt: 'Erstellt am',
-    updatedAt: 'Aktualisiert am'
+    updatedAt: 'Aktualisiert am',
   }
   return labels[columnId] || columnId
 }
@@ -282,24 +287,31 @@ const defaultColumnVisibility = {
   phone: true,
   email: true,
   createdAt: false,
-  updatedAt: false
+  updatedAt: false,
 }
 
 const handleEditSubmit = async (event: FormSubmitEvent<StudentSchema>) => {
   if (!studentToEdit.value) return
   isSubmitting.value = true
   try {
-    await updateStudent(studentToEdit.value.id, event.data)
+    const data = {
+      ...event.data,
+      phone: event.data.phone || null,
+      email: event.data.email || null,
+    }
+    await updateStudent(studentToEdit.value.id, data)
     toast.add({
       title: 'Schülerin erfolgreich bearbeitet',
       color: 'success',
-      icon: 'i-lucide-check-circle'
+      icon: 'i-lucide-check-circle',
     })
     handleEditCancel()
-  } catch (error: unknown) {
+  }
+  catch (error: unknown) {
     const errorToasts = handleApiError(error, 'Fehler beim Bearbeiten der Schülerin')
-    errorToasts.forEach((toastData) => toast.add(toastData))
-  } finally {
+    errorToasts.forEach(toastData => toast.add(toastData))
+  }
+  finally {
     isSubmitting.value = false
   }
 }
@@ -307,17 +319,24 @@ const handleEditSubmit = async (event: FormSubmitEvent<StudentSchema>) => {
 const handleAddSubmit = async (event: FormSubmitEvent<StudentSchema>) => {
   isSubmitting.value = true
   try {
-    await addStudent(event.data)
+    const data = {
+      ...event.data,
+      phone: event.data.phone || null,
+      email: event.data.email || null,
+    }
+    await addStudent(data)
     toast.add({
       title: 'Schülerin erfolgreich erstellt',
       color: 'success',
-      icon: 'i-lucide-check-circle'
+      icon: 'i-lucide-check-circle',
     })
     handleAddCancel()
-  } catch (error: unknown) {
+  }
+  catch (error: unknown) {
     const errorToasts = handleApiError(error, 'Fehler beim Erstellen der Schülerin')
-    errorToasts.forEach((toastData) => toast.add(toastData))
-  } finally {
+    errorToasts.forEach(toastData => toast.add(toastData))
+  }
+  finally {
     isSubmitting.value = false
   }
 }
@@ -341,20 +360,21 @@ const handleDeleteConfirm = async () => {
     toast.add({
       title: 'Schülerin erfolgreich gelöscht',
       color: 'success',
-      icon: 'i-lucide-check-circle'
+      icon: 'i-lucide-check-circle',
     })
-
-  } catch (error: unknown) {
-    const errorMessage = error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'message' in error.data 
-      ? String(error.data.message) 
+  }
+  catch (error: unknown) {
+    const errorMessage = error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'message' in error.data
+      ? String(error.data.message)
       : 'Bitte versuche es erneut'
     toast.add({
       title: 'Fehler beim Löschen der Schülerin',
       description: errorMessage,
       color: 'error',
-      icon: 'i-lucide-alert-circle'
+      icon: 'i-lucide-alert-circle',
     })
-  } finally {
+  }
+  finally {
     isDeleteModalOpen.value = false
     studentToDelete.value = null
     isDeleting.value = false
@@ -396,52 +416,68 @@ const handleDeleteCancel = () => {
           />
 
           <div class="flex gap-2 w-full md:w-auto md:ml-auto">
-          <UDropdownMenu
-            :items="table?.tableApi?.getAllColumns().filter(column => column.getCanHide()).map(column => ({
-              label: getColumnLabel(column.id),
-              value: column.id,
-              type: 'checkbox' as const,
-              checked: column.getIsVisible(),
-              onUpdateChecked(checked: boolean) {
-                table?.tableApi?.getColumn(column.id)?.toggleVisibility(!!checked)
-              },
-              onSelect(e?: Event) {
-                e?.preventDefault()
-              },
-              slot: `col-${column.id}`
-            }))"
-            :content="{ align: 'end' }"
-            :ui="{ content: 'min-w-[12rem]' }"
-          >
-            <UButton
-              label="Spalten"
-              color="neutral"
-              variant="outline"
-              trailing-icon="i-lucide-chevron-down"
-              class="w-full md:w-auto"
-              aria-label="Spalten-Auswahl Dropdown"
-            />
-            <template v-for="column in table?.tableApi?.getAllColumns().filter(c => c.getCanHide())" #[`col-${column.id}-trailing`] :key="column.id">
-              <UIcon v-if="column.getIsVisible()" name="i-lucide-check" class="shrink-0 size-5 text-primary" />
-            </template>
-          </UDropdownMenu>
-          <UDropdownMenu
-            :items="sortDropdownItems"
-            :content="{ align: 'end' }"
-            :ui="{ content: 'min-w-[12rem]', item: { icon: 'order-last' } }"
-          >
-            <UButton
-              label="Sortieren"
-              color="neutral"
-              variant="outline"
-              trailing-icon="i-lucide-chevron-down"
-              class="w-full md:w-auto"
-              aria-label="Sortier-Auswahl Dropdown"
-            />
-            <template v-for="option in sortOptions" #[`sort-${option.value}-trailing`] :key="option.value">
-              <UIcon v-if="sortColumn === option.value" name="i-lucide-check" class="shrink-0 size-5 text-primary" />
-            </template>
-          </UDropdownMenu>
+            <UDropdownMenu
+              :items="table?.tableApi?.getAllColumns().filter(column => column.getCanHide()).map(column => ({
+                label: getColumnLabel(column.id),
+                value: column.id,
+                type: 'checkbox' as const,
+                checked: column.getIsVisible(),
+                onUpdateChecked(checked: boolean) {
+                  table?.tableApi?.getColumn(column.id)?.toggleVisibility(checked)
+                },
+                onSelect(e?: Event) {
+                  e?.preventDefault()
+                },
+                slot: `col-${column.id}`,
+              }))"
+              :content="{ align: 'end' }"
+              :ui="{ content: 'min-w-[12rem]' }"
+            >
+              <UButton
+                label="Spalten"
+                color="neutral"
+                variant="outline"
+                trailing-icon="i-lucide-chevron-down"
+                class="w-full md:w-auto"
+                aria-label="Spalten-Auswahl Dropdown"
+              />
+              <template
+                v-for="column in table?.tableApi?.getAllColumns().filter(c => c.getCanHide())"
+                #[`col-${column.id}-trailing`]
+                :key="column.id"
+              >
+                <UIcon
+                  v-if="column.getIsVisible()"
+                  name="i-lucide-check"
+                  class="shrink-0 size-5 text-primary"
+                />
+              </template>
+            </UDropdownMenu>
+            <UDropdownMenu
+              :items="sortDropdownItems"
+              :content="{ align: 'end' }"
+              :ui="{ content: 'min-w-[12rem]', item: { icon: 'order-last' } }"
+            >
+              <UButton
+                label="Sortieren"
+                color="neutral"
+                variant="outline"
+                trailing-icon="i-lucide-chevron-down"
+                class="w-full md:w-auto"
+                aria-label="Sortier-Auswahl Dropdown"
+              />
+              <template
+                v-for="option in sortOptions"
+                #[`sort-${option.value}-trailing`]
+                :key="option.value"
+              >
+                <UIcon
+                  v-if="sortColumn === option.value"
+                  name="i-lucide-check"
+                  class="shrink-0 size-5 text-primary"
+                />
+              </template>
+            </UDropdownMenu>
           </div>
         </div>
 
@@ -470,10 +506,23 @@ const handleDeleteCancel = () => {
     </UCard>
 
     <!-- Edit Modal -->
-    <UModal v-model:open="isEditModalOpen" title="Schülerin bearbeiten" description="Bearbeite die Informationen der ausgewählten Schülerin." :close="false">
+    <UModal
+      v-model:open="isEditModalOpen"
+      title="Schülerin bearbeiten"
+      description="Bearbeite die Informationen der ausgewählten Schülerin."
+      :close="false"
+    >
       <template #body>
-        <UForm :schema="studentSchema" :state="editForm" class="space-y-6" @submit="handleEditSubmit">
-          <UFormField label="Name" name="name">
+        <UForm
+          :schema="studentSchema"
+          :state="editForm"
+          class="space-y-6"
+          @submit="handleEditSubmit"
+        >
+          <UFormField
+            label="Name"
+            name="name"
+          >
             <UInput
               v-model="editForm.name"
               placeholder="z.B. Anna Mustermann"
@@ -481,7 +530,10 @@ const handleDeleteCancel = () => {
               class="w-full"
             />
           </UFormField>
-          <UFormField label="Pflegeschule" name="schoolId">
+          <UFormField
+            label="Pflegeschule"
+            name="schoolId"
+          >
             <USelectMenu
               :model-value="editForm.schoolId || undefined"
               :items="schoolOptions"
@@ -491,7 +543,10 @@ const handleDeleteCancel = () => {
               @update:model-value="val => editForm.schoolId = val ?? undefined"
             />
           </UFormField>
-          <UFormField label="Betrieb" name="companyId">
+          <UFormField
+            label="Betrieb"
+            name="companyId"
+          >
             <USelectMenu
               :model-value="editForm.companyId || undefined"
               :items="companyOptions"
@@ -501,7 +556,10 @@ const handleDeleteCancel = () => {
               @update:model-value="val => editForm.companyId = val ?? undefined"
             />
           </UFormField>
-          <UFormField label="Telefonnummer" name="phone">
+          <UFormField
+            label="Telefonnummer"
+            name="phone"
+          >
             <UInput
               v-model="editForm.phone"
               placeholder="z.B. +49 123 456789"
@@ -510,7 +568,10 @@ const handleDeleteCancel = () => {
               class="w-full"
             />
           </UFormField>
-          <UFormField label="E-Mail-Adresse" name="email">
+          <UFormField
+            label="E-Mail-Adresse"
+            name="email"
+          >
             <UInput
               v-model="editForm.email"
               placeholder="z.B. anna@mustermann.de"
@@ -541,10 +602,23 @@ const handleDeleteCancel = () => {
     </UModal>
 
     <!-- Add Modal -->
-    <UModal v-model:open="isAddModalOpen" title="Neue Schülerin hinzufügen" description="Füge eine neue Schülerin hinzu." :close="false">
+    <UModal
+      v-model:open="isAddModalOpen"
+      title="Neue Schülerin hinzufügen"
+      description="Füge eine neue Schülerin hinzu."
+      :close="false"
+    >
       <template #body>
-        <UForm :schema="studentSchema" :state="addForm" class="space-y-6" @submit="handleAddSubmit">
-          <UFormField label="Name" name="name">
+        <UForm
+          :schema="studentSchema"
+          :state="addForm"
+          class="space-y-6"
+          @submit="handleAddSubmit"
+        >
+          <UFormField
+            label="Name"
+            name="name"
+          >
             <UInput
               v-model="addForm.name"
               placeholder="z.B. Anna Mustermann"
@@ -552,7 +626,10 @@ const handleDeleteCancel = () => {
               class="w-full"
             />
           </UFormField>
-          <UFormField label="Pflegeschule" name="schoolId">
+          <UFormField
+            label="Pflegeschule"
+            name="schoolId"
+          >
             <USelectMenu
               :model-value="addForm.schoolId || undefined"
               :items="schoolOptions"
@@ -562,7 +639,10 @@ const handleDeleteCancel = () => {
               @update:model-value="val => addForm.schoolId = val ?? undefined"
             />
           </UFormField>
-          <UFormField label="Betrieb" name="companyId">
+          <UFormField
+            label="Betrieb"
+            name="companyId"
+          >
             <USelectMenu
               :model-value="addForm.companyId || undefined"
               :items="companyOptions"
@@ -572,7 +652,10 @@ const handleDeleteCancel = () => {
               @update:model-value="val => addForm.companyId = val ?? undefined"
             />
           </UFormField>
-          <UFormField label="Telefonnummer" name="phone">
+          <UFormField
+            label="Telefonnummer"
+            name="phone"
+          >
             <UInput
               v-model="addForm.phone"
               placeholder="z.B. +49 123 456789"
@@ -581,7 +664,10 @@ const handleDeleteCancel = () => {
               class="w-full"
             />
           </UFormField>
-          <UFormField label="E-Mail-Adresse" name="email">
+          <UFormField
+            label="E-Mail-Adresse"
+            name="email"
+          >
             <UInput
               v-model="addForm.email"
               placeholder="z.B. anna@mustermann.de"
@@ -612,7 +698,12 @@ const handleDeleteCancel = () => {
     </UModal>
 
     <!-- Delete Confirmation Modal -->
-    <UModal v-model:open="isDeleteModalOpen" title="Schülerin löschen" description="Diese Aktion kann nicht rückgängig gemacht werden." :close="false">
+    <UModal
+      v-model:open="isDeleteModalOpen"
+      title="Schülerin löschen"
+      description="Diese Aktion kann nicht rückgängig gemacht werden."
+      :close="false"
+    >
       <template #body>
         <p class="text-sm text-gray-600 dark:text-gray-300">
           Bist du sicher, dass du die Schülerin '{{ studentToDelete?.name || '' }}' löschen möchtest?
@@ -639,4 +730,4 @@ const handleDeleteCancel = () => {
       </template>
     </UModal>
   </div>
-</template> 
+</template>
