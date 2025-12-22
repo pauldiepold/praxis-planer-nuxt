@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "praxis-planer",
+      "database_id": "b350f34f-6f2b-4d4b-baa7-613f8d76927a"
+    }
+  ]
+}
