@@ -8,4 +8,4 @@
 
     <LayoutFooter />
   </div>
-</template> 
+</template>

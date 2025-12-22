@@ -1,5 +1,3 @@
-import type { School, Student, Company } from '../../types/database'
-
 export const useEntities = () => {
   const store = useEntitiesStore()
 
@@ -7,7 +5,7 @@ export const useEntities = () => {
   const schools = computed(() => store.schools)
   const students = computed(() => store.students)
   const companies = computed(() => store.companies)
-  
+
   const isLoading = computed(() => store.isLoading)
   const error = computed(() => store.error)
 
@@ -113,21 +111,21 @@ export const useEntities = () => {
   return {
     // Store-Referenz
     store,
-    
+
     // Daten
     schools,
     students,
     companies,
     isLoading,
     error,
-    
+
     // Optionen
     schoolOptions,
     studentOptions,
     companyOptions,
     studentOptionsWithSchool,
     studentsWithDetails,
-    
+
     // Hilfsfunktionen
     getSchoolById,
     getStudentById,
@@ -135,7 +133,7 @@ export const useEntities = () => {
     getSchoolName,
     getStudentName,
     getCompanyName,
-    
+
     // CRUD-Operationen
     addSchool,
     updateSchool,
@@ -146,14 +144,14 @@ export const useEntities = () => {
     addCompany,
     updateCompany,
     deleteCompany,
-    
+
     // Laden
     fetchAll,
     fetchSchools,
     fetchStudents,
     fetchCompanies,
-    
+
     // Reset
-    reset
+    reset,
   }
-} 
+}

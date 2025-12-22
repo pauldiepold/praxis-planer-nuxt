@@ -3,9 +3,9 @@ import { de } from '@nuxt/ui/locale'
 
 useHead({
   htmlAttrs: {
-    lang: 'de'
+    lang: 'de',
   },
-  title: 'Praxis Pflege Planer'
+  title: 'Praxis Pflege Planer',
 })
 </script>
 
@@ -14,7 +14,7 @@ useHead({
     :locale="de"
     :toaster="{
       position: 'top-right',
-      duration: 3000
+      duration: 3000,
     }"
   >
     <NuxtRouteAnnouncer />

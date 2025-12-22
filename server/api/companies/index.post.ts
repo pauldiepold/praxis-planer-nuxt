@@ -1,10 +1,11 @@
 import { z } from 'zod'
+import { db, schema } from 'hub:db'
 
 const createCompanySchema = z.object({
   name: z.string().min(1, 'Name ist erforderlich').max(255, 'Name kann maximal 255 Zeichen haben'),
   contactPerson: z.string().max(255, 'Ansprechpartner kann maximal 255 Zeichen haben').optional().or(z.literal('')).nullish(),
   phone: z.string().max(50, 'Telefonnummer kann maximal 50 Zeichen haben').optional().or(z.literal('')).nullish(),
-  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail kann maximal 255 Zeichen haben').optional().or(z.literal('')).nullish()
+  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail kann maximal 255 Zeichen haben').optional().or(z.literal('')).nullish(),
 })
 
 export default eventHandler(async (event) => {
@@ -17,24 +18,22 @@ export default eventHandler(async (event) => {
       statusCode: 400,
       message: 'Validierungsfehler',
       data: {
-        errors: validationResult.error.errors.map(err => ({
+        errors: validationResult.error.issues.map(err => ({
           field: err.path.join('.'),
-          message: err.message
-        }))
-      }
+          message: err.message,
+        })),
+      },
     })
   }
 
   const validatedData = validationResult.data
 
-  const newCompany = await useDrizzle().insert(tables.companies).values({
+  return await db.insert(schema.companies).values({
     name: validatedData.name,
     contactPerson: validatedData.contactPerson,
     phone: validatedData.phone,
     email: validatedData.email,
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   }).returning().get()
-
-  return newCompany
-}) 
+})

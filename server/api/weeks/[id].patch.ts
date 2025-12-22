@@ -1,11 +1,11 @@
 import { z } from 'zod'
-import { useDrizzle, tables } from '../../utils/drizzle'
+import { db, schema } from 'hub:db'
 import { eq } from 'drizzle-orm'
 
 const updateWeekSchema = z.object({
   status: z.enum(['free', 'booked', 'vacation']),
   studentId: z.number().nullable(),
-  notes: z.string().max(1000, 'Notizen können maximal 1000 Zeichen haben').optional().or(z.literal('')).nullish()
+  notes: z.string().max(1000, 'Notizen können maximal 1000 Zeichen haben').optional().or(z.literal('')).nullish(),
 })
 
 export default eventHandler(async (event) => {
@@ -19,11 +19,11 @@ export default eventHandler(async (event) => {
       statusCode: 400,
       message: 'Validierungsfehler',
       data: {
-        errors: validationResult.error.errors.map(err => ({
+        errors: validationResult.error.issues.map(err => ({
           field: err.path.join('.'),
-          message: err.message
-        }))
-      }
+          message: err.message,
+        })),
+      },
     })
   }
 
@@ -33,7 +33,7 @@ export default eventHandler(async (event) => {
   if (validatedData.status === 'free' && validatedData.studentId !== null) {
     throw createError({
       statusCode: 400,
-      message: 'Bei Status "frei" kann keine Schülerin zugeordnet werden'
+      message: 'Bei Status "frei" kann keine Schülerin zugeordnet werden',
     })
   }
 
@@ -41,23 +41,23 @@ export default eventHandler(async (event) => {
   if (validatedData.status === 'booked' && validatedData.studentId === null) {
     throw createError({
       statusCode: 400,
-      message: 'Bei Status "belegt" muss eine Schülerin zugeordnet werden'
+      message: 'Bei Status "belegt" muss eine Schülerin zugeordnet werden',
     })
   }
 
-  const updatedWeek = await useDrizzle().update(tables.weeks).set({
+  const updatedWeek = await db.update(schema.weeks).set({
     status: validatedData.status,
     studentId: validatedData.studentId,
     notes: validatedData.notes,
-    updatedAt: new Date()
-  }).where(eq(tables.weeks.id, Number(id))).returning().get()
+    updatedAt: new Date(),
+  }).where(eq(schema.weeks.id, Number(id))).returning().get()
 
   if (!updatedWeek) {
     throw createError({
       statusCode: 404,
-      message: 'Woche nicht gefunden'
+      message: 'Woche nicht gefunden',
     })
   }
 
   return updatedWeek
-}) 
+})

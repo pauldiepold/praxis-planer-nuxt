@@ -1,30 +1,24 @@
-import { useDrizzle, tables } from '../../utils/drizzle'
 import { eq, sql } from 'drizzle-orm'
+import { db, schema } from 'hub:db'
 
 export default eventHandler(async (event) => {
-  const db = useDrizzle()
   const year = Number(getQuery(event).year) || new Date().getFullYear()
 
-  // Debug: Alle Wochen ohne Filter loggen
-  const _allWeeks = await db.select().from(tables.weeks).all()
-
   // Wochen für das Jahr inkl. Schülerin-Name und Schule (LIKE-Filter)
-  const weeks = await db
+  return await db
     .select({
-      id: tables.weeks.id,
-      weekStartDate: tables.weeks.weekStartDate,
-      status: tables.weeks.status,
-      studentId: tables.weeks.studentId,
-      studentName: tables.students.name,
-      schoolName: tables.schools.name,
-      notes: tables.weeks.notes,
+      id: schema.weeks.id,
+      weekStartDate: schema.weeks.weekStartDate,
+      status: schema.weeks.status,
+      studentId: schema.weeks.studentId,
+      studentName: schema.students.name,
+      schoolName: schema.schools.name,
+      notes: schema.weeks.notes,
     })
-    .from(tables.weeks)
-    .leftJoin(tables.students, eq(tables.weeks.studentId, tables.students.id))
-    .leftJoin(tables.schools, eq(tables.students.schoolId, tables.schools.id))
-    .where(sql`${tables.weeks.weekStartDate} LIKE ${year + '-%'}`)
-    .orderBy(tables.weeks.weekStartDate)
+    .from(schema.weeks)
+    .leftJoin(schema.students, eq(schema.weeks.studentId, schema.students.id))
+    .leftJoin(schema.schools, eq(schema.students.schoolId, schema.schools.id))
+    .where(sql`${schema.weeks.weekStartDate} LIKE ${year + '-%'}`)
+    .orderBy(schema.weeks.weekStartDate)
     .all()
-
-  return weeks
-}) 
+})

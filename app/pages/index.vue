@@ -4,15 +4,13 @@ import { ref, computed, watch, onMounted } from 'vue'
 // Authentifizierung prüfen
 const { loggedIn } = useUserSession()
 
-const nextYear = ref<number|null>(null)
+const nextYear = ref<number | null>(null)
 const isLoading = ref(true)
 const isSuccess = ref(false)
 const isError = ref(false)
 const feedbackMsg = ref('')
 const isWeeksLoading = ref(false)
 const isWeeksError = ref(false)
-
-
 
 const selectedYear = ref(new Date().getFullYear())
 
@@ -32,7 +30,7 @@ interface WeekEntry {
 const weeksRaw = ref<WeekEntry[]>([])
 const weeksByMonth = computed<Record<number, WeekEntry[]>>(() => {
   const grouped: Record<number, WeekEntry[]> = {}
-  weeksRaw.value.forEach(week => {
+  weeksRaw.value.forEach((week) => {
     const month = new Date(week.weekStartDate).getMonth()
     if (!grouped[month]) grouped[month] = []
     grouped[month].push(week)
@@ -45,19 +43,25 @@ async function fetchAvailableYears() {
   try {
     const res = await $fetch<{ years: number[] }>('/api/weeks/available-years')
     years.value = res.years
-    
+
     const currentYear = new Date().getFullYear()
-    
+
     // Wähle das aktuelle Jahr aus, falls es verfügbar ist
     if (years.value.includes(currentYear)) {
       selectedYear.value = currentYear
-    } else if (years.value.length > 0) {
-      // Fallback: Wähle das erste verfügbare Jahr
-      selectedYear.value = years.value[0]
     }
-  } catch {
+    else if (years.value.length > 0) {
+      // Fallback: Wähle das erste verfügbare Jahr
+      const firstYear = years.value[0]
+      if (firstYear !== undefined) {
+        selectedYear.value = firstYear
+      }
+    }
+  }
+  catch {
     console.error('Fehler beim Laden der verfügbaren Jahre')
-  } finally {
+  }
+  finally {
     isLoadingYears.value = false
   }
 }
@@ -68,12 +72,14 @@ async function fetchNextYear() {
   isSuccess.value = false
   feedbackMsg.value = ''
   try {
-    const res = await $fetch<{ nextYear: number|null }>('/api/weeks/next-missing-year')
+    const res = await $fetch<{ nextYear: number | null }>('/api/weeks/next-missing-year')
     nextYear.value = res.nextYear
-  } catch {
+  }
+  catch {
     isError.value = true
     feedbackMsg.value = 'Fehler beim Laden des nächsten Jahres.'
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
@@ -85,27 +91,30 @@ async function handleFillWeeks() {
   isSuccess.value = false
   feedbackMsg.value = ''
   try {
-    const res = await $fetch<{ year: number|null, created: number }>('/api/weeks/fill-missing', { method: 'POST' })
+    const res = await $fetch<{ year: number | null, created: number }>('/api/weeks/fill-missing', { method: 'POST' })
     if (res.created > 0) {
       isSuccess.value = true
       feedbackMsg.value = `Kalenderwochen für ${res.year} wurden angelegt.`
-      
+
       // Aktualisiere die verfügbaren Jahre
       await fetchAvailableYears()
-      
+
       // Wenn das neue Jahr hinzugefügt wurde, wähle es aus und lade die Daten
       if (res.year && years.value.includes(res.year)) {
         selectedYear.value = res.year
         await fetchWeeksForYear(res.year)
       }
-    } else {
+    }
+    else {
       feedbackMsg.value = 'Es wurden keine neuen Wochen angelegt.'
     }
     await fetchNextYear()
-  } catch {
+  }
+  catch {
     isError.value = true
     feedbackMsg.value = 'Fehler beim Anlegen der Kalenderwochen.'
-  } finally {
+  }
+  finally {
     isLoading.value = false
   }
 }
@@ -114,35 +123,41 @@ async function fetchWeeksForYear(year: number) {
   isWeeksLoading.value = true
   isWeeksError.value = false
   try {
-    const res = await $fetch<WeekEntry[]>(`/api/weeks?year=${year}`)
-    weeksRaw.value = res
-  } catch {
+    weeksRaw.value = await $fetch<WeekEntry[]>(`/api/weeks?year=${year}`)
+  }
+  catch {
     isWeeksError.value = true
-  } finally {
+  }
+  finally {
     isWeeksLoading.value = false
   }
 }
 
 watch(selectedYear, (year) => {
-  fetchWeeksForYear(year)
+  if (year) {
+    fetchWeeksForYear(year)
+  }
 })
 
 // Funktion zum Aktualisieren einer Woche
-function handleWeekUpdated(updatedWeek: { id: number; status: 'free' | 'booked' | 'vacation'; studentId: number | null; notes: string | null; studentName: string | null; schoolName: string | null }) {
+function handleWeekUpdated(updatedWeek: { id: number, status: 'free' | 'booked' | 'vacation', studentId: number | null, notes: string | null, studentName: string | null, schoolName: string | null }) {
   // Finde die Woche in der Liste und aktualisiere sie
   const weekIndex = weeksRaw.value.findIndex(w => w.id === updatedWeek.id)
   if (weekIndex !== -1) {
     // Aktualisiere die Woche mit den neuen Daten
-    weeksRaw.value[weekIndex] = {
-      ...weeksRaw.value[weekIndex],
-      status: updatedWeek.status,
-      studentId: updatedWeek.studentId,
-      notes: updatedWeek.notes,
-      // Verwende die übergebenen Daten oder lade sie neu
-      studentName: updatedWeek.studentName || (updatedWeek.studentId ? 'Laden...' : null),
-      schoolName: updatedWeek.schoolName || (updatedWeek.studentId ? 'Laden...' : null)
+    const existingWeek = weeksRaw.value[weekIndex]
+    if (existingWeek) {
+      weeksRaw.value[weekIndex] = {
+        ...existingWeek,
+        status: updatedWeek.status,
+        studentId: updatedWeek.studentId,
+        notes: updatedWeek.notes,
+        // Verwende die übergebenen Daten oder lade sie neu
+        studentName: updatedWeek.studentName || (updatedWeek.studentId ? 'Laden...' : null),
+        schoolName: updatedWeek.schoolName || (updatedWeek.studentId ? 'Laden...' : null),
+      }
     }
-    
+
     // Wenn eine Schülerin zugeordnet wurde, lade die Details
     if (updatedWeek.studentId) {
       loadStudentDetails(updatedWeek.studentId, weekIndex)
@@ -159,16 +174,18 @@ async function loadStudentDetails(studentId: number, weekIndex: number) {
     const student = students.value.find(s => s.id === studentId)
     if (student && weekIndex !== -1 && weeksRaw.value[weekIndex]) {
       weeksRaw.value[weekIndex].studentName = student.name
-      
+
       // Schule-Name laden, falls verfügbar
       if (student.schoolId) {
         const school = schools.value.find(s => s.id === student.schoolId)
         weeksRaw.value[weekIndex].schoolName = school?.name || null
-      } else {
+      }
+      else {
         weeksRaw.value[weekIndex].schoolName = null
       }
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Fehler beim Laden der Schülerin-Details:', error)
   }
 }
@@ -184,18 +201,21 @@ onMounted(async () => {
 definePageMeta({
   title: 'Startseite',
   colorMode: 'dark',
-  layout: 'fullwidth'
+  layout: 'fullwidth',
 })
 
 // Seitenspezifischer Titel
 useHead({
-  title: 'Startseite'
+  title: 'Startseite',
 })
 </script>
 
 <template>
   <!-- Nicht angemeldete Benutzer sehen nur die Willkommensseite -->
-  <div v-if="!loggedIn" class="mx-auto p-6">
+  <div
+    v-if="!loggedIn"
+    class="mx-auto p-6"
+  >
     <div class="max-w-2xl mx-auto text-center">
       <div class="mb-8">
         <img
@@ -203,12 +223,14 @@ useHead({
           alt="Praxis Logo"
           class="mx-auto bg-gray-200 p-1 rounded-lg h-24 w-auto mb-6"
         >
-        <h1 class="text-4xl font-bold mb-4">Praxis Pflege Planer</h1>
+        <h1 class="text-4xl font-bold mb-4">
+          Praxis Pflege Planer
+        </h1>
         <p class="text-lg text-muted mb-8">
           Bitte melden dich an, um auf die Anwendung zuzugreifen.
         </p>
       </div>
-      
+
       <UButton
         href="/auth/github"
         external
@@ -224,9 +246,14 @@ useHead({
   </div>
 
   <!-- Angemeldete Benutzer sehen den Jahresplaner -->
-  <div v-else class="mx-auto p-6">
+  <div
+    v-else
+    class="mx-auto p-6"
+  >
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold">Jahresplaner</h1>
+      <h1 class="text-3xl font-bold">
+        Jahresplaner
+      </h1>
       <div class="flex items-center gap-4">
         <div class="flex flex-col gap-2">
           <label class="flex flex-col gap-1">
@@ -248,15 +275,15 @@ useHead({
       <div class="py-3 px-6">
         <div class="flex justify-center gap-8">
           <div class="flex items-center gap-2">
-            <div class="w-4 h-4 bg-success rounded"/>
+            <div class="w-4 h-4 bg-success rounded" />
             <span class="text-sm">Frei</span>
           </div>
           <div class="flex items-center gap-2">
-            <div class="w-4 h-4 bg-error rounded"/>
+            <div class="w-4 h-4 bg-error rounded" />
             <span class="text-sm">Belegt</span>
           </div>
           <div class="flex items-center gap-2">
-            <div class="w-4 h-4 bg-warning rounded"/>
+            <div class="w-4 h-4 bg-warning rounded" />
             <span class="text-sm">Urlaub</span>
           </div>
         </div>
@@ -264,41 +291,59 @@ useHead({
     </div>
 
     <!-- Loading Indicator -->
-    <div v-if="isLoading ||isWeeksLoading || entitiesLoading.schools || entitiesLoading.students || entitiesLoading.companies" class="flex justify-center items-center py-20">
+    <div
+      v-if="isLoading ||isWeeksLoading || entitiesLoading.schools || entitiesLoading.students || entitiesLoading.companies"
+      class="flex justify-center items-center py-20"
+    >
       <div class="text-center">
         <UIcon
           name="i-lucide-loader-2"
           class="w-16 h-16 text-primary animate-spin mx-auto mb-4"
         />
-        <p class="text-lg text-muted">Lade Jahresplaner...</p>
+        <p class="text-lg text-muted">
+          Lade Jahresplaner...
+        </p>
       </div>
     </div>
-    
+
     <!-- Calendar Container -->
-    <div v-else-if="!isLoading && !isWeeksLoading && !entitiesLoading.schools && !entitiesLoading.students && !entitiesLoading.companies" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-      <div v-for="month in 12" :key="month" class="bg-muted rounded-lg shadow-xl border-t-4 border-primary hover:shadow-2xl transition-all duration-200 cursor-pointer">
+    <div
+      v-else-if="!isLoading && !isWeeksLoading && !entitiesLoading.schools && !entitiesLoading.students && !entitiesLoading.companies"
+      class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
+    >
+      <div
+        v-for="month in 12"
+        :key="month"
+        class="bg-muted rounded-lg shadow-xl border-t-4 border-primary hover:shadow-2xl transition-all duration-200 cursor-pointer"
+      >
         <div class="p-4">
           <h2 class="text-2xl font-bold text-center mb-4">
-            {{ new Date(selectedYear, month-1, 1).toLocaleString('de-DE', { month: 'long', year: 'numeric' }) }}
+            {{ selectedYear ? new Date(selectedYear, month-1, 1).toLocaleString('de-DE', { month: 'long', year: 'numeric' }) : '' }}
           </h2>
-          <div v-if="weeksByMonth[month-1] && weeksByMonth[month-1].length > 0" class="space-y-3">
+          <div
+            v-if="weeksByMonth[month-1] && (weeksByMonth[month-1]?.length ?? 0) > 0"
+            class="space-y-3"
+          >
             <CalendarWeek
-              v-for="week in weeksByMonth[month-1]"
+              v-for="week in (weeksByMonth[month-1] || [])"
               :key="week.id"
               :week="week"
               @updated="handleWeekUpdated"
             />
           </div>
-          <div v-else class="text-sm text-muted text-center py-4">
+          <div
+            v-else
+            class="text-sm text-muted text-center py-4"
+          >
             Keine Wochen in diesem Monat
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- Trennelement -->
-    <div class="border-t border-neutral-600 my-8"/>
-    
+    <div class="border-t border-neutral-600 my-8" />
+
     <!-- Jahr hinzufügen Button -->
     <div class="flex justify-center">
       <UButton
@@ -311,7 +356,10 @@ useHead({
       >
         Kalenderwochen für {{ nextYear }} anlegen
       </UButton>
-      <div v-else class="text-muted text-sm">
+      <div
+        v-else
+        class="text-muted text-sm"
+      >
         Alle Kalenderwochen bis 5 Jahre im Voraus sind angelegt.
       </div>
     </div>
