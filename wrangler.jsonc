@@ -3,8 +3,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "praxis-planer",
-      "database_id": "b350f34f-6f2b-4d4b-baa7-613f8d76927a"
+      "database_name": "praxis-planer-nuxt",
+      "database_id": "c661178a-c96d-41c8-8949-6cc722485558"
     }
   ]
 }
