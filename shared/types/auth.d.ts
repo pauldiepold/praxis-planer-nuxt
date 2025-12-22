@@ -1,15 +1,5 @@
 import type { Ref } from 'vue'
 
-// Globale User-Typdefinition
-interface User {
-  provider: string
-  id: string
-  name: string
-  avatar?: string
-  url?: string
-  email?: string
-}
-
 // Nuxt Auth Utils Modul-Definition
 declare module '#auth-utils' {
   interface User {
