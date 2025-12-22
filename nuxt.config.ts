@@ -22,9 +22,10 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     allowedUsers: process.env.NUXT_ALLOWED_USERS || '',
-    oauthGithubClientSecret: '',
+    oauthGithubClientSecret: process.env.NUXT_OAUTH_GITHUB_CLIENT_SECRET || '',
+    sessionPassword: process.env.NUXT_SESSION_PASSWORD || '',
     public: {
-      oauthGithubClientId: '',
+      oauthGithubClientId: process.env.NUXT_OAUTH_GITHUB_CLIENT_ID || '',
     },
   },
 
