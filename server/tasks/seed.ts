@@ -19,7 +19,6 @@ export default defineTask({
       }
       catch (error) {
         console.error('Schools table does not exist or error:', error)
-        throw new Error('Schools table not found. Please run migrations first.')
       }
 
       // Clear all tables first (in reverse order of dependencies)
@@ -429,17 +428,10 @@ export default defineTask({
       // Insert students one by one to identify the problem
       const insertedStudents = []
       for (let i = 0; i < students.length; i++) {
-        try {
-          console.log(`Inserting student ${i + 1}/${students.length}: ${students[i].name}`)
-          const student = await db.insert(schema.students).values(students[i]).returning().get()
-          insertedStudents.push(student)
-          console.log(`Successfully inserted: ${student.name}`)
-        }
-        catch (error) {
-          console.error(`Failed to insert student ${students[i].name}:`, error)
-          console.error('Student data:', students[i])
-          throw error
-        }
+        console.log(`Inserting student ${i + 1}/${students.length}: ${students[i].name}`)
+        const student = await db.insert(schema.students).values(students[i]).returning().get()
+        insertedStudents.push(student)
+        console.log(`Successfully inserted: ${student.name}`)
       }
 
       console.log(`Successfully inserted ${insertedStudents.length} students`)
