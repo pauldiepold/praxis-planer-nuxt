@@ -4,9 +4,7 @@ export default defineOAuthGitHubEventHandler({
   },
   async onSuccess(event, { user, tokens: _tokens }) {
     try {
-      console.log('hello')
       const { allowedUsers } = useRuntimeConfig(event)
-      console.log(event.context.env)
 
       // Hole die erlaubten E-Mails aus der ENV
       const allowed = (allowedUsers || '').split(',').map(e => e.trim().toLowerCase())
@@ -14,7 +12,7 @@ export default defineOAuthGitHubEventHandler({
       // Prüfe, ob die User-Email in der Liste ist
       if (!user.login || !allowed.includes(user.login.toLowerCase())) {
         console.log('Unauthorized login attempt:', user.login)
-        // Session löschen, falls schon gesetztx
+        // Session löschen, falls schon gesetzt
         await setUserSession(event, { user: null })
         // Weiterleitung mit Fehler
         return sendRedirect(event, '/')
