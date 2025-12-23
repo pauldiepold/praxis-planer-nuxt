@@ -13,7 +13,7 @@ export default defineOAuthGitHubEventHandler({
       if (!user.login || !allowed.includes(user.login.toLowerCase())) {
         console.log('Unauthorized login attempt:', user.login)
         // Session löschen, falls schon gesetzt
-        await setUserSession(event, { user: null })
+        await setUserSession(event, { user: undefined })
         // Weiterleitung mit Fehler
         return sendRedirect(event, '/')
       }
@@ -25,7 +25,7 @@ export default defineOAuthGitHubEventHandler({
           name: user.name || user.login,
           avatar: user.avatar_url,
           url: user.html_url,
-          email: user.email,
+          email: user.email ?? undefined,
         },
       })
 
@@ -36,7 +36,7 @@ export default defineOAuthGitHubEventHandler({
 
       // Fallback: Session löschen und zur Startseite weiterleiten
       try {
-        await setUserSession(event, { user: null })
+        await setUserSession(event, { user: undefined })
       }
       catch (sessionError) {
         console.error('Error clearing session:', sessionError)
