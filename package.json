@@ -6,6 +6,7 @@
     "dev": "nuxi dev",
     "build": "nuxi build",
     "db:generate": "npx nuxt db generate",
+    "db:migrate": "npx nuxt db migrate",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postinstall": "nuxt prepare",
