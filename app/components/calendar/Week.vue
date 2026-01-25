@@ -11,9 +11,8 @@ interface Props {
     status: 'free' | 'booked' | 'vacation' | 'reserved'
     studentId: number | null
     studentName: string | null
+    schoolId: number | null
     schoolName: string | null
-    companyId: number | null
-    companyName: string | null
     notes: string | null
   }
 }
@@ -22,7 +21,7 @@ const props = defineProps<Props>()
 
 // Emit für das Aktualisieren der Woche
 const emit = defineEmits<{
-  updated: [week: { id: number, weekStartDate: string, status: 'free' | 'booked' | 'vacation' | 'reserved', studentId: number | null, companyId: number | null, notes: string | null, studentName: string | null, schoolName: string | null, companyName: string | null }]
+  updated: [week: { id: number, weekStartDate: string, status: 'free' | 'booked' | 'vacation' | 'reserved', studentId: number | null, schoolId: number | null, notes: string | null, studentName: string | null, schoolName: string | null }]
 }>()
 
 // Modal state
@@ -32,13 +31,13 @@ const isEditModalOpen = ref(false)
 const isSubmitting = ref(false)
 
 // Entities Composable verwenden
-const { studentOptionsWithSchool, companyOptions } = useEntities()
+const { studentOptionsWithSchool, schoolOptions } = useEntities()
 
 // Zod schema für Formularvalidierung
 const weekSchema = z.object({
   status: z.enum(['free', 'booked', 'vacation', 'reserved']),
   studentId: z.number().nullable(),
-  companyId: z.number().nullable(),
+  schoolId: z.number().nullable(),
   notes: z.string().max(1000, 'Notizen können maximal 1000 Zeichen haben').optional().or(z.literal('')).nullish(),
 })
 
@@ -48,7 +47,7 @@ type WeekSchema = z.output<typeof weekSchema>
 const editForm = reactive<Partial<WeekSchema>>({
   status: 'free',
   studentId: null,
-  companyId: null,
+  schoolId: null,
   notes: '',
 })
 
@@ -87,7 +86,7 @@ function openEditModal() {
   Object.assign(editForm, {
     status: props.week.status,
     studentId: props.week.studentId,
-    companyId: props.week.companyId,
+    schoolId: props.week.schoolId,
     notes: props.week.notes || '',
   })
   isEditModalOpen.value = true
@@ -102,19 +101,19 @@ async function handleEditSubmit(event: { data: WeekSchema }) {
     let submitData: Partial<WeekSchema>
 
     if (event.data.status === 'reserved') {
-      // Bei 'reserved': companyId senden, studentId auf null
+      // Bei 'reserved': schoolId senden, studentId auf null
       submitData = {
         ...event.data,
-        companyId: event.data.companyId,
+        schoolId: event.data.schoolId,
         studentId: null,
       }
     }
     else if (event.data.status === 'booked') {
-      // Bei 'booked': studentId senden, companyId auf null
+      // Bei 'booked': studentId senden, schoolId auf null
       submitData = {
         ...event.data,
         studentId: event.data.studentId,
-        companyId: null,
+        schoolId: null,
       }
     }
     else {
@@ -122,7 +121,7 @@ async function handleEditSubmit(event: { data: WeekSchema }) {
       submitData = {
         ...event.data,
         studentId: null,
-        companyId: null,
+        schoolId: null,
       }
     }
 
@@ -140,15 +139,14 @@ async function handleEditSubmit(event: { data: WeekSchema }) {
     // Aktuelle Schülerin- und Schulinformationen aus dem Store holen
     const currentStudent = studentOptionsWithSchool.value.find(s => s.id === updatedWeek.studentId)
 
-    // Aktuelle Company-Informationen aus dem Store holen
-    const currentCompany = companyOptions.value.find(c => c.id === updatedWeek.companyId)
+    // Aktuelle Schul-Informationen aus dem Store holen (für reserved Status)
+    const currentSchool = schoolOptions.value.find(s => s.id === updatedWeek.schoolId)
 
     // Emit für Parent-Komponente
     emit('updated', {
       ...updatedWeek,
       studentName: currentStudent?.name || null,
-      schoolName: currentStudent?.school || null,
-      companyName: currentCompany?.label || null,
+      schoolName: updatedWeek.status === 'reserved' ? (currentSchool?.label || null) : (currentStudent?.school || null),
     })
 
     // Modal schließen
@@ -190,9 +188,9 @@ const statusOptions = [
         <span class="text-sm text-muted">{{ getWeekRange(week.weekStartDate) }}</span>
       </div>
 
-      <!-- Schüler/Betrieb und Pflegeschule in der Mitte (rechtsbündig) -->
+      <!-- Schüler/Schule in der Mitte (rechtsbündig) -->
       <div class="flex flex-col flex-1 min-w-0 text-right">
-        <span class="text-sm font-medium truncate">{{ week.status === 'reserved' ? week.companyName : week.studentName }}</span>
+        <span class="text-sm font-medium truncate">{{ week.status === 'reserved' ? week.schoolName : week.studentName }}</span>
         <span class="text-xs text-muted truncate">{{ week.status === 'reserved' ? '' : week.schoolName }}</span>
       </div>
 
@@ -286,22 +284,22 @@ const statusOptions = [
             </USelectMenu>
           </UFormField>
 
-          <!-- Betrieb (nur anzeigen wenn Status 'reserved' ist) -->
+          <!-- Schule (nur anzeigen wenn Status 'reserved' ist) -->
           <UFormField
             v-if="editForm.status === 'reserved'"
-            label="Betrieb"
-            name="companyId"
+            label="Schule"
+            name="schoolId"
           >
             <USelectMenu
-              :model-value="editForm.companyId || undefined"
-              :items="companyOptions"
+              :model-value="editForm.schoolId || undefined"
+              :items="schoolOptions"
               value-key="id"
               label-key="label"
-              placeholder="Betrieb auswählen"
+              placeholder="Schule auswählen"
               size="lg"
               class="w-full"
               searchable
-              @update:model-value="val => editForm.companyId = val ?? null"
+              @update:model-value="val => editForm.schoolId = val ?? null"
             />
           </UFormField>
 
