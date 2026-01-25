@@ -36,7 +36,7 @@ export const weeks = sqliteTable('weeks', {
   weekStartDate: text('week_start_date').notNull(),
   status: text('status', { enum: ['free', 'booked', 'vacation', 'reserved'] }).notNull().default('free'),
   studentId: integer('student_id').references(() => students.id),
-  companyId: integer('company_id').references(() => companies.id),
+  schoolId: integer('school_id').references(() => schools.id),
   notes: text('notes'),
   createdAt: integer('createdAt', { mode: 'timestamp' }).notNull(),
   updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull(),

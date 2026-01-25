@@ -29,6 +29,13 @@
       "when": 1769364875754,
       "tag": "0003_lethal_gambit",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1769369668703,
+      "tag": "0004_common_puppet_master",
+      "breakpoints": true
     }
   ]
 }
