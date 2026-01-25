@@ -1,0 +1,1 @@
+ALTER TABLE `weeks` ADD `company_id` integer REFERENCES companies(id);
