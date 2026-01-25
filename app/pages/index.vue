@@ -20,10 +20,12 @@ const isLoadingYears = ref(true)
 interface WeekEntry {
   id: number
   weekStartDate: string
-  status: 'free' | 'booked' | 'vacation'
+  status: 'free' | 'booked' | 'vacation' | 'reserved'
   studentId: number | null
   studentName: string | null
   schoolName: string | null
+  companyId: number | null
+  companyName: string | null
   notes: string | null
 }
 
@@ -140,7 +142,7 @@ watch(selectedYear, (year) => {
 })
 
 // Funktion zum Aktualisieren einer Woche
-function handleWeekUpdated(updatedWeek: { id: number, status: 'free' | 'booked' | 'vacation', studentId: number | null, notes: string | null, studentName: string | null, schoolName: string | null }) {
+function handleWeekUpdated(updatedWeek: { id: number, status: 'free' | 'booked' | 'vacation' | 'reserved', studentId: number | null, companyId: number | null, notes: string | null, studentName: string | null, schoolName: string | null, companyName: string | null }) {
   // Finde die Woche in der Liste und aktualisiere sie
   const weekIndex = weeksRaw.value.findIndex(w => w.id === updatedWeek.id)
   if (weekIndex !== -1) {
@@ -151,10 +153,12 @@ function handleWeekUpdated(updatedWeek: { id: number, status: 'free' | 'booked' 
         ...existingWeek,
         status: updatedWeek.status,
         studentId: updatedWeek.studentId,
+        companyId: updatedWeek.companyId,
         notes: updatedWeek.notes,
         // Verwende die übergebenen Daten oder lade sie neu
         studentName: updatedWeek.studentName || (updatedWeek.studentId ? 'Laden...' : null),
         schoolName: updatedWeek.schoolName || (updatedWeek.studentId ? 'Laden...' : null),
+        companyName: updatedWeek.companyName || (updatedWeek.companyId ? 'Laden...' : null),
       }
     }
 
@@ -162,11 +166,16 @@ function handleWeekUpdated(updatedWeek: { id: number, status: 'free' | 'booked' 
     if (updatedWeek.studentId) {
       loadStudentDetails(updatedWeek.studentId, weekIndex)
     }
+
+    // Wenn ein Betrieb zugeordnet wurde, lade die Details
+    if (updatedWeek.companyId) {
+      loadCompanyDetails(updatedWeek.companyId, weekIndex)
+    }
   }
 }
 
 // Entities Composable verwenden
-const { students, schools, isLoading: entitiesLoading } = useEntities()
+const { students, schools, companies, isLoading: entitiesLoading } = useEntities()
 
 // Funktion zum Laden der Schülerin-Details
 async function loadStudentDetails(studentId: number, weekIndex: number) {
@@ -187,6 +196,19 @@ async function loadStudentDetails(studentId: number, weekIndex: number) {
   }
   catch (error) {
     console.error('Fehler beim Laden der Schülerin-Details:', error)
+  }
+}
+
+// Funktion zum Laden der Betrieb-Details
+async function loadCompanyDetails(companyId: number, weekIndex: number) {
+  try {
+    const company = companies.value.find(c => c.id === companyId)
+    if (company && weekIndex !== -1 && weeksRaw.value[weekIndex]) {
+      weeksRaw.value[weekIndex].companyName = company.name
+    }
+  }
+  catch (error) {
+    console.error('Fehler beim Laden der Betrieb-Details:', error)
   }
 }
 
@@ -285,6 +307,10 @@ useHead({
           <div class="flex items-center gap-2">
             <div class="w-4 h-4 bg-warning rounded" />
             <span class="text-sm">Urlaub</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-4 h-4 bg-info rounded" />
+            <span class="text-sm">Reserviert</span>
           </div>
         </div>
       </div>

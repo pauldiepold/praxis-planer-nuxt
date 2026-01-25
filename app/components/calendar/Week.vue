@@ -8,10 +8,12 @@ interface Props {
   week: {
     id: number
     weekStartDate: string
-    status: 'free' | 'booked' | 'vacation'
+    status: 'free' | 'booked' | 'vacation' | 'reserved'
     studentId: number | null
     studentName: string | null
     schoolName: string | null
+    companyId: number | null
+    companyName: string | null
     notes: string | null
   }
 }
@@ -20,7 +22,7 @@ const props = defineProps<Props>()
 
 // Emit für das Aktualisieren der Woche
 const emit = defineEmits<{
-  updated: [week: { id: number, weekStartDate: string, status: 'free' | 'booked' | 'vacation', studentId: number | null, notes: string | null, studentName: string | null, schoolName: string | null }]
+  updated: [week: { id: number, weekStartDate: string, status: 'free' | 'booked' | 'vacation' | 'reserved', studentId: number | null, companyId: number | null, notes: string | null, studentName: string | null, schoolName: string | null, companyName: string | null }]
 }>()
 
 // Modal state
@@ -30,12 +32,13 @@ const isEditModalOpen = ref(false)
 const isSubmitting = ref(false)
 
 // Entities Composable verwenden
-const { studentOptionsWithSchool } = useEntities()
+const { studentOptionsWithSchool, companyOptions } = useEntities()
 
 // Zod schema für Formularvalidierung
 const weekSchema = z.object({
-  status: z.enum(['free', 'booked', 'vacation']),
+  status: z.enum(['free', 'booked', 'vacation', 'reserved']),
   studentId: z.number().nullable(),
+  companyId: z.number().nullable(),
   notes: z.string().max(1000, 'Notizen können maximal 1000 Zeichen haben').optional().or(z.literal('')).nullish(),
 })
 
@@ -45,6 +48,7 @@ type WeekSchema = z.output<typeof weekSchema>
 const editForm = reactive<Partial<WeekSchema>>({
   status: 'free',
   studentId: null,
+  companyId: null,
   notes: '',
 })
 
@@ -83,6 +87,7 @@ function openEditModal() {
   Object.assign(editForm, {
     status: props.week.status,
     studentId: props.week.studentId,
+    companyId: props.week.companyId,
     notes: props.week.notes || '',
   })
   isEditModalOpen.value = true
@@ -93,10 +98,32 @@ async function handleEditSubmit(event: { data: WeekSchema }) {
   isSubmitting.value = true
 
   try {
-    // Wenn Status 'free' ist, studentId auf null setzen
-    const submitData = {
-      ...event.data,
-      studentId: event.data.status === 'free' ? null : event.data.studentId,
+    // Validierung basierend auf Status
+    let submitData: Partial<WeekSchema>
+
+    if (event.data.status === 'reserved') {
+      // Bei 'reserved': companyId senden, studentId auf null
+      submitData = {
+        ...event.data,
+        companyId: event.data.companyId,
+        studentId: null,
+      }
+    }
+    else if (event.data.status === 'booked') {
+      // Bei 'booked': studentId senden, companyId auf null
+      submitData = {
+        ...event.data,
+        studentId: event.data.studentId,
+        companyId: null,
+      }
+    }
+    else {
+      // Bei 'free' oder 'vacation': beide auf null
+      submitData = {
+        ...event.data,
+        studentId: null,
+        companyId: null,
+      }
     }
 
     const updatedWeek = await $fetch(`/api/weeks/${props.week.id}`, {
@@ -113,11 +140,15 @@ async function handleEditSubmit(event: { data: WeekSchema }) {
     // Aktuelle Schülerin- und Schulinformationen aus dem Store holen
     const currentStudent = studentOptionsWithSchool.value.find(s => s.id === updatedWeek.studentId)
 
+    // Aktuelle Company-Informationen aus dem Store holen
+    const currentCompany = companyOptions.value.find(c => c.id === updatedWeek.companyId)
+
     // Emit für Parent-Komponente
     emit('updated', {
       ...updatedWeek,
       studentName: currentStudent?.name || null,
       schoolName: currentStudent?.school || null,
+      companyName: currentCompany?.label || null,
     })
 
     // Modal schließen
@@ -142,6 +173,7 @@ const statusOptions = [
   { value: 'free', label: 'Frei' },
   { value: 'booked', label: 'Belegt' },
   { value: 'vacation', label: 'Urlaub' },
+  { value: 'reserved', label: 'Reserviert' },
 ]
 </script>
 
@@ -158,21 +190,21 @@ const statusOptions = [
         <span class="text-sm text-muted">{{ getWeekRange(week.weekStartDate) }}</span>
       </div>
 
-      <!-- Schüler und Pflegeschule in der Mitte (rechtsbündig) -->
+      <!-- Schüler/Betrieb und Pflegeschule in der Mitte (rechtsbündig) -->
       <div class="flex flex-col flex-1 min-w-0 text-right">
-        <span class="text-sm font-medium truncate">{{ week.studentName }}</span>
-        <span class="text-xs text-muted truncate">{{ week.schoolName }}</span>
+        <span class="text-sm font-medium truncate">{{ week.status === 'reserved' ? week.companyName : week.studentName }}</span>
+        <span class="text-xs text-muted truncate">{{ week.status === 'reserved' ? '' : week.schoolName }}</span>
       </div>
 
       <!-- Badge rechts -->
       <div class="">
         <UBadge
-          :color="week.status === 'free' ? 'success' : week.status === 'booked' ? 'error' : 'warning'"
+          :color="week.status === 'free' ? 'success' : week.status === 'booked' ? 'error' : week.status === 'reserved' ? 'info' : 'warning'"
           variant="soft"
           size="lg"
           class="rounded-full px-4"
         >
-          {{ week.status === 'free' ? 'frei' : week.status === 'booked' ? 'belegt' : 'Urlaub' }}
+          {{ week.status === 'free' ? 'frei' : week.status === 'booked' ? 'belegt' : week.status === 'reserved' ? 'reserviert' : 'Urlaub' }}
         </UBadge>
       </div>
     </div>
@@ -252,6 +284,25 @@ const statusOptions = [
                 </div>
               </template>
             </USelectMenu>
+          </UFormField>
+
+          <!-- Betrieb (nur anzeigen wenn Status 'reserved' ist) -->
+          <UFormField
+            v-if="editForm.status === 'reserved'"
+            label="Betrieb"
+            name="companyId"
+          >
+            <USelectMenu
+              :model-value="editForm.companyId || undefined"
+              :items="companyOptions"
+              value-key="id"
+              label-key="label"
+              placeholder="Betrieb auswählen"
+              size="lg"
+              class="w-full"
+              searchable
+              @update:model-value="val => editForm.companyId = val ?? null"
+            />
           </UFormField>
 
           <!-- Notizen -->

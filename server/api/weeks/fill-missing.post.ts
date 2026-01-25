@@ -20,6 +20,7 @@ export default eventHandler(async () => {
     weekStartDate: String(monday), // explizit als String
     status: 'free',
     studentId: null,
+    companyId: null,
     notes: null,
     createdAt: now,
     updatedAt: now,
