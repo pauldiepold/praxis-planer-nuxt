@@ -15,13 +15,15 @@ defineProps<{
 </script>
 
 <template>
-  <UCard>
+  <PraxisCard subtle-border>
     <template #header>
-      <div class="flex items-center gap-2">
-        <UIcon
-          name="i-lucide-smartphone"
-          class="size-5 text-primary"
-        />
+      <div class="flex items-center gap-3">
+        <div class="rounded-lg bg-primary/10 p-2">
+          <UIcon
+            name="i-lucide-smartphone"
+            class="size-5 text-primary"
+          />
+        </div>
         <div class="space-y-0.5">
           <p class="text-base font-semibold text-highlighted">
             Praxis App & Kommunikation
@@ -82,5 +84,5 @@ defineProps<{
         </ul>
       </div>
     </div>
-  </UCard>
+  </PraxisCard>
 </template>

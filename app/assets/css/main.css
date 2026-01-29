@@ -24,6 +24,9 @@
   --ui-color-primary-950: #0f1f17;
 
   --ui-primary: var(--ui-color-primary-600);
+  /* Akzentfarben für Karten (Lovable-Stil) */
+  --praxis-accent: hsl(38 85% 55%);
+  --praxis-sky-blue: hsl(200 70% 50%);
 }
 
 button,

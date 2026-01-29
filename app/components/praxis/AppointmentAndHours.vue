@@ -19,7 +19,7 @@ defineProps<{
 
 <template>
   <div class="space-y-6">
-    <UCard>
+    <PraxisCard>
       <template #header>
         <div class="flex items-center gap-2">
           <UIcon
@@ -72,10 +72,13 @@ defineProps<{
           </UButton>
         </div>
       </div>
-    </UCard>
+    </PraxisCard>
 
-    <div class="grid gap-4 lg:grid-cols-3">
-      <UCard>
+    <div class="grid gap-4 lg:grid-cols-7">
+      <PraxisCard
+        left-border="primary"
+        class="lg:col-span-2"
+      >
         <template #header>
           <div class="flex items-center gap-2">
             <UIcon
@@ -91,9 +94,12 @@ defineProps<{
           Wir arbeiten im Rahmen einer Terminsprechstunde. Um unnötige Wartezeiten zu vermeiden, bitten wir Sie,
           vor jedem Besuch einen Termin online zu vereinbaren oder anzurufen.
         </p>
-      </UCard>
+      </PraxisCard>
 
-      <UCard>
+      <PraxisCard
+        left-border="accent"
+        class="lg:col-span-3"
+      >
         <template #header>
           <div class="flex items-center gap-2">
             <UIcon
@@ -119,9 +125,12 @@ defineProps<{
             die Akutsprechstunde an).
           </p>
         </div>
-      </UCard>
+      </PraxisCard>
 
-      <UCard>
+      <PraxisCard
+        left-border="sky-blue"
+        class="lg:col-span-2"
+      >
         <template #header>
           <div class="flex items-center gap-2">
             <UIcon
@@ -136,10 +145,10 @@ defineProps<{
         <p class="text-sm text-muted">
           Wir bieten auch eine Videosprechstunde an, die über den Online-Terminkalender zu buchen ist.
         </p>
-      </UCard>
+      </PraxisCard>
     </div>
 
-    <UCard variant="subtle">
+    <PraxisCard subtle-border>
       <template #header>
         <div class="flex items-center justify-between gap-4">
           <div class="space-y-0.5">
@@ -183,6 +192,6 @@ defineProps<{
           Herzlichen Dank für Ihre Unterstützung!
         </p>
       </div>
-    </UCard>
+    </PraxisCard>
   </div>
 </template>

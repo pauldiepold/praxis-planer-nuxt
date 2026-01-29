@@ -44,7 +44,7 @@ defineProps<{
 
 <template>
   <div class="space-y-6">
-    <UCard>
+    <PraxisCard>
       <template #header>
         <div class="flex items-center gap-2">
           <UIcon
@@ -118,14 +118,14 @@ defineProps<{
           </div>
         </div>
       </div>
-    </UCard>
+    </PraxisCard>
 
-    <UCard>
+    <PraxisCard left-border="accent">
       <template #header>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-3">
           <UIcon
             name="i-lucide-hospital"
-            class="size-5 text-primary"
+            class="size-6 text-primary"
           />
           <p class="text-base font-semibold text-highlighted">
             Kinderärztlicher Bereitschaftsdienst
@@ -137,9 +137,6 @@ defineProps<{
         <div class="space-y-2">
           <p class="text-sm text-muted">
             {{ emergencyService.note }}
-          </p>
-          <p class="text-sm font-medium text-highlighted">
-            Adresse
           </p>
           <a
             class="text-sm text-primary hover:underline"
@@ -201,9 +198,9 @@ defineProps<{
           </p>
         </div>
       </div>
-    </UCard>
+    </PraxisCard>
 
-    <UCard>
+    <PraxisCard class="transition-shadow hover:shadow-md">
       <template #header>
         <div class="flex items-center gap-2">
           <UIcon
@@ -269,6 +266,6 @@ defineProps<{
           </div>
         </div>
       </div>
-    </UCard>
+    </PraxisCard>
   </div>
 </template>

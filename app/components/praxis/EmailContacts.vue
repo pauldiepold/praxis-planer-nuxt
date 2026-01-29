@@ -10,7 +10,7 @@ defineProps<{
 </script>
 
 <template>
-  <UCard>
+  <PraxisCard>
     <template #header>
       <div class="flex items-center gap-2">
         <UIcon
@@ -49,5 +49,5 @@ defineProps<{
         </a>
       </div>
     </div>
-  </UCard>
+  </PraxisCard>
 </template>

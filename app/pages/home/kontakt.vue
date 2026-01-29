@@ -14,10 +14,6 @@ useHead({
 const doctolibUrl
   = 'https://www.doctolib.de/praxis/northeim/praxis-fuer-kinder-und-jugendmedizin-thomas-holstein-diepold-und-dr-katharina-diepold?utm_campaign=website-button&utm_source=praxis-fuer-kinder-und-jugendmedizin-thomas-holstein-diepold-und-dr-katharina-diepold-website-button&utm_medium=referral&utm_content=option-8&utm_term=praxis-fuer-kinder-und-jugendmedizin-thomas-holstein-diepold-und-dr-katharina-diepold'
 
-const pageLinks = [
-  { label: 'Doctolib', to: doctolibUrl, target: '_blank', color: 'primary' as const, variant: 'solid' as const, icon: 'i-lucide-calendar' },
-]
-
 const contact = {
   name: 'Kinder- und Jugendarztpraxis',
   doctorsLine: 'Thomas Holstein-Diepold und Dr. med. Katharina Diepold',
@@ -150,101 +146,102 @@ const clinics = [
 </script>
 
 <template>
-  <UPage>
-    <div class="bg-primary-50">
+  <div>
+    <!-- Hero Header (Lovable-Stil) -->
+    <section class="bg-primary-50 py-12">
       <UContainer>
-        <UPageHeader
-          title="Kontakt & Notfälle"
-          description="Kontaktdaten, Telefonzeiten, Terminbuchung und Notfallnummern"
-          :links="pageLinks"
-        />
+        <h1 class="mb-2 text-3xl font-bold text-highlighted md:text-4xl">
+          Kontakt & Termine
+        </h1>
+        <p class="text-muted">
+          Kontaktdaten, Terminbuchung, Kommunikation und Notfallnummern
+        </p>
       </UContainer>
-    </div>
-    <UPageBody>
-      <UContainer>
-        <div class="space-y-10">
-          <section aria-labelledby="kontakt">
-            <div class="mb-4 flex items-center gap-2">
-              <div class="h-1 w-10 rounded-full bg-primary" />
-              <h2
-                id="kontakt"
-                class="text-xl font-semibold text-highlighted"
-              >
-                Praxis & Anfahrt
-              </h2>
-            </div>
-            <PraxisContactCard
-              :contact="contact"
-              :accessibility="accessibility"
-              :parking="parking"
-            />
-          </section>
+    </section>
 
-          <section aria-labelledby="termine">
-            <div class="mb-4 flex items-center gap-2">
-              <div class="h-1 w-10 rounded-full bg-primary" />
-              <h2
-                id="termine"
-                class="text-xl font-semibold text-highlighted"
-              >
-                Sprechzeiten & Termine
-              </h2>
-            </div>
-            <PraxisAppointmentAndHours
-              :phone-hours="phoneHours"
-              :appointment-links="{ doctolibUrl }"
-            />
-          </section>
+    <UContainer class="py-10">
+      <div class="space-y-10">
+        <section aria-labelledby="kontakt">
+          <div class="mb-6 flex items-center gap-3">
+            <div class="h-1 w-12 rounded-full bg-primary" />
+            <h2
+              id="kontakt"
+              class="text-2xl font-bold text-highlighted"
+            >
+              Praxis & Anfahrt
+            </h2>
+          </div>
+          <PraxisContactCard
+            :contact="contact"
+            :accessibility="accessibility"
+            :parking="parking"
+          />
+        </section>
 
-          <section aria-labelledby="app">
-            <div class="mb-4 flex items-center gap-2">
-              <div class="h-1 w-10 rounded-full bg-primary" />
-              <h2
-                id="app"
-                class="text-xl font-semibold text-highlighted"
-              >
-                Praxis App
-              </h2>
-            </div>
-            <PraxisAppCommunication
-              :app-links="appLinks"
-              :use-cases="appUseCases"
-            />
-          </section>
+        <section aria-labelledby="termine">
+          <div class="mb-6 flex items-center gap-3">
+            <div class="h-1 w-12 rounded-full bg-primary" />
+            <h2
+              id="termine"
+              class="text-2xl font-bold text-highlighted"
+            >
+              Sprechzeiten & Termine
+            </h2>
+          </div>
+          <PraxisAppointmentAndHours
+            :phone-hours="phoneHours"
+            :appointment-links="{ doctolibUrl }"
+          />
+        </section>
 
-          <section aria-labelledby="email">
-            <div class="mb-4 flex items-center gap-2">
-              <div class="h-1 w-10 rounded-full bg-primary" />
-              <h2
-                id="email"
-                class="text-xl font-semibold text-highlighted"
-              >
-                E-Mail
-              </h2>
-            </div>
-            <PraxisEmailContacts :emails="emails" />
-          </section>
+        <section aria-labelledby="app">
+          <div class="mb-6 flex items-center gap-3">
+            <div class="h-1 w-12 rounded-full bg-primary" />
+            <h2
+              id="app"
+              class="text-2xl font-bold text-highlighted"
+            >
+              Praxis App
+            </h2>
+          </div>
+          <PraxisAppCommunication
+            :app-links="appLinks"
+            :use-cases="appUseCases"
+          />
+        </section>
 
-          <section aria-labelledby="notfaelle">
-            <div class="mb-4 flex items-center gap-2">
-              <div class="h-1 w-10 rounded-full bg-primary" />
-              <h2
-                id="notfaelle"
-                class="text-xl font-semibold text-highlighted"
-              >
-                Notfälle & Bereitschaftsdienst
-              </h2>
-            </div>
-            <PraxisEmergencyAndClinics
-              :emergency-numbers="emergencyNumbers"
-              :poison-centers="poisonCenters"
-              :giz-nord-url="gizNordUrl"
-              :emergency-service="emergencyService"
-              :clinics="clinics"
-            />
-          </section>
-        </div>
-      </UContainer>
-    </UPageBody>
-  </UPage>
+        <section aria-labelledby="email">
+          <div class="mb-6 flex items-center gap-3">
+            <div class="h-1 w-12 rounded-full bg-primary" />
+            <h2
+              id="email"
+              class="text-2xl font-bold text-highlighted"
+            >
+              E-Mail
+            </h2>
+          </div>
+          <PraxisEmailContacts :emails="emails" />
+        </section>
+
+        <section aria-labelledby="notfaelle">
+          <div class="mb-6 flex items-center gap-3">
+            <div class="h-1 w-12 rounded-full bg-primary" />
+            <h2
+              id="notfaelle"
+              class="text-2xl font-bold text-highlighted"
+            >
+              Notfälle & Bereitschaftsdienst
+            </h2>
+          </div>
+          <PraxisEmergencyAndClinics
+            :emergency-numbers="emergencyNumbers"
+            :poison-centers="poisonCenters"
+            :giz-nord-url="gizNordUrl"
+            :emergency-service="emergencyService"
+            :clinics="clinics"
+          />
+        </section>
+      </div>
+    </UContainer>
+  </div>
 </template>
