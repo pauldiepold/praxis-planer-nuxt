@@ -4,6 +4,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/eslint',
     '@nuxthub/core',
+    '@nuxt/fonts',
     'nuxt-auth-utils',
     '@pinia/nuxt',
   ],
@@ -49,5 +50,17 @@ export default defineNuxtConfig({
     config: {
       stylistic: true,
     },
+  },
+
+  icon: {
+    mode: 'css',
+    cssLayer: 'base',
+    clientBundle: {
+      scan: true,
+    },
+    customCollections: [{
+      prefix: 'praxis',
+      dir: './app/assets/icons',
+    }],
   },
 })

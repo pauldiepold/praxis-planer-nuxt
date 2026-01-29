@@ -5,11 +5,34 @@ export default defineAppConfig({
       primary: 'emerald',
       neutral: 'slate',
     },
-    button: {
-      defaultVariants: {
-        // Set default button color to neutral
-        // color: 'neutral'
+    pageHeader: {
+      slots: {
+        root: '!border-b-0',
       },
+    },
+    button: {
+      slots: {
+        base: 'rounded-lg',
+      },
+      variants: {
+        size: {
+          md: {
+            base: 'px-4 py-2',
+          },
+        },
+      },
+    },
+    navigationMenu: {
+      compoundVariants: [
+        {
+          variant: 'pill',
+          active: true,
+          highlight: false,
+          class: {
+            link: 'before:bg-primary-100',
+          },
+        },
+      ],
     },
   },
 })
