@@ -29,36 +29,31 @@ defineProps<{
 </script>
 
 <template>
-  <UCard>
-    <template #header>
-      <div class="space-y-1">
-        <p class="text-base font-semibold text-highlighted">
-          {{ contact.name }}
-        </p>
-        <p class="text-sm text-muted">
-          {{ contact.doctorsLine }}
-        </p>
-        <p class="text-xs text-muted">
-          {{ contact.orgLine }}
-        </p>
-      </div>
-    </template>
-
-    <div class="grid gap-6 lg:grid-cols-2">
+  <PraxisCard>
+    <div class="grid gap-6 md:grid-cols-2">
       <div class="space-y-4">
+        <div class="space-y-0.5">
+          <h3 class="font-semibold text-highlighted">
+            {{ contact.name }}
+          </h3>
+          <p class="text-toned">
+            {{ contact.doctorsLine }}
+          </p>
+          <p class="text-sm text-toned">
+            {{ contact.orgLine }}
+          </p>
+        </div>
+
         <div class="flex items-start gap-3">
           <UIcon
             name="i-lucide-map-pin"
-            class="mt-0.5 size-5 text-primary"
+            class="mt-0.5 size-5 shrink-0 text-primary"
           />
-          <div class="space-y-0.5">
-            <p class="text-sm font-medium text-highlighted">
-              Adresse
-            </p>
-            <p class="text-sm text-default">
+          <div>
+            <p class="text-highlighted">
               {{ contact.street }}
             </p>
-            <p class="text-sm text-default">
+            <p class="text-highlighted">
               {{ contact.zipCity }}
             </p>
           </div>
@@ -78,77 +73,76 @@ defineProps<{
       </div>
 
       <div class="space-y-4">
-        <div class="flex items-start gap-3">
+        <div class="flex items-center gap-3">
           <UIcon
             name="i-lucide-phone"
-            class="mt-0.5 size-5 text-primary"
+            class="size-5 shrink-0 text-primary"
           />
-          <div class="space-y-0.5">
-            <p class="text-sm font-medium text-highlighted">
+          <div>
+            <p class="text-xs text-muted">
               Telefon
             </p>
             <a
-              class="text-sm font-semibold text-primary hover:underline"
               :href="contact.phoneTel"
+              class="font-medium text-primary hover:underline"
             >
               {{ contact.phoneDisplay }}
             </a>
           </div>
         </div>
 
-        <div class="flex items-start gap-3">
+        <div class="flex items-center gap-3">
           <UIcon
             name="i-lucide-printer"
-            class="mt-0.5 size-5 text-muted"
+            class="size-5 shrink-0 text-muted"
           />
-          <div class="space-y-0.5">
-            <p class="text-sm font-medium text-highlighted">
+          <div>
+            <p class="text-xs text-muted">
               Telefax
             </p>
-            <p class="text-sm text-default">
-              {{ contact.faxDisplay }}
-            </p>
-          </div>
-        </div>
-
-        <div class="grid gap-3 sm:grid-cols-2">
-          <div class="rounded-lg bg-elevated/50 p-3 ring-1 ring-default">
-            <div class="mb-1 flex items-center gap-2">
-              <UIcon
-                name="i-lucide-accessibility"
-                class="size-4 text-primary"
-              />
-              <p class="text-sm font-medium text-highlighted">
-                Barrierefreiheit
-              </p>
-            </div>
-            <p class="text-xs text-muted">
-              {{ accessibility.summary }}
-            </p>
-            <p class="mt-1 text-xs text-muted">
-              {{ accessibility.details }}
-            </p>
-          </div>
-
-          <div class="rounded-lg bg-elevated/50 p-3 ring-1 ring-default">
-            <div class="mb-1 flex items-center gap-2">
-              <UIcon
-                name="i-lucide-car"
-                class="size-4 text-primary"
-              />
-              <p class="text-sm font-medium text-highlighted">
-                Parken
-              </p>
-            </div>
-            <p class="text-xs text-muted">
-              {{ parking.summary }}
-            </p>
-            <p class="mt-1 text-xs text-muted">
-              {{ parking.details }}
-            </p>
+            <span class="text-highlighted">{{ contact.faxDisplay }}</span>
           </div>
         </div>
       </div>
     </div>
-  </UCard>
+
+    <!-- Barrierefrei + Parken, je halbe Breite -->
+    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+      <div class="rounded-lg bg-elevated/50 p-4 ring-1 ring-default">
+        <div class="mb-1 flex items-center gap-2">
+          <UIcon
+            name="i-lucide-accessibility"
+            class="size-4 text-primary"
+          />
+          <p class="text-sm font-medium text-highlighted">
+            Barrierefreiheit
+          </p>
+        </div>
+        <p class="text-xs text-muted">
+          {{ accessibility.summary }}
+        </p>
+        <p class="mt-1 text-xs text-muted">
+          {{ accessibility.details }}
+        </p>
+      </div>
+
+      <div class="rounded-lg bg-elevated/50 p-4 ring-1 ring-default">
+        <div class="mb-1 flex items-center gap-2">
+          <UIcon
+            name="i-lucide-car"
+            class="size-4 text-primary"
+          />
+          <p class="text-sm font-medium text-highlighted">
+            Parken
+          </p>
+        </div>
+        <p class="text-xs text-muted">
+          {{ parking.summary }}
+        </p>
+        <p class="mt-1 text-xs text-muted">
+          {{ parking.details }}
+        </p>
+      </div>
+    </div>
+  </PraxisCard>
 </template>
