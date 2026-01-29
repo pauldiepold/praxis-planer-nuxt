@@ -107,7 +107,7 @@ defineProps<{
     </div>
 
     <!-- Barrierefrei + Parken, je halbe Breite -->
-    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+    <div class="mt-6 grid gap-6 sm:grid-cols-2">
       <div class="rounded-lg bg-elevated/50 p-4 ring-1 ring-default">
         <div class="mb-1 flex items-center gap-2">
           <UIcon

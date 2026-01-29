@@ -32,7 +32,7 @@ defineProps<{
         </div>
       </template>
 
-      <div class="grid gap-4 lg:grid-cols-2">
+      <div class="grid gap-8 lg:grid-cols-2">
         <div class="space-y-2">
           <p class="text-sm text-muted">
             {{ phoneHours.summary }}
