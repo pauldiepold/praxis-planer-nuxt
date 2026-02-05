@@ -46,7 +46,7 @@ const items = computed<NavigationMenuItem[]>(() => [
           alt="Logo"
           class="size-12 text-black"
         />
-        <div class="hidden sm:block text-sm font-semibold leading-tight text-foreground">
+        <div class="text-sm font-semibold leading-tight text-foreground">
           <p>Praxis für Kinder- und</p>
           <p>Jugendmedizin</p>
         </div>
