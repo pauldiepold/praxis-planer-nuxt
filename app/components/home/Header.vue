@@ -25,9 +25,14 @@ const items = computed<NavigationMenuItem[]>(() => [
     active: route.path === '/home/patienteninfos',
   },
   {
-    label: 'Kontakt & Notfälle',
-    to: '/home/kontakt',
-    active: route.path === '/home/kontakt',
+    label: 'Termine & Kontakt',
+    to: '/home/termine',
+    active: route.path === '/home/termine',
+  },
+  {
+    label: 'Notdienst',
+    to: '/home/notdienst',
+    active: route.path === '/home/notdienst',
   },
 ])
 </script>
@@ -39,30 +44,19 @@ const items = computed<NavigationMenuItem[]>(() => [
         <UIcon
           name="i-praxis-logo"
           alt="Logo"
-          class="size-12 text-black "
+          class="size-12 text-black"
         />
         <div class="hidden sm:block text-sm font-semibold leading-tight text-foreground">
-          <p>
-            Praxis für Kinder- und
-          </p>
-          <p>
-            Jugendmedizin
-          </p>
+          <p>Praxis für Kinder- und</p>
+          <p>Jugendmedizin</p>
         </div>
       </div>
     </template>
-    <UNavigationMenu
-      :items="items"
-      :ui="{ list: 'gap-1', item: '!rounded-xl', link: 'px-3 !rounded-xl' }"
-    />
     <template #right>
-      <UButton
-        icon="i-lucide-calendar"
-        to="https://www.doctolib.de/praxis/northeim/praxis-fuer-kinder-und-jugendmedizin-thomas-holstein-diepold-und-dr-katharina-diepold?utm_campaign=website-button&utm_source=praxis-fuer-kinder-und-jugendmedizin-thomas-holstein-diepold-und-dr-katharina-diepold-website-button&utm_medium=referral&utm_content=option-8&utm_term=praxis-fuer-kinder-und-jugendmedizin-thomas-holstein-diepold-und-dr-katharina-diepold"
-        target="_blank"
-      >
-        Termin buchen
-      </UButton>
+      <UNavigationMenu
+        :items="items"
+        :ui="{ list: 'gap-1', item: '!rounded-xl', link: 'px-3 !rounded-xl' }"
+      />
     </template>
   </UHeader>
 </template>

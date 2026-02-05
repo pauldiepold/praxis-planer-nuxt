@@ -20,56 +20,48 @@ defineProps<{
 <template>
   <div class="space-y-6">
     <PraxisCard>
-      <template #header>
-        <div class="flex items-center gap-2">
-          <UIcon
-            name="i-lucide-clock"
-            class="size-5 text-primary"
-          />
-          <p class="text-base font-semibold text-highlighted">
-            Telefonzeiten
-          </p>
-        </div>
-      </template>
+      <div class="flex items-center gap-2">
+        <UIcon
+          name="i-lucide-clock"
+          class="size-5 text-primary"
+        />
+        <p class=" font-semibold text-highlighted">
+          Telefonzeiten
+        </p>
+      </div>
 
-      <div class="grid gap-8 lg:grid-cols-2">
+      <div class="grid gap-4 lg:grid-cols-2 pt-4 items-center">
         <div class="space-y-2">
-          <p class="text-sm text-muted">
-            {{ phoneHours.summary }}
-          </p>
-          <ul class="space-y-1 text-sm">
-            <li
-              v-for="h in phoneHours.days"
-              :key="h.day"
-              class="flex items-center justify-between gap-3"
-            >
-              <span class="text-muted">{{ h.day }}</span>
-              <span class="font-medium text-highlighted">{{ h.time }}</span>
-            </li>
-          </ul>
+          <div class="flex items-center gap-2">
+            <span class="text-muted">Montag – Freitag:</span>
+            <span class="font-semibold">8:30 – 12:00 Uhr</span>
+          </div>
           <p
             v-if="phoneHours.note"
-            class="pt-2 text-sm text-muted"
+            class="text-sm text-muted"
           >
             {{ phoneHours.note }}
           </p>
         </div>
 
-        <div class="space-y-3">
-          <UAlert
-            color="neutral"
-            variant="subtle"
-            icon="i-lucide-phone"
-            title="Telefon"
-            :description="phoneHours.phoneDisplay"
-          />
-          <UButton
-            :to="phoneHours.phoneTel"
-            icon="i-lucide-phone-call"
-            block
-          >
-            Jetzt anrufen
-          </UButton>
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <UIcon
+              name="i-lucide-phone"
+              class="size-5 shrink-0 text-primary"
+            />
+            <div>
+              <p class="text-xs text-muted">
+                Telefon
+              </p>
+              <a
+                :href="phoneHours.phoneTel"
+                class="font-medium text-primary hover:underline"
+              >
+                {{ phoneHours.phoneDisplay }}
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </PraxisCard>
@@ -148,49 +140,40 @@ defineProps<{
       </PraxisCard>
     </div>
 
-    <PraxisCard subtle-border>
-      <template #header>
-        <div class="flex items-center justify-between gap-4">
-          <div class="space-y-0.5">
-            <p class="text-base font-semibold text-highlighted">
-              Termin online buchen
-            </p>
-            <p class="text-sm text-muted">
-              Wir nutzen Doctolib für die Online-Terminvergabe.
-            </p>
-          </div>
-          <UButton
-            :to="appointmentLinks.doctolibUrl"
-            target="_blank"
-            icon="i-lucide-calendar"
-          >
-            Zu Doctolib
-          </UButton>
-        </div>
-      </template>
+    <div class="flex justify-center">
+      <UButton
+        :to="appointmentLinks.doctolibUrl"
+        target="_blank"
+        size="lg"
+        color="secondary"
+        class="text-black"
+        icon="i-lucide-calendar"
+      >
+        Termin online buchen (Doctolib)
+      </UButton>
+    </div>
 
-      <div class="space-y-2 text-sm text-muted">
-        <p>
-          Einen Akuttermin können Sie ab einem Tag im Voraus buchen. Die Akutsprechstunde findet ohne feste Arztbindung
-          statt – schauen Sie bitte bei beiden Ärzt:innen nach freien Terminen.
+    <PraxisCard subtle-border>
+      <div class="space-y-3">
+        <p class="font-semibold text-highlighted">
+          Wichtige Hinweise zur Online-Terminvergabe
         </p>
-        <ul class="list-disc space-y-1 pl-5">
+
+        <ul class="text-sm text-muted list-disc space-y-3 pl-5">
           <li>
-            Die Online-Terminvergabe ist nahezu ausschließlich für Patient:innen unserer Praxis möglich.
+            <span class="font-semibold">Arztbindung beachten:</span> Insbesondere bei Vorsorgeuntersuchungen bitten wir Sie, die Arztbindung zu beachten.
+          </li>
+          <li>
+            <span class="font-semibold">Vertretung:</span>
             Vertretungspatient:innen melden sich bitte telefonisch oder über die Praxis App.
+            Die Online-Terminvergabe ist nur für Patient:innen unserer Praxis möglich.
           </li>
           <li>
-            Neupatient:innen mit Überweisung in die neuropädiatrische oder Kopfschmerzsprechstunde von Frau Dr. Diepold
-            können auch für den Erstkontakt online buchen.
-          </li>
-          <li>
-            Für alle anderen Termine ist uns die Arztbindung wichtig. Bitte beachten Sie das insbesondere bei
-            Vorsorgeuntersuchungen.
+            <span class="font-semibold">Neupatient:innen Neuropädiatrie:</span>
+            Mit Überweisung in die neuropädiatrische oder Kopfschmerzsprechstunde von Frau Dr. Diepold
+            kann auch für den Erstkontakt online gebucht werden!
           </li>
         </ul>
-        <p class="pt-2 font-medium text-highlighted">
-          Herzlichen Dank für Ihre Unterstützung!
-        </p>
       </div>
     </PraxisCard>
   </div>

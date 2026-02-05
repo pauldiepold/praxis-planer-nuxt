@@ -3,9 +3,9 @@ defineProps<{
   name: string
   title: string
   shortBio: string
-  qualifications: string[]
-  fullBio: string[]
-  interests: { icon: string; text: string }[]
+  qualifications: readonly string[]
+  fullBio: readonly string[]
+  interests: readonly { icon: string, text: string }[]
   personal: string
 }>()
 </script>

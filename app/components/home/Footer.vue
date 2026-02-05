@@ -79,7 +79,7 @@ const currentYear = new Date().getFullYear()
           </p>
         </div>
 
-        <!-- Schnelllinks -->
+        <!-- Schnelllinks: Termine und Notdienst zuerst (was Nutzer:innen am häufigsten suchen), dann Infoseiten -->
         <div>
           <h3 class="font-semibold text-lg mb-4">
             Schnelllinks
@@ -87,10 +87,26 @@ const currentYear = new Date().getFullYear()
           <ul class="space-y-2 text-sm">
             <li>
               <NuxtLink
-                to="/home/kontakt"
+                to="/home/termine"
                 class="text-primary-50/80 hover:text-primary-50 transition-colors"
               >
-                Kontakt & Notfälle
+                Termine & Kontakt
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink
+                to="/home/notdienst"
+                class="text-primary-50/80 hover:text-primary-50 transition-colors"
+              >
+                Notdienst
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink
+                to="/home/ueber-uns"
+                class="text-primary-50/80 hover:text-primary-50 transition-colors"
+              >
+                Über uns
               </NuxtLink>
             </li>
             <li>
@@ -98,7 +114,7 @@ const currentYear = new Date().getFullYear()
                 to="/home/leistungen"
                 class="text-primary-50/80 hover:text-primary-50 transition-colors"
               >
-                Leistungsspektrum
+                Leistungen
               </NuxtLink>
             </li>
             <li>
@@ -108,16 +124,6 @@ const currentYear = new Date().getFullYear()
               >
                 Patienteninfos
               </NuxtLink>
-            </li>
-            <li>
-              <a
-                href="https://www.doctolib.de"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-primary-50/80 hover:text-primary-50 transition-colors"
-              >
-                Online-Terminbuchung
-              </a>
             </li>
           </ul>
         </div>

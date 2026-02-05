@@ -1,22 +1,24 @@
 <script setup lang="ts">
 defineProps<{
   id: string
-  heading: string
-  bgClass: string
+  heading?: string
+  bgClass?: string
 }>()
 </script>
 
 <template>
   <section
-    aria-labelledby="kontakt"
+    :aria-labelledby="id"
     class="py-10"
     :class="bgClass"
   >
-    <UContainer class="py-10 space-y-10">
+    <UContainer class="space-y-10">
       <PraxisSectionHeading
+        v-if="heading"
         :id="id"
         :heading="heading"
       />
+      <slot />
     </UContainer>
   </section>
 </template>

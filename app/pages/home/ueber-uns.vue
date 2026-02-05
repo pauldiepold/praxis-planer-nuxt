@@ -72,17 +72,16 @@ const teamMembers = [
 
 <template>
   <div>
+    <!-- Hero Header (wie Kontakt) -->
     <section class="bg-primary-50 py-12">
       <UContainer>
-        <div class="mx-auto max-w-3xl text-center">
-          <h1 class="mb-2 text-3xl font-bold text-highlighted md:text-4xl">
-            Über uns
-          </h1>
-          <p class="text-muted">
-            Lernen Sie unser Ärzteteam und die Mitarbeiterinnen unserer Praxis kennen.
-            Wir freuen uns darauf, Sie und Ihre Familie zu betreuen.
-          </p>
-        </div>
+        <h1 class="mb-2 text-3xl font-bold text-highlighted md:text-4xl">
+          Über uns
+        </h1>
+        <p class="text-muted">
+          Lernen Sie unser Ärzteteam und die Mitarbeiterinnen unserer Praxis kennen.
+          Wir freuen uns darauf, Sie und Ihre Familie zu betreuen.
+        </p>
       </UContainer>
     </section>
 

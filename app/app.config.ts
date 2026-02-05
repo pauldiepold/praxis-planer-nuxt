@@ -3,7 +3,8 @@ export default defineAppConfig({
   ui: {
     colors: {
       primary: 'emerald',
-      neutral: 'slate',
+      secondary: 'yellow',
+      neutral: 'zinc',
     },
     pageHeader: {
       slots: {
@@ -18,6 +19,9 @@ export default defineAppConfig({
         size: {
           md: {
             base: 'px-4 py-2',
+          },
+          lg: {
+            base: 'px-6 py-3',
           },
         },
       },

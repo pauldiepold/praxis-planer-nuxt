@@ -43,181 +43,153 @@ defineProps<{
 </script>
 
 <template>
-  <div class="space-y-6">
-    <PraxisCard>
-      <template #header>
-        <div class="flex items-center gap-2">
-          <UIcon
-            name="i-lucide-siren"
-            class="size-5 text-error"
-          />
-          <p class="text-base font-semibold text-highlighted">
-            Notfälle
-          </p>
-        </div>
-      </template>
-
-      <div class="grid gap-4 lg:grid-cols-2">
-        <div
-          v-for="item in emergencyNumbers"
-          :key="item.label"
-          class="rounded-lg bg-elevated/50 p-4 ring-1 ring-default"
-        >
-          <p class="text-xs font-medium text-muted">
-            {{ item.description }}
-          </p>
-          <p class="mt-1 text-sm font-semibold text-highlighted">
-            {{ item.label }}
-          </p>
-          <a
-            class="mt-2 inline-flex items-center gap-2 text-2xl font-bold text-error hover:underline"
-            :href="item.numberTel"
-          >
+  <div>
+    <PraxisPageSection id="bereitschaftsdienst">
+      <PraxisCard left-border="accent">
+        <template #header>
+          <div class="flex items-center gap-3">
             <UIcon
-              name="i-lucide-phone"
-              class="size-5"
+              name="i-lucide-hospital"
+              class="size-6 text-primary"
             />
-            {{ item.numberDisplay }}
-          </a>
+            <p class="text-base font-semibold text-highlighted">
+              Kinderärztlicher Bereitschaftsdienst
+            </p>
+          </div>
+        </template>
+
+        <div class="grid gap-6 lg:grid-cols-2">
+          <div class="space-y-2">
+            <p class="text-sm text-muted">
+              {{ emergencyService.note }}
+            </p>
+            <a
+              class="text-sm text-primary hover:underline"
+              :href="emergencyService.mapsUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ emergencyService.addressLine1 }}<br>
+              {{ emergencyService.addressLine2 }}
+            </a>
+
+            <div class="pt-2">
+              <p class="text-sm font-medium text-highlighted">
+                Telefon (nur während der Sprechzeiten)
+              </p>
+              <a
+                class="text-sm font-semibold text-primary hover:underline"
+                :href="emergencyService.phoneTel"
+              >
+                {{ emergencyService.phoneDisplay }}
+              </a>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-sm font-medium text-highlighted">
+              Sprechzeiten
+            </p>
+            <div class="overflow-hidden rounded-lg ring-1 ring-default">
+              <table class="w-full text-sm">
+                <thead class="bg-elevated/50">
+                  <tr>
+                    <th class="px-4 py-2 text-left font-medium text-highlighted">
+                      Tag
+                    </th>
+                    <th class="px-4 py-2 text-left font-medium text-highlighted">
+                      Zeit
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-default">
+                  <tr
+                    v-for="hour in emergencyService.hours"
+                    :key="hour.day"
+                    class="hover:bg-elevated/50"
+                  >
+                    <td class="px-4 py-2 text-muted">
+                      {{ hour.day }}
+                    </td>
+                    <td class="px-4 py-2 font-medium text-highlighted">
+                      {{ hour.time }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="pt-2 text-sm text-muted">
+              Außerhalb dieser Sprechzeiten führen die Kinderkliniken die Behandlung für Notfallpatient:innen fort.
+            </p>
+          </div>
         </div>
-      </div>
+      </PraxisCard>
+    </PraxisPageSection>
 
-      <div class="mt-6 space-y-3">
-        <UAlert
-          color="warning"
-          variant="subtle"
-          icon="i-lucide-list-checks"
-          title="Achtung: Bitte bereithalten"
-          description="Wer / Was / Wann / Wie / Wo / Wieviele?"
-        />
+    <PraxisPageSection
+      id="notfaelle"
+      bg-class="bg-red-600 text-white"
+    >
+      <div class="space-y-6">
+        <div class="flex items-center gap-3">
+          <UIcon
+            name="i-lucide-alert-triangle"
+            class="size-8"
+          />
+          <h2 class="text-2xl md:text-3xl font-bold">
+            Notfälle
+          </h2>
+        </div>
 
-        <div class="rounded-lg bg-elevated/50 p-4 ring-1 ring-default">
-          <p class="text-sm font-semibold text-highlighted">
-            Alternative Giftnotrufzentralen (unvollständig)
+        <div class="grid gap-4 md:grid-cols-2">
+          <div
+            v-for="item in emergencyNumbers"
+            :key="item.label"
+            class="rounded-lg bg-white/10 border border-white/20 p-6 backdrop-blur-sm shadow-lg"
+          >
+            <p class="mb-1 text-sm text-white/80">
+              {{ item.description }}
+            </p>
+            <p class="font-semibold text-lg text-white">
+              {{ item.label }}
+            </p>
+            <a
+              class="text-3xl font-bold text-white hover:underline"
+              :href="item.numberTel"
+            >
+              {{ item.numberDisplay }}
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-6 text-sm">
+          <p class="mb-2 font-medium">
+            Alternative Giftnotrufzentralen:
           </p>
-          <div class="mt-2 flex flex-wrap gap-3 text-sm">
+          <div class="flex flex-wrap gap-4">
             <a
               v-for="c in poisonCenters"
               :key="c.city"
-              class="text-primary hover:underline"
+              class="text-white hover:underline"
               :href="c.numberTel"
             >
               {{ c.city }}: {{ c.numberDisplay }}
             </a>
           </div>
-          <div class="mt-3">
-            <UButton
-              :to="gizNordUrl"
-              target="_blank"
-              variant="outline"
-              color="neutral"
-              icon="i-lucide-external-link"
-            >
-              Weitere Infos zu Vergiftungen (GIZ-Nord)
-            </UButton>
-          </div>
         </div>
       </div>
-    </PraxisCard>
+    </PraxisPageSection>
 
-    <PraxisCard left-border="accent">
-      <template #header>
-        <div class="flex items-center gap-3">
-          <UIcon
-            name="i-lucide-hospital"
-            class="size-6 text-primary"
-          />
-          <p class="text-base font-semibold text-highlighted">
-            Kinderärztlicher Bereitschaftsdienst
-          </p>
-        </div>
-      </template>
-
-      <div class="grid gap-6 lg:grid-cols-2">
-        <div class="space-y-2">
-          <p class="text-sm text-muted">
-            {{ emergencyService.note }}
-          </p>
-          <a
-            class="text-sm text-primary hover:underline"
-            :href="emergencyService.mapsUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {{ emergencyService.addressLine1 }}<br>
-            {{ emergencyService.addressLine2 }}
-          </a>
-
-          <div class="pt-2">
-            <p class="text-sm font-medium text-highlighted">
-              Telefon (nur während der Sprechzeiten)
-            </p>
-            <a
-              class="text-sm font-semibold text-primary hover:underline"
-              :href="emergencyService.phoneTel"
-            >
-              {{ emergencyService.phoneDisplay }}
-            </a>
-          </div>
-        </div>
-
-        <div class="space-y-2">
-          <p class="text-sm font-medium text-highlighted">
-            Sprechzeiten
-          </p>
-          <div class="overflow-hidden rounded-lg ring-1 ring-default">
-            <table class="w-full text-sm">
-              <thead class="bg-elevated/50">
-                <tr>
-                  <th class="px-4 py-2 text-left font-medium text-highlighted">
-                    Tag
-                  </th>
-                  <th class="px-4 py-2 text-left font-medium text-highlighted">
-                    Zeit
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-default">
-                <tr
-                  v-for="hour in emergencyService.hours"
-                  :key="hour.day"
-                  class="hover:bg-elevated/50"
-                >
-                  <td class="px-4 py-2 text-muted">
-                    {{ hour.day }}
-                  </td>
-                  <td class="px-4 py-2 font-medium text-highlighted">
-                    {{ hour.time }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="pt-2 text-sm text-muted">
-            Außerhalb dieser Sprechzeiten führen die Kinderkliniken die Behandlung für Notfallpatient:innen fort.
-          </p>
-        </div>
-      </div>
-    </PraxisCard>
-
-    <PraxisCard class="transition-shadow hover:shadow-md">
-      <template #header>
-        <div class="flex items-center gap-2">
-          <UIcon
-            name="i-lucide-map"
-            class="size-5 text-primary"
-          />
-          <p class="text-base font-semibold text-highlighted">
-            Nahegelegene Kinderkliniken
-          </p>
-        </div>
-      </template>
-
+    <PraxisPageSection
+      id="kliniken"
+      heading="Nahegelegene Kinderkliniken"
+      bg-class="bg-neutral-100"
+    >
       <div class="grid gap-4 lg:grid-cols-2">
         <div
           v-for="clinic in clinics"
           :key="clinic.name"
-          class="rounded-lg bg-elevated/50 p-4 ring-1 ring-default"
+          class="rounded-lg bg-white p-5 shadow-sm border border-neutral-200"
         >
           <p class="text-sm font-semibold text-highlighted">
             {{ clinic.name }}
@@ -266,6 +238,6 @@ defineProps<{
           </div>
         </div>
       </div>
-    </PraxisCard>
+    </PraxisPageSection>
   </div>
 </template>

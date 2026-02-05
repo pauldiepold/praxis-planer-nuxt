@@ -8,7 +8,7 @@
 }
 
 :root {
-  --ui-container: 88rem;
+  --ui-container: 80rem;
   --ui-header-height: --spacing(20);
 
   --ui-color-primary-50: #f1f8f3;
@@ -27,6 +27,8 @@
   /* Akzentfarben für Karten (Lovable-Stil) */
   --praxis-accent: hsl(38 85% 55%);
   --praxis-sky-blue: hsl(200 70% 50%);
+  --ui-color-accent: var(--praxis-accent);
+  --ui-color-sky-blue: var(--praxis-sky-blue);
 }
 
 button,

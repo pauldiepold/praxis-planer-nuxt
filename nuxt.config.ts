@@ -34,6 +34,10 @@ export default defineNuxtConfig({
     },
   },
 
+  routeRules: {
+    '/home/kontakt': { redirect: '/home/termine' },
+  },
+
   compatibilityDate: '2025-12-11',
 
   nitro: {

@@ -2,12 +2,12 @@
 defineProps<{
   description: string
   topics?: string[]
-  links: { name: string; url: string }[]
+  links: { name: string, url: string }[]
 }>()
 </script>
 
 <template>
-  <div class="pl-14">
+  <div class="pb-5 pt-1">
     <p class="mb-4 text-sm text-muted">
       {{ description }}
     </p>

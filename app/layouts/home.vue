@@ -4,6 +4,7 @@
 <template>
   <div>
     <HomeHeader />
+    <HomeDoctolibBanner />
 
     <UMain>
       <slot />
