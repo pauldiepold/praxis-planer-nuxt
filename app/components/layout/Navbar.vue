@@ -102,7 +102,7 @@ const toggleMenu = () => {
         <!-- Mobile Menu Button -->
         <button
           v-if="loggedIn"
-          class="hover:text-primary text-foreground transition-colors lg:hidden"
+          class="hover:text-primary text-white transition-colors lg:hidden"
           aria-label="Menü öffnen"
           @click="toggleMenu"
         >

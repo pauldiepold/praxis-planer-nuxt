@@ -189,7 +189,7 @@ defineProps<{
         <div
           v-for="clinic in clinics"
           :key="clinic.name"
-          class="rounded-lg bg-page p-5 shadow-sm border border-neutral-200"
+          class="rounded-lg bg-white p-5 shadow-sm border border-neutral-200"
         >
           <p class="text-sm font-semibold text-highlighted">
             {{ clinic.name }}
