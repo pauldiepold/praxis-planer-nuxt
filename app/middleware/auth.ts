@@ -6,8 +6,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
     await new Promise(resolve => setTimeout(resolve, 10))
   }
 
-  // Wenn nicht eingeloggt, zur Startseite weiterleiten (dort ist der Login-Button)
-  if (!loggedIn.value && to.path !== '/') {
+  // Nur Pflege-Planer-Bereich schützen; nicht eingeloggt → zur öffentlichen Startseite
+  if (!loggedIn.value && to.path.startsWith('/pflege-planer')) {
     return navigateTo('/')
   }
 })

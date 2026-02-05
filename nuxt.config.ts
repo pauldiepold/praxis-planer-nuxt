@@ -35,7 +35,15 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/home/kontakt': { redirect: '/home/termine' },
+    // Öffentliche statische Praxis-Seiten: Pre-Rendering für bessere Performance & SEO
+    '/': { prerender: true },
+    '/datenschutz': { prerender: true },
+    '/impressum': { prerender: true },
+    '/leistungen': { prerender: true },
+    '/notdienst': { prerender: true },
+    '/patienteninfos': { prerender: true },
+    '/termine': { prerender: true },
+    '/ueber-uns': { prerender: true },
   },
 
   compatibilityDate: '2025-12-11',

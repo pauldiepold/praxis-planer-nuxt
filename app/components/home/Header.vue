@@ -6,33 +6,33 @@ const route = useRoute()
 const items = computed<NavigationMenuItem[]>(() => [
   {
     label: 'Startseite',
-    to: '/home',
-    active: route.path === '/home',
+    to: '/',
+    active: route.path === '/',
   },
   {
     label: 'Über uns',
-    to: '/home/ueber-uns',
-    active: route.path === '/home/ueber-uns',
+    to: '/ueber-uns',
+    active: route.path === '/ueber-uns',
   },
   {
     label: 'Leistungen',
-    to: '/home/leistungen',
-    active: route.path === '/home/leistungen',
+    to: '/leistungen',
+    active: route.path === '/leistungen',
   },
   {
     label: 'Patienteninfos',
-    to: '/home/patienteninfos',
-    active: route.path === '/home/patienteninfos',
+    to: '/patienteninfos',
+    active: route.path === '/patienteninfos',
   },
   {
     label: 'Termine & Kontakt',
-    to: '/home/termine',
-    active: route.path === '/home/termine',
+    to: '/termine',
+    active: route.path === '/termine',
   },
   {
     label: 'Notdienst',
-    to: '/home/notdienst',
-    active: route.path === '/home/notdienst',
+    to: '/notdienst',
+    active: route.path === '/notdienst',
   },
 ])
 </script>

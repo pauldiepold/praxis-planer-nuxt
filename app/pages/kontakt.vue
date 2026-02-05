@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'home',
-  middleware: () => navigateTo('/home/termine', { replace: true }),
+  middleware: () => navigateTo('/termine', { replace: true }),
 })
 </script>
 

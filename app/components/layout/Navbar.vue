@@ -11,7 +11,7 @@ const handleLogout = async () => {
       color: 'success',
       icon: 'i-lucide-check-circle',
     })
-    // Zur Startseite weiterleiten
+    // Zur öffentlichen Startseite weiterleiten
     await navigateTo('/')
   }
   catch (error) {
@@ -36,7 +36,7 @@ const toggleMenu = () => {
         class="flex items-center justify-between"
       >
         <NuxtLink
-          to="/"
+          to="/pflege-planer"
           class="group flex items-center"
         >
           <div class="">
@@ -55,19 +55,19 @@ const toggleMenu = () => {
         >
           <ul class="flex space-x-6">
             <LayoutHeaderLink
-              to="/"
+              to="/pflege-planer"
               label="Startseite"
             />
             <LayoutHeaderLink
-              to="/students"
+              to="/pflege-planer/students"
               label="Schülerinnen"
             />
             <LayoutHeaderLink
-              to="/schools"
+              to="/pflege-planer/schools"
               label="Pflegeschulen"
             />
             <LayoutHeaderLink
-              to="/companies"
+              to="/pflege-planer/companies"
               label="Betriebe"
             />
           </ul>
@@ -122,25 +122,25 @@ const toggleMenu = () => {
       >
         <ul class="space-y-4 px-4 py-4">
           <LayoutHeaderLinkMobile
-            to="/"
+            to="/pflege-planer"
             label="Startseite"
             :is-menu-open="isMenuOpen"
             @close-menu="isMenuOpen = false"
           />
           <LayoutHeaderLinkMobile
-            to="/students"
+            to="/pflege-planer/students"
             label="Schülerinnen"
             :is-menu-open="isMenuOpen"
             @close-menu="isMenuOpen = false"
           />
           <LayoutHeaderLinkMobile
-            to="/schools"
+            to="/pflege-planer/schools"
             label="Pflegeschulen"
             :is-menu-open="isMenuOpen"
             @close-menu="isMenuOpen = false"
           />
           <LayoutHeaderLinkMobile
-            to="/companies"
+            to="/pflege-planer/companies"
             label="Betriebe"
             :is-menu-open="isMenuOpen"
             @close-menu="isMenuOpen = false"

@@ -9,7 +9,7 @@ const currentYear = new Date().getFullYear()
         <!-- Logo & Praxis Info -->
         <div class="lg:col-span-1">
           <NuxtLink
-            to="/home"
+            to="/"
             class="inline-block mb-4"
           >
             <UIcon
@@ -87,7 +87,7 @@ const currentYear = new Date().getFullYear()
           <ul class="space-y-2 text-sm inline-block">
             <li>
               <NuxtLink
-                to="/home/termine"
+                to="/termine"
                 class="text-primary-50/80 hover:text-primary-50 transition-colors"
               >
                 Termine & Kontakt
@@ -95,7 +95,7 @@ const currentYear = new Date().getFullYear()
             </li>
             <li>
               <NuxtLink
-                to="/home/notdienst"
+                to="/notdienst"
                 class="text-primary-50/80 hover:text-primary-50 transition-colors"
               >
                 Notdienst
@@ -103,7 +103,7 @@ const currentYear = new Date().getFullYear()
             </li>
             <li>
               <NuxtLink
-                to="/home/ueber-uns"
+                to="/ueber-uns"
                 class="text-primary-50/80 hover:text-primary-50 transition-colors"
               >
                 Über uns
@@ -111,7 +111,7 @@ const currentYear = new Date().getFullYear()
             </li>
             <li>
               <NuxtLink
-                to="/home/leistungen"
+                to="/leistungen"
                 class="text-primary-50/80 hover:text-primary-50 transition-colors"
               >
                 Leistungen
@@ -119,7 +119,7 @@ const currentYear = new Date().getFullYear()
             </li>
             <li>
               <NuxtLink
-                to="/home/patienteninfos"
+                to="/patienteninfos"
                 class="text-primary-50/80 hover:text-primary-50 transition-colors"
               >
                 Patienteninfos
@@ -135,13 +135,13 @@ const currentYear = new Date().getFullYear()
           <p>© Paul Diepold • {{ currentYear }}</p>
           <div class="flex gap-4 items-center">
             <NuxtLink
-              to="/home/impressum"
+              to="/impressum"
               class="hover:text-primary-50 transition-colors"
             >
               Impressum
             </NuxtLink>
             <NuxtLink
-              to="/home/datenschutz"
+              to="/datenschutz"
               class="hover:text-primary-50 transition-colors"
             >
               Datenschutz
