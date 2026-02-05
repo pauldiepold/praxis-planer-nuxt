@@ -27,10 +27,12 @@ import doctolibLogo from '../../assets/images/doctolib-white-transparent.png'
 </template>
 
 <style scoped>
+/* Mobile: unten, damit er keine wichtigen Inhalte verdeckt */
 .doctolib-banner {
   position: fixed;
-  top: 180px;
+  bottom: 1rem;
   right: 0;
+  top: auto;
   z-index: 2147483647;
   display: flex;
   flex-direction: column;
@@ -47,6 +49,14 @@ import doctolibLogo from '../../assets/images/doctolib-white-transparent.png'
   text-decoration: none;
   padding: 10px;
   line-height: 1.4;
+}
+
+/* Desktop: oben wie bisher */
+@media (min-width: 768px) {
+  .doctolib-banner {
+    bottom: auto;
+    top: 180px;
+  }
 }
 
 .doctolib-banner:hover {
