@@ -8,9 +8,22 @@ useHead({
   title: 'Über uns',
 })
 
-const doctors = [
+type Doctor = {
+  id: string
+  image?: string
+  name: string
+  title: string
+  shortBio: string
+  fullBio: readonly string[]
+  qualifications: readonly string[]
+  interests: readonly { icon: string, text: string }[]
+  personal: string
+}
+
+const doctors: Doctor[] = [
   {
     id: 'diepold',
+    image: '/team/doctors/diepold.webp',
     name: 'Dr. Katharina Diepold',
     title: 'Kinder- und Jugendärztin',
     shortBio: 'Fachärztin mit Schwerpunkt Neuropädiatrie. Oberärztin am Klinikum Kassel bis 2021, seit Dezember 2020 in unserer Berufsausübungsgemeinschaft.',
@@ -28,13 +41,13 @@ const doctors = [
     qualifications: ['Neuropädiatrie', 'Palliativmedizin'],
     interests: [
       { icon: 'i-lucide-heart', text: 'Mitglied IPPNW seit 1992' },
-      { icon: 'i-lucide-music', text: 'Geigerin im Orchester der deutschen Kinderärzte' },
-      { icon: 'i-lucide-music', text: 'Stellvertretende Vorsitzende der AOV Göttingen' },
+      { icon: 'i-lucide-music', text: 'Geigerin und im Vorstand im Orchester der deutschen Kinderärzte' },
     ],
     personal: 'Seit 2002 mit Th. Holstein-Diepold verheiratet, wir haben 2 erwachsene Kinder und leben in Göttingen.',
   },
   {
     id: 'holstein',
+    image: '/team/doctors/holstein.webp',
     name: 'Thomas Holstein-Diepold',
     title: 'Kinder- und Jugendarzt',
     shortBio: 'Seit 2007 in eigener Praxis in Northeim. 2025 Zertifikat der DGMSM für Manuelle und Osteopathische Säuglings- und Kinderbehandlung.',
@@ -56,9 +69,14 @@ const doctors = [
     ],
     personal: 'Seit 2002 mit Dr. K. Diepold verheiratet, wir haben zwei Kinder und leben in Göttingen.',
   },
-] as const
+]
 
-const teamMembers = [
+type TeamMember = { name: string, role: string, image?: string }
+// Optional pro Person: image: '/team/staff/slug.jpg' – Bild in public/team/staff/ ablegen
+/** Gemeinsamer privater Abschnitt (einmal unter beiden Ärzten, zentriert) */
+const doctorsSharedPersonal = 'Seit 2002 verheiratet, zwei erwachsene Kinder, leben in Göttingen.'
+
+const teamMembers: TeamMember[] = [
   { name: 'Regine Feil', role: 'MFA' },
   { name: 'Kerstin Voigt', role: 'MFA' },
   { name: 'Elena Lorenz', role: 'MFA' },
@@ -67,7 +85,7 @@ const teamMembers = [
   { name: 'Pauline Mönkemeyer', role: 'Auszubildende' },
   { name: 'Malak El Batal', role: 'Auszubildende' },
   { name: 'Peter Reese', role: 'Freier Mitarbeiter' },
-] as const
+]
 </script>
 
 <template>
@@ -90,23 +108,34 @@ const teamMembers = [
         <div class="mb-10 flex items-center gap-3">
           <div class="h-1 w-12 rounded-full bg-primary" />
           <h2 class="text-2xl font-bold text-highlighted md:text-3xl">
-            Unsere Ärzte
+            Unsere Ärzt:innen
           </h2>
         </div>
 
-        <div class="grid gap-8 lg:grid-cols-2">
-          <PraxisDoctorCard
-            v-for="doctor in doctors"
+        <!-- Trennung zwischen den Ärzten: Desktop vertikaler Strich (dezent), Mobile horizontaler Strich -->
+        <div class="grid gap-0 lg:grid-cols-2">
+          <div
+            v-for="(doctor, index) in doctors"
             :key="doctor.id"
-            :name="doctor.name"
-            :title="doctor.title"
-            :short-bio="doctor.shortBio"
-            :qualifications="doctor.qualifications"
-            :full-bio="doctor.fullBio"
-            :interests="doctor.interests"
-            :personal="doctor.personal"
-          />
+            :class="index === 0
+              ? 'border-b-2 border-primary/20 pb-8 lg:border-b-0 lg:border-r-2 lg:border-primary/20 lg:pr-8'
+              : 'pt-8 lg:pt-0 lg:pl-8'"
+          >
+            <PraxisDoctorCard
+              :name="doctor.name"
+              :title="doctor.title"
+              :short-bio="doctor.shortBio"
+              :qualifications="doctor.qualifications"
+              :full-bio="doctor.fullBio"
+              :interests="doctor.interests"
+              :personal="''"
+              :image="doctor.image"
+            />
+          </div>
         </div>
+        <p class="mt-8 max-w-xl mx-auto text-center text-sm italic text-muted">
+          {{ doctorsSharedPersonal }}
+        </p>
       </UContainer>
     </section>
 
@@ -125,6 +154,7 @@ const teamMembers = [
             :key="member.name"
             :name="member.name"
             :role="member.role"
+            :image="member.image"
           />
         </div>
       </UContainer>

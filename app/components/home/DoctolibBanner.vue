@@ -32,7 +32,10 @@ import doctolibLogo from '../../assets/images/doctolib-white-transparent.png'
   top: 180px;
   right: 0;
   z-index: 2147483647;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   opacity: 0.85;
   background-color: #0596de;
@@ -56,9 +59,9 @@ import doctolibLogo from '../../assets/images/doctolib-white-transparent.png'
 }
 
 .doctolib-banner__logo {
+  display: block;
   height: 15px;
-  margin-top: 10px;
-  vertical-align: middle;
   width: auto;
+  margin-top: 10px;
 }
 </style>

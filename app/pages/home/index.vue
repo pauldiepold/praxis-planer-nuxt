@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { DOCTOLIB_URL } from '~/utils/doctolib'
-
 definePageMeta({
   title: 'Startseite',
   layout: 'home',
@@ -10,8 +8,18 @@ useHead({
   title: 'Kinder- und Jugendarztpraxis Northeim – Thomas Holstein-Diepold & Dr. Katharina Diepold',
 })
 
-const appStoreUrl = 'https://cux.link/appstore'
-const playStoreUrl = 'https://cux.link/playstore'
+const appLinks = {
+  playStoreUrl: 'https://cux.link/playstore',
+  appStoreUrl: 'https://cux.link/appstore',
+} as const
+
+const appUseCases = [
+  { label: 'Fragen an das Praxisteam' },
+  { label: 'Rezepte (insbesondere bei bekannten Dauermedikationen)' },
+  { label: 'Verordnungen für Heilmittel (Ergotherapie, Logopädie, Physiotherapie)' },
+  { label: 'Ein- oder Überweisungen' },
+  { label: 'Terminanfragen' },
+] as const
 
 const phoneDisplay = '05551 90 99 307'
 const phoneTel = 'tel:+4955519099307'
@@ -23,9 +31,10 @@ const phoneTel = 'tel:+4955519099307'
     <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
       <div
         class="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        :style="{ backgroundImage: 'url(/hero-empfang.jpg)' }"
+        :style="{ backgroundImage: 'url(/hero-empfang.webp)' }"
       />
-      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background" />
+      <!-- Fade: oben dunkler, unten ins Weiße für ruhigen Übergang -->
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-white" />
 
       <div class="relative w-full py-12 md:py-16 text-center">
         <UContainer>
@@ -42,34 +51,32 @@ const phoneTel = 'tel:+4955519099307'
 
             <div class="flex flex-col sm:flex-row gap-3 justify-center mb-6">
               <UButton
-                :to="DOCTOLIB_URL"
-                target="_blank"
-                rel="noopener noreferrer"
-                size="lg"
-                color="primary"
-                class="font-semibold text-base md:text-lg px-6 py-5 shadow-lg bg-[var(--praxis-accent)] hover:opacity-90 text-gray-900"
+                to="/home/termine"
+                size="md"
+                class="font-semibold text-sm md:text-base px-5 py-3 shadow-lg !bg-[var(--praxis-accent)] hover:!bg-[var(--praxis-accent)] hover:!opacity-90 active:!bg-[var(--praxis-accent)] text-gray-900"
               >
                 <UIcon
                   name="i-lucide-calendar"
-                  class="size-5"
+                  class="size-4"
                 />
-                Termin online buchen
+                Termine & Kontakt
               </UButton>
               <UButton
                 :to="phoneTel"
-                size="lg"
+                size="md"
                 variant="outline"
-                class="font-semibold text-base md:text-lg px-6 py-5 bg-white/20 hover:bg-white/30 text-white border-white/30 backdrop-blur-sm"
+                color="neutral"
+                class="font-semibold text-sm md:text-base px-5 py-3 bg-white/20 hover:bg-white/30 text-white !border-white/30 ring-0 focus:ring-0 backdrop-blur-sm"
               >
                 <UIcon
                   name="i-lucide-phone"
-                  class="size-5"
+                  class="size-4"
                 />
                 {{ phoneDisplay }}
               </UButton>
             </div>
 
-            <div class="rounded-xl p-4 md:p-5 max-w-xl mx-auto border border-white/20 shadow-lg bg-background/90 backdrop-blur-sm text-left">
+            <div class="rounded-xl p-4 md:p-5 max-w-xl mx-auto border border-gray-200/90 dark:border-gray-600/90 shadow-lg bg-white/95 dark:bg-gray-900/95 backdrop-blur-md text-left">
               <div class="flex items-start gap-3">
                 <UIcon
                   name="i-lucide-stethoscope"
@@ -87,19 +94,6 @@ const phoneTel = 'tel:+4955519099307'
                 </div>
               </div>
             </div>
-
-            <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm">
-              <NuxtLink
-                to="/home/termine"
-                class="flex items-center gap-2 text-white/80 hover:text-white transition-colors"
-              >
-                <UIcon
-                  name="i-lucide-clock"
-                  class="size-4"
-                />
-                <span>Telefonzeiten & Anfahrt →</span>
-              </NuxtLink>
-            </div>
           </div>
         </UContainer>
       </div>
@@ -107,7 +101,7 @@ const phoneTel = 'tel:+4955519099307'
       <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <UIcon
           name="i-lucide-chevron-down"
-          class="size-6 text-white/70 rotate-90"
+          class="size-6 text-gray-600/80"
         />
       </div>
     </section>
@@ -256,82 +250,16 @@ const phoneTel = 'tel:+4955519099307'
       </UContainer>
     </section>
 
-    <!-- Praxis App -->
+    <!-- Praxis App (gleiche Karte wie auf Termine & Kontakt) -->
     <section class="py-16 bg-primary-50">
       <UContainer>
-        <PraxisCard
-          content-class="p-0"
-          class="overflow-hidden shadow-xl border-none"
-        >
-          <div class="grid md:grid-cols-2 gap-0">
-            <div class="p-8 md:p-12 flex flex-col justify-center">
-              <div class="flex items-center gap-3 mb-4">
-                <div class="rounded-xl bg-primary/10 p-3">
-                  <UIcon
-                    name="i-lucide-smartphone"
-                    class="size-6 text-primary"
-                  />
-                </div>
-                <span class="text-sm font-medium text-primary uppercase tracking-wide">Praxis App</span>
-              </div>
-              <h2 class="text-2xl md:text-3xl font-bold text-highlighted mb-4">
-                Meine pädiatrische Praxis
-              </h2>
-              <p class="text-muted mb-4">
-                Mit der PraxisApp kommunizieren wir datenschutzkonform mit Ihnen. Die App bietet:
-              </p>
-              <ul class="space-y-2 text-muted mb-6">
-                <li class="flex items-start gap-2">
-                  <span class="text-primary mt-1">✓</span>
-                  <span><strong>Erinnerungen</strong> an Impf- und Vorsorgetermine</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-primary mt-1">✓</span>
-                  <span><strong>Sicherer Chat</strong> für Rezepte, Verordnungen & Überweisungen</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-primary mt-1">✓</span>
-                  <span><strong>Dokumente austauschen</strong> – Fotos, Laborbefunde, Protokolle</span>
-                </li>
-              </ul>
-              <div class="flex flex-wrap gap-3">
-                <UButton
-                  :to="appStoreUrl"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  color="primary"
-                >
-                  App Store
-                </UButton>
-                <UButton
-                  :to="playStoreUrl"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  color="primary"
-                >
-                  Google Play
-                </UButton>
-              </div>
-              <p class="text-xs text-muted mt-4">
-                Tipp: Eltern sollten ein gemeinsames Login nutzen, damit der Chat richtig funktioniert.
-              </p>
-            </div>
-            <div class="hidden md:flex items-center justify-center p-12 bg-gradient-to-br from-primary to-[var(--ui-color-primary-800)] text-primary-foreground">
-              <div class="text-center">
-                <UIcon
-                  name="i-lucide-smartphone"
-                  class="size-24 mx-auto mb-4 opacity-80"
-                />
-                <p class="text-xl font-semibold">
-                  Meine pädiatrische Praxis
-                </p>
-                <p class="text-sm opacity-80 mt-2">
-                  Kostenlos für iOS & Android
-                </p>
-              </div>
-            </div>
-          </div>
-        </PraxisCard>
+        <h2 class="sr-only">
+          Praxis App
+        </h2>
+        <PraxisAppCommunication
+          :app-links="appLinks"
+          :use-cases="appUseCases"
+        />
       </UContainer>
     </section>
   </div>

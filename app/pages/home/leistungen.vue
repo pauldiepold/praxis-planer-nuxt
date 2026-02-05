@@ -169,8 +169,11 @@ const categories = [
 
       <div class="mt-12 text-center">
         <PraxisCard class="inline-block">
-          <p class="text-lg font-medium text-highlighted">
+          <p class="mb-2 text-lg font-medium text-highlighted">
             Noch Wünsche? – Fragen Sie nach!
+          </p>
+          <p class="text-muted">
+            Sprechen Sie uns gerne an, wenn Sie weitere Fragen zu unserem Leistungsspektrum haben.
           </p>
         </PraxisCard>
       </div>

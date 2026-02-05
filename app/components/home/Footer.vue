@@ -80,11 +80,11 @@ const currentYear = new Date().getFullYear()
         </div>
 
         <!-- Schnelllinks: Termine und Notdienst zuerst (was Nutzer:innen am häufigsten suchen), dann Infoseiten -->
-        <div>
+        <div class="text-right">
           <h3 class="font-semibold text-lg mb-4">
             Schnelllinks
           </h3>
-          <ul class="space-y-2 text-sm">
+          <ul class="space-y-2 text-sm inline-block">
             <li>
               <NuxtLink
                 to="/home/termine"
@@ -146,7 +146,6 @@ const currentYear = new Date().getFullYear()
             >
               Datenschutz
             </NuxtLink>
-            <UColorModeButton class="ml-2" />
           </div>
         </div>
       </div>
