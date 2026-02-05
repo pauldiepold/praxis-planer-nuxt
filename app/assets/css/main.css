@@ -5,11 +5,17 @@
   --font-sans: 'Inter', system-ui, sans-serif;
   --breakpoint-lg: 68rem;
   --breakpoint-xl: 80rem;
+  /* Sanfter Seitenhintergrund (leicht creme) – weniger grell als reines Weiß */
+  --color-page: #fdfcf9;
 }
 
 :root {
   --ui-container: 80rem;
   --ui-header-height: --spacing(20);
+
+  /* Nuxt UI: Body und bg-default/bg-muted – direkt Creme, später durch Variable ersetzen */
+  --ui-bg: #fdfcf9;
+  --ui-bg-muted: #fdfcf9;
 
   --ui-color-primary-50: #f1f8f3;
   --ui-color-primary-100: #deede1;
@@ -29,6 +35,12 @@
   --praxis-sky-blue: hsl(200 70% 50%);
   --ui-color-accent: var(--praxis-accent);
   --ui-color-sky-blue: var(--praxis-sky-blue);
+}
+
+/* Ebenfalls für .light (Nuxt UI setzt --ui-bg dort) */
+.light {
+  --ui-bg: #fdfcf9;
+  --ui-bg-muted: #fdfcf9;
 }
 
 button,

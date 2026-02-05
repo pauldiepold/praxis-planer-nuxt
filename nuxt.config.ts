@@ -16,6 +16,9 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Praxis Pflege Planer',
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' },
+      ],
     },
   },
 

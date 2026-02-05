@@ -29,7 +29,7 @@ export default defineOAuthGitHubEventHandler({
         },
       })
 
-      return sendRedirect(event, '/')
+      return sendRedirect(event, '/pflege-planer')
     }
     catch (error: unknown) {
       console.error('GitHub OAuth error:', error)

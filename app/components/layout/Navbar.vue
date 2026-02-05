@@ -39,13 +39,11 @@ const toggleMenu = () => {
           to="/pflege-planer"
           class="group flex items-center"
         >
-          <div class="">
-            <img
-              src="~/assets/images/praxis-logo.png"
-              alt="BTC Logo"
-              class="bg-gray-200 p-1 rounded-lg h-12 w-auto transform transition-transform duration-300 group-hover:scale-110"
-            >
-          </div>
+          <UIcon
+            name="i-praxis-logo"
+            alt="Praxis Logo"
+            class="size-12 text-black bg-gray-200 p-1 rounded-lg transform transition-transform duration-300 group-hover:scale-110"
+          />
         </NuxtLink>
 
         <!-- Desktop Navigation -->
@@ -104,7 +102,7 @@ const toggleMenu = () => {
         <!-- Mobile Menu Button -->
         <button
           v-if="loggedIn"
-          class="hover:text-primary text-white transition-colors lg:hidden"
+          class="hover:text-primary text-foreground transition-colors lg:hidden"
           aria-label="Menü öffnen"
           @click="toggleMenu"
         >

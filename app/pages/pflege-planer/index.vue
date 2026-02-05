@@ -220,7 +220,6 @@ onMounted(async () => {
 
 definePageMeta({
   title: 'Startseite',
-  colorMode: 'dark',
   layout: 'fullwidth',
 })
 
@@ -238,11 +237,11 @@ useHead({
   >
     <div class="max-w-2xl mx-auto text-center">
       <div class="mb-8">
-        <img
-          src="~/assets/images/praxis-logo.png"
+        <UIcon
+          name="i-praxis-logo"
           alt="Praxis Logo"
-          class="mx-auto bg-gray-200 p-1 rounded-lg h-24 w-auto mb-6"
-        >
+          class="mx-auto size-24 text-black bg-gray-200 p-1 rounded-lg mb-6 block"
+        />
         <h1 class="text-4xl font-bold mb-4">
           Praxis Pflege Planer
         </h1>

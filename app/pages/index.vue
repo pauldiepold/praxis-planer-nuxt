@@ -34,7 +34,7 @@ const phoneTel = 'tel:+4955519099307'
         :style="{ backgroundImage: 'url(/hero-empfang.webp)' }"
       />
       <!-- Fade: oben dunkler, unten ins Weiße für ruhigen Übergang -->
-      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-white" />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-[var(--page-bg)]" />
 
       <div class="relative w-full py-12 md:py-16 text-center">
         <UContainer>
@@ -76,7 +76,7 @@ const phoneTel = 'tel:+4955519099307'
               </UButton>
             </div>
 
-            <div class="rounded-xl p-4 md:p-5 max-w-xl mx-auto border border-gray-200/90 dark:border-gray-600/90 shadow-lg bg-white/95 dark:bg-gray-900/95 backdrop-blur-md text-left">
+            <div class="rounded-xl p-4 md:p-5 max-w-xl mx-auto border border-gray-200/90 dark:border-gray-600/90 shadow-lg bg-page/95 dark:bg-gray-900/95 backdrop-blur-md text-left">
               <div class="flex items-start gap-3">
                 <UIcon
                   name="i-lucide-stethoscope"

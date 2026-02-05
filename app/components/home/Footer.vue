@@ -132,21 +132,37 @@ const currentYear = new Date().getFullYear()
       <!-- Bottom Bar -->
       <div class="mt-8 pt-4 border-t border-primary-50/20 text-primary-50/60">
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-primary-50/60">
-          <p>© Paul Diepold • {{ currentYear }}</p>
-          <div class="flex gap-4 items-center">
+          <p>
+            © Paul Diepold {{ currentYear }}
+            <span
+              class="mx-1"
+              aria-hidden="true"
+            >•</span>
+            <NuxtLink
+              to="/pflege-planer"
+              class="hover:text-primary-50 transition-colors"
+            >
+              Anmelden
+            </NuxtLink>
+          </p>
+          <p>
             <NuxtLink
               to="/impressum"
               class="hover:text-primary-50 transition-colors"
             >
               Impressum
             </NuxtLink>
+            <span
+              class="mx-1"
+              aria-hidden="true"
+            >•</span>
             <NuxtLink
               to="/datenschutz"
               class="hover:text-primary-50 transition-colors"
             >
               Datenschutz
             </NuxtLink>
-          </div>
+          </p>
         </div>
       </div>
     </div>
