@@ -49,11 +49,11 @@ const phoneTel = 'tel:+4955519099307'
               Herzlich willkommen! Wir freuen uns darauf, Sie und Ihre Kinder beim Heranwachsen zu begleiten.
             </p>
 
-            <div class="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+            <div class="flex flex-col sm:flex-row gap-3 justify-center items-center mb-6">
               <UButton
                 to="/termine"
                 size="md"
-                class="font-semibold text-sm md:text-base px-5 py-3 shadow-lg !bg-[var(--praxis-accent)] hover:!bg-[var(--praxis-accent)] hover:!opacity-90 active:!bg-[var(--praxis-accent)] text-gray-900"
+                class="font-semibold text-sm md:text-base px-5 py-3 shadow-lg !bg-[var(--praxis-accent)] hover:!bg-[var(--praxis-accent)] hover:!opacity-90 active:!bg-[var(--praxis-accent)] text-gray-900 max-w-xs sm:max-w-none"
               >
                 <UIcon
                   name="i-lucide-calendar"
@@ -66,7 +66,7 @@ const phoneTel = 'tel:+4955519099307'
                 size="md"
                 variant="outline"
                 color="neutral"
-                class="font-semibold text-sm md:text-base px-5 py-3 bg-white/20 hover:bg-white/30 text-white !border-white/30 ring-0 focus:ring-0 backdrop-blur-sm"
+                class="font-semibold text-sm md:text-base px-5 py-3 bg-white/20 hover:bg-white/30 text-white !border-white/30 ring-0 focus:ring-0 backdrop-blur-sm max-w-xs sm:max-w-none"
               >
                 <UIcon
                   name="i-lucide-phone"

@@ -52,10 +52,22 @@ const items = computed<NavigationMenuItem[]>(() => [
         </div>
       </div>
     </template>
+    <!-- Desktop: Navigation rechtbündig (nur ab lg sichtbar) -->
     <template #right>
+      <div class="hidden lg:flex items-center">
+        <UNavigationMenu
+          :items="items"
+          :ui="{ list: 'gap-1', item: '!rounded-xl', link: 'px-3 !rounded-xl' }"
+        />
+      </div>
+    </template>
+    <!-- Mobile: Aufklappbares Menü mit vertikaler Navigation -->
+    <template #body>
       <UNavigationMenu
         :items="items"
-        :ui="{ list: 'gap-1', item: '!rounded-xl', link: 'px-3 !rounded-xl' }"
+        orientation="vertical"
+        :ui="{ list: 'gap-0', item: '', link: 'px-3 py-2.5 rounded-lg' }"
+        class="-mx-2.5"
       />
     </template>
   </UHeader>

@@ -80,11 +80,11 @@ const currentYear = new Date().getFullYear()
         </div>
 
         <!-- Schnelllinks: Termine und Notdienst zuerst (was Nutzer:innen am häufigsten suchen), dann Infoseiten -->
-        <div class="text-right">
+        <div>
           <h3 class="font-semibold text-lg mb-4">
             Schnelllinks
           </h3>
-          <ul class="space-y-2 text-sm inline-block">
+          <ul class="space-y-2 text-sm">
             <li>
               <NuxtLink
                 to="/termine"
