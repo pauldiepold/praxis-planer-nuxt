@@ -26,8 +26,8 @@ const phoneTel = 'tel:+4955519099307'
 
 <template>
   <div>
-    <!-- Hero Section mit Hintergrundbild -->
-    <section class="relative min-h-[65vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden">
+    <!-- Hero Section mit Hintergrundbild – füllt Viewport, kein Weiß sichtbar -->
+    <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
       <div
         class="absolute inset-0 bg-cover bg-center bg-no-repeat"
         :style="{ backgroundImage: 'url(/hero-empfang.webp)' }"
@@ -35,7 +35,7 @@ const phoneTel = 'tel:+4955519099307'
       <!-- Fade: oben dunkler, unten ins Weiße für ruhigen Übergang -->
       <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-white" />
 
-      <div class="relative w-full pt-6 pb-10 md:py-16 text-center">
+      <div class="relative w-full pt-8 pb-12 md:py-16 text-center">
         <UContainer>
           <div class="max-w-3xl mx-auto">
             <p class="text-white/90 font-medium mb-2 text-base md:text-lg drop-shadow-sm">
@@ -95,7 +95,7 @@ const phoneTel = 'tel:+4955519099307'
         </UContainer>
       </div>
 
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 animate-bounce">
         <UIcon
           name="i-lucide-chevron-down"
           class="size-6 text-gray-600/80"
