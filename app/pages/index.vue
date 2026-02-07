@@ -75,23 +75,21 @@ const phoneTel = 'tel:+4955519099307'
               </UButton>
             </div>
 
-            <div class="rounded-xl p-4 md:p-5 max-w-xl mx-auto border border-gray-200/90 dark:border-gray-600/90 shadow-lg bg-white/95 dark:bg-gray-900/95 backdrop-blur-md text-left">
+            <div class="rounded-xl p-4 md:p-5 max-w-xl mx-auto border border-white/20 dark:border-gray-500/30 shadow-md bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm text-left">
               <div class="flex items-start gap-3">
                 <UIcon
                   name="i-lucide-stethoscope"
                   class="size-5 text-primary mt-0.5 shrink-0"
                 />
-                <div class="text-sm md:text-base text-foreground">
-                  <p class="font-medium mb-1">
-                    Wir sind eine Terminpraxis
-                  </p>
-                  <p class="text-muted-foreground text-sm">
-                    Für kurze Wartezeiten vergeben wir alle Termine vorab. Täglich reservieren wir Zeit für die
-                    <span class="font-medium text-foreground">Akutsprechstunde</span>
-                    – auch kurzfristige Anliegen bekommen einen Termin.
-                  </p>
-                </div>
+                <p class="font-medium text-sm md:text-base text-foreground">
+                  Wir sind eine Terminpraxis
+                </p>
               </div>
+              <p class="text-muted-foreground text-sm mt-2">
+                Für kurze Wartezeiten vergeben wir alle Termine vorab. Täglich reservieren wir Zeit für die
+                <span class="font-medium text-foreground">Akutsprechstunde</span>
+                – auch kurzfristige Anliegen bekommen einen Termin.
+              </p>
             </div>
           </div>
         </UContainer>
