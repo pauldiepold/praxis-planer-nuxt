@@ -75,7 +75,13 @@ const currentYear = new Date().getFullYear()
             Wir sind eine <span class="font-medium text-primary-50/80">Terminpraxis</span> mit täglicher Akutsprechstunde.
           </p>
           <p class="text-xs text-primary-50/60 mt-2">
-            Außerhalb der Telefonzeiten nutzen Sie bitte die Praxis App.
+            Außerhalb der Telefonzeiten nutzen Sie bitte die
+            <NuxtLink
+              to="/termine#app"
+              class="font-medium text-primary-50/80 hover:text-primary-50 transition-colors underline underline-offset-2"
+            >
+              Praxis App
+            </NuxtLink>.
           </p>
         </div>
 

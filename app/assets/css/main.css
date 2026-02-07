@@ -9,7 +9,7 @@
 
 :root {
   --ui-container: 80rem;
-  --ui-header-height: --spacing(20);
+  --ui-header-height: 5rem;
 
   --ui-color-primary-50: #f1f8f3;
   --ui-color-primary-100: #deede1;
@@ -38,4 +38,9 @@ button,
 
 :disabled {
   cursor: default;
+}
+
+/* Anker-Ziele: Abstand nach oben beim Scrollen, damit der feste Header nicht überdeckt */
+[id] {
+  scroll-margin-top: var(--ui-header-height);
 }

@@ -163,7 +163,7 @@ const categories = [
       <div class="mt-12 text-center">
         <BaseCard class="inline-block">
           <p class="mb-2 text-lg font-medium text-highlighted">
-            Noch Wünsche? – Fragen Sie nach!
+            Noch Wünsche oder Fragen?
           </p>
           <p class="text-muted">
             Sprechen Sie uns gerne an, wenn Sie weitere Fragen zu unserem Leistungsspektrum haben.
