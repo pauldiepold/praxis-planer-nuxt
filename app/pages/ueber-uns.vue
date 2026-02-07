@@ -74,7 +74,7 @@ const doctors: Doctor[] = [
 type TeamMember = { name: string, role: string, image?: string }
 // Optional pro Person: image: '/team/staff/slug.jpg' – Bild in public/team/staff/ ablegen
 /** Gemeinsamer privater Abschnitt (einmal unter beiden Ärzten, zentriert) */
-const doctorsSharedPersonal = 'Seit 2002 verheiratet, zwei erwachsene Kinder, leben in Göttingen.'
+const doctorsSharedPersonal = 'Wir sind seit 2002 verheiratet, haben zwei erwachsene Kinder und leben in Göttingen.'
 
 const teamMembers: TeamMember[] = [
   { name: 'Regine Feil', role: 'MFA' },
@@ -178,7 +178,7 @@ const teamMembers: TeamMember[] = [
             class="mx-auto mb-4 size-16 text-muted-foreground"
           />
           <p class="text-muted">
-            Hier können später Fotos der Praxisräumlichkeiten eingefügt werden.
+            Hier folgen Photos der Praxisräumlichkeiten.
           </p>
         </PraxisCard>
       </UContainer>

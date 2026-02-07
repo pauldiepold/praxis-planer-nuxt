@@ -47,15 +47,15 @@ defineProps<{
     <PraxisPageSection id="bereitschaftsdienst">
       <PraxisCard left-border="accent">
         <template #header>
-          <div class="flex items-center gap-3">
-            <UIcon
-              name="i-lucide-hospital"
-              class="size-6 text-primary"
-            />
+          <PraxisHeadingWithIcon
+            icon="i-lucide-hospital"
+            layout="inline"
+            size="md"
+          >
             <p class="text-base font-semibold text-highlighted">
               Kinderärztlicher Bereitschaftsdienst
             </p>
-          </div>
+          </PraxisHeadingWithIcon>
         </template>
 
         <div class="grid gap-6 lg:grid-cols-2">
@@ -134,7 +134,7 @@ defineProps<{
         <div class="flex items-center gap-3">
           <UIcon
             name="i-lucide-alert-triangle"
-            class="size-8"
+            class="size-8 shrink-0"
           />
           <h2 class="text-2xl md:text-3xl font-bold">
             Notfälle

@@ -20,15 +20,15 @@ defineProps<{
 <template>
   <div class="space-y-6">
     <PraxisCard>
-      <div class="flex items-center gap-2">
-        <UIcon
-          name="i-lucide-clock"
-          class="size-5 text-primary"
-        />
-        <p class=" font-semibold text-highlighted">
+      <PraxisHeadingWithIcon
+        icon="i-lucide-clock"
+        layout="inline"
+        size="md"
+      >
+        <p class="font-semibold text-highlighted">
           Telefonzeiten
         </p>
-      </div>
+      </PraxisHeadingWithIcon>
 
       <div class="grid gap-4 lg:grid-cols-2 pt-4 items-center">
         <div class="space-y-2">
@@ -72,15 +72,15 @@ defineProps<{
         class="lg:col-span-2"
       >
         <template #header>
-          <div class="flex items-center gap-2">
-            <UIcon
-              name="i-lucide-stethoscope"
-              class="size-5 text-primary"
-            />
+          <PraxisHeadingWithIcon
+            icon="i-lucide-stethoscope"
+            layout="inline"
+            size="md"
+          >
             <p class="font-semibold text-highlighted">
               Terminsprechstunde
             </p>
-          </div>
+          </PraxisHeadingWithIcon>
         </template>
         <p class="text-sm text-muted">
           Wir arbeiten im Rahmen einer Terminsprechstunde. Um unnötige Wartezeiten zu vermeiden, bitten wir Sie,
@@ -93,15 +93,16 @@ defineProps<{
         class="lg:col-span-3"
       >
         <template #header>
-          <div class="flex items-center gap-2">
-            <UIcon
-              name="i-lucide-triangle-alert"
-              class="size-5 text-warning"
-            />
+          <PraxisHeadingWithIcon
+            icon="i-lucide-triangle-alert"
+            layout="inline"
+            size="md"
+            icon-color-class="text-warning"
+          >
             <p class="font-semibold text-highlighted">
               Akutsprechstunde
             </p>
-          </div>
+          </PraxisHeadingWithIcon>
         </template>
         <div class="space-y-2 text-sm text-muted">
           <p>
@@ -124,15 +125,15 @@ defineProps<{
         class="lg:col-span-2"
       >
         <template #header>
-          <div class="flex items-center gap-2">
-            <UIcon
-              name="i-lucide-video"
-              class="size-5 text-primary"
-            />
+          <PraxisHeadingWithIcon
+            icon="i-lucide-video"
+            layout="inline"
+            size="md"
+          >
             <p class="font-semibold text-highlighted">
               Videosprechstunde
             </p>
-          </div>
+          </PraxisHeadingWithIcon>
         </template>
         <p class="text-sm text-muted">
           Wir bieten auch eine Videosprechstunde an, die über den Online-Terminkalender zu buchen ist.

@@ -29,18 +29,17 @@ const iconColor = computed(() => props.iconColorClass ?? props.colorClass ?? 'te
 <template>
   <PraxisCard class="flex h-full flex-col transition-shadow hover:shadow-lg">
     <template #header>
-      <div class="mb-4 flex items-start gap-3">
-        <div
-          :class="[iconBox, 'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl']"
+      <div class="mb-4">
+        <PraxisHeadingWithIcon
+          :icon="icon"
+          layout="inline"
+          :icon-box-class="iconBox"
+          :icon-color-class="iconColor"
         >
-          <UIcon
-            :name="icon"
-            :class="[iconColor, 'size-6']"
-          />
-        </div>
-        <h3 class="min-w-0 pt-1 text-xl font-semibold leading-snug text-highlighted">
-          {{ title }}
-        </h3>
+          <h3 class="text-xl font-semibold leading-tight text-highlighted">
+            {{ title }}
+          </h3>
+        </PraxisHeadingWithIcon>
       </div>
     </template>
     <ul class="list-none space-y-2 pl-0">

@@ -21,7 +21,7 @@ defineProps<{
     <div class="grid gap-6 lg:grid-cols-2">
       <div class="space-y-4">
         <div class="flex items-center gap-3">
-          <div class="rounded-lg flex items-center justify-center bg-primary/10 p-2">
+          <div class="rounded-lg flex shrink-0 items-center justify-center bg-primary/10 p-2">
             <UIcon
               name="i-lucide-smartphone"
               class="size-5 text-primary"
@@ -65,7 +65,7 @@ defineProps<{
         </div>
 
         <p class="text-xs text-dimmed flex items-center gap-1">
-          <Icon name="i-lucide-bell" />
+          <Icon name="i-lucide-bell" class="shrink-0" />
           Tipp: Eltern sollten ein gemeinsames Login nutzen, damit der Chat richtig funktioniert.
         </p>
       </div>
@@ -82,7 +82,7 @@ defineProps<{
             >
               <UIcon
                 name="i-lucide-check"
-                class="mt-0.5 size-4 text-primary"
+                class="mt-0.5 size-4 shrink-0 text-primary"
               />
               <span>{{ item.label }}</span>
             </li>

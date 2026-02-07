@@ -152,6 +152,7 @@ const accordionItems = computed(() =>
               item: 'rounded-xl border border-primary-100 bg-default shadow-sm transition-shadow mb-3 last:mb-0 hover:shadow-md px-6',
               trigger: 'py-5 hover:no-underline',
               content: '',
+              leadingIcon: 'shrink-0 size-5',
             }"
           >
             <template

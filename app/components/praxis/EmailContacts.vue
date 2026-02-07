@@ -15,7 +15,7 @@ defineProps<{
       <div class="flex items-center gap-2">
         <UIcon
           name="i-lucide-mail"
-          class="size-5 text-muted"
+          class="size-5 shrink-0 text-muted"
         />
         <p class="text-sm text-muted">
           Ihre Post wird zwar zeitnah, jedoch nicht verlässlich tagesaktuell beantwortet. Für schnellere Kommunikation empfehlen wir die Praxis App.

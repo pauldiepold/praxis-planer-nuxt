@@ -66,14 +66,6 @@ const categories = [
     ],
   },
   {
-    title: 'Betreuung',
-    icon: 'i-lucide-heart-pulse',
-    services: [
-      'Betreuung chronisch kranker Patienten (z.B. Entwicklungsstörungen, Frühgeborene mit kompliziertem Krankheitsverlauf, Asthma- und Allergiepatienten, Teilnahme am DMP)',
-      'Betreuung der Wochenstation und des Kreißsaals im Helios-Albert-Schweitzer-Krankenhaus Northeim',
-    ],
-  },
-  {
     title: 'Allergie & Desensibilisierung',
     icon: 'i-lucide-flask-conical',
     services: [
@@ -102,11 +94,13 @@ const categories = [
     ],
   },
   {
-    title: 'Weitere Untersuchungen',
+    title: 'Sonstiges',
     icon: 'i-lucide-stethoscope',
     services: [
       'Hörtest- und Trommelfelltests (Audio- und Tympanometrie)',
       'Sporteignungsuntersuchungen',
+      'Betreuung chronisch kranker Patienten (z.B. Entwicklungsstörungen, Frühgeborene mit kompliziertem Krankheitsverlauf, Asthma- und Allergiepatienten, Teilnahme am DMP)',
+      'Betreuung der Wochenstation und des Kreißsaals im Helios-Albert-Schweitzer-Krankenhaus Northeim',
     ],
   },
 ]

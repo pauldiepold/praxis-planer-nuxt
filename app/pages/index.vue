@@ -153,13 +153,14 @@ const phoneTel = 'tel:+4955519099307'
             class="group block"
           >
             <PraxisCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
-              <UIcon
-                name="i-lucide-calendar"
-                class="size-10 text-primary mb-4"
-              />
-              <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors">
-                Termine & Kontakt
-              </h3>
+              <PraxisHeadingWithIcon
+                icon="i-lucide-calendar"
+                layout="responsive"
+              >
+                <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
+                  Termine & Kontakt
+                </h3>
+              </PraxisHeadingWithIcon>
               <p class="text-sm text-muted mb-3">
                 Sprechzeiten, Anfahrt, Terminbuchung und Erreichbarkeit.
               </p>
@@ -167,7 +168,7 @@ const phoneTel = 'tel:+4955519099307'
                 Mehr erfahren
                 <UIcon
                   name="i-lucide-chevron-right"
-                  class="size-4"
+                  class="size-4 shrink-0"
                 />
               </span>
             </PraxisCard>
@@ -178,13 +179,14 @@ const phoneTel = 'tel:+4955519099307'
             class="group block"
           >
             <PraxisCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
-              <UIcon
-                name="i-lucide-hospital"
-                class="size-10 text-primary mb-4"
-              />
-              <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors">
-                Notdienst
-              </h3>
+              <PraxisHeadingWithIcon
+                icon="i-lucide-hospital"
+                layout="responsive"
+              >
+                <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
+                  Notdienst
+                </h3>
+              </PraxisHeadingWithIcon>
               <p class="text-sm text-muted mb-3">
                 Außerhalb der Sprechzeiten: Bereitschaftsdienst und Kinderkliniken.
               </p>
@@ -192,7 +194,7 @@ const phoneTel = 'tel:+4955519099307'
                 Mehr erfahren
                 <UIcon
                   name="i-lucide-chevron-right"
-                  class="size-4"
+                  class="size-4 shrink-0"
                 />
               </span>
             </PraxisCard>
@@ -203,13 +205,14 @@ const phoneTel = 'tel:+4955519099307'
             class="group block"
           >
             <PraxisCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
-              <UIcon
-                name="i-lucide-stethoscope"
-                class="size-10 text-primary mb-4"
-              />
-              <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors">
-                Leistungen
-              </h3>
+              <PraxisHeadingWithIcon
+                icon="i-lucide-stethoscope"
+                layout="responsive"
+              >
+                <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
+                  Leistungen
+                </h3>
+              </PraxisHeadingWithIcon>
               <p class="text-sm text-muted mb-3">
                 Von Vorsorgen über Allergietests bis zur Neuropädiatrie – unser umfassendes Angebot.
               </p>
@@ -217,7 +220,7 @@ const phoneTel = 'tel:+4955519099307'
                 Mehr erfahren
                 <UIcon
                   name="i-lucide-chevron-right"
-                  class="size-4"
+                  class="size-4 shrink-0"
                 />
               </span>
             </PraxisCard>
@@ -228,12 +231,14 @@ const phoneTel = 'tel:+4955519099307'
             class="group block"
           >
             <PraxisCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
-              <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <span class="text-primary font-bold text-sm">HD</span>
+              <div class="flex flex-row items-start gap-3 md:flex-col md:gap-2 mb-2">
+                <div class="size-10 shrink-0 rounded-full bg-primary/10 flex items-center justify-center">
+                  <span class="text-primary font-bold text-sm">HD</span>
+                </div>
+                <h3 class="font-semibold text-lg text-highlighted group-hover:text-primary transition-colors min-w-0 md:mb-0">
+                  Über uns
+                </h3>
               </div>
-              <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors">
-                Über uns
-              </h3>
               <p class="text-sm text-muted mb-3">
                 Lernen Sie Frau Dr. Diepold, Herrn Holstein-Diepold und unser Praxisteam kennen.
               </p>
@@ -241,7 +246,7 @@ const phoneTel = 'tel:+4955519099307'
                 Mehr erfahren
                 <UIcon
                   name="i-lucide-chevron-right"
-                  class="size-4"
+                  class="size-4 shrink-0"
                 />
               </span>
             </PraxisCard>

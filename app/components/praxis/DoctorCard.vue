@@ -54,7 +54,7 @@ defineProps<{
         <h4 class="mb-3 flex items-center gap-2 font-semibold text-highlighted">
           <UIcon
             name="i-lucide-badge-check"
-            class="size-4 text-primary"
+            class="size-4 shrink-0 text-primary"
           />
           Zusatzbezeichnungen
         </h4>
@@ -73,7 +73,7 @@ defineProps<{
         <h4 class="mb-3 flex items-center gap-2 font-semibold text-highlighted">
           <UIcon
             name="i-lucide-award"
-            class="size-4 text-primary"
+            class="size-4 shrink-0 text-primary"
           />
           Werdegang
         </h4>
@@ -97,13 +97,14 @@ defineProps<{
           <li
             v-for="(item, i) in interests"
             :key="i"
-            class="flex items-center gap-2"
           >
-            <UIcon
-              :name="item.icon"
-              class="size-4 text-primary"
-            />
-            {{ item.text }}
+            <PraxisIconWithText
+              :icon="item.icon"
+              size="sm"
+              icon-class="text-primary"
+            >
+              {{ item.text }}
+            </PraxisIconWithText>
           </li>
         </ul>
       </div>
