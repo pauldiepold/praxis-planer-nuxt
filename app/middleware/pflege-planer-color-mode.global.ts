@@ -9,7 +9,8 @@ export default defineNuxtRouteMiddleware((to) => {
   const colorMode = useColorMode()
   if (to.path.startsWith('/pflege-planer')) {
     colorMode.preference = 'dark'
-  } else {
+  }
+  else {
     colorMode.preference = 'light'
   }
 })

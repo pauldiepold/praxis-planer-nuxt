@@ -80,8 +80,7 @@ const currentYear = new Date().getFullYear()
               to="/termine#app"
               class="font-medium text-primary-50/80 hover:text-primary-50 transition-colors underline underline-offset-2"
             >
-              Praxis App
-            </NuxtLink>.
+              Praxis App</NuxtLink>.
           </p>
         </div>
 

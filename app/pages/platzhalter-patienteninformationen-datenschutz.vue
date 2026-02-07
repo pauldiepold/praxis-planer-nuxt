@@ -22,7 +22,10 @@ useHead({
     </section>
     <UContainer class="py-10">
       <p class="text-muted">
-        <NuxtLink to="/datenschutz" class="text-primary hover:underline">
+        <NuxtLink
+          to="/datenschutz"
+          class="text-primary hover:underline"
+        >
           Zurück zur Datenschutzerklärung
         </NuxtLink>
       </p>

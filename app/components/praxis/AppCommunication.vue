@@ -65,7 +65,10 @@ defineProps<{
         </div>
 
         <p class="text-xs text-dimmed flex items-center gap-1">
-          <Icon name="i-lucide-bell" class="shrink-0" />
+          <Icon
+            name="i-lucide-bell"
+            class="shrink-0"
+          />
           Tipp: Eltern sollten ein gemeinsames Login nutzen, damit der Chat richtig funktioniert.
         </p>
       </div>

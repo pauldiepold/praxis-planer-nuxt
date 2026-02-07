@@ -43,7 +43,10 @@ useHead({
           <p class="text-muted">
             Telefon: +49 5551-90 99 307<br>
             Fax: +49 5551-90 99 308<br>
-            E-Mail: <a href="mailto:kinderarzt@praxis-hd.de" class="text-primary hover:underline">kinderarzt@praxis-hd.de</a>
+            E-Mail: <a
+              href="mailto:kinderarzt@praxis-hd.de"
+              class="text-primary hover:underline"
+            >kinderarzt@praxis-hd.de</a>
           </p>
         </section>
 
@@ -53,9 +56,17 @@ useHead({
           </h2>
           <p class="text-muted">
             Landesärztekammer Niedersachsen, Berliner Allee 20, 30175 Hannover,<br>
-            Telefon: +49 511 380 0, Internet: <a href="https://www.aekn.de" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">www.aekn.de</a><br>
+            Telefon: +49 511 380 0, Internet: <a
+              href="https://www.aekn.de"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary hover:underline"
+            >www.aekn.de</a><br>
             Ärztekammer Bezirksstelle Göttingen, Elbinger Str. 2, 37083 Göttingen,<br>
-            Telefax: +49 551 3070 23 29, E-Mail: <a href="mailto:bz.goettingen@aekn.de" class="text-primary hover:underline">bz.goettingen@aekn.de</a>
+            Telefax: +49 551 3070 23 29, E-Mail: <a
+              href="mailto:bz.goettingen@aekn.de"
+              class="text-primary hover:underline"
+            >bz.goettingen@aekn.de</a>
           </p>
         </section>
 
@@ -65,8 +76,19 @@ useHead({
           </h2>
           <p class="text-muted">
             Kassenärztliche Vereinigung Niedersachsen, Berliner Allee 22, 30175 Hannover,<br>
-            Telefon: +49 511 380 03, Telefax: +49 511 380 3491, E-Mail: <a href="mailto:info@kvn.de" class="text-primary hover:underline">info@kvn.de</a>, Internet: <a href="https://www.kvn.de" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">www.kvn.de</a><br>
-            Bezirksstelle Göttingen, Elbinger Str. 2, 37083 Göttingen (Postfach 2541, 37015 Göttingen), Telefon: +49 551 70 70 9 0, Telefax: +49 551 70 70 9 170, E-Mail: <a href="mailto:kvn.goettingen@kvn.de" class="text-primary hover:underline">kvn.goettingen@kvn.de</a>
+            Telefon: +49 511 380 03, Telefax: +49 511 380 3491, E-Mail: <a
+              href="mailto:info@kvn.de"
+              class="text-primary hover:underline"
+            >info@kvn.de</a>, Internet: <a
+              href="https://www.kvn.de"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary hover:underline"
+            >www.kvn.de</a><br>
+            Bezirksstelle Göttingen, Elbinger Str. 2, 37083 Göttingen (Postfach 2541, 37015 Göttingen), Telefon: +49 551 70 70 9 0, Telefax: +49 551 70 70 9 170, E-Mail: <a
+              href="mailto:kvn.goettingen@kvn.de"
+              class="text-primary hover:underline"
+            >kvn.goettingen@kvn.de</a>
           </p>
         </section>
 
@@ -105,7 +127,10 @@ useHead({
           </h2>
           <p class="text-muted">
             Paul Diepold<br>
-            E-Mail: <a href="mailto:webmaster@praxis-hd.de" class="text-primary hover:underline">webmaster@praxis-hd.de</a>
+            E-Mail: <a
+              href="mailto:webmaster@praxis-hd.de"
+              class="text-primary hover:underline"
+            >webmaster@praxis-hd.de</a>
           </p>
         </section>
 

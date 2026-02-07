@@ -41,10 +41,16 @@ useHead({
             Telefax: +49 5551 90 99 308
           </p>
           <p class="mt-2 text-muted">
-            Link zum Impressum: <NuxtLink to="/impressum" class="text-primary hover:underline">/impressum</NuxtLink>
+            Link zum Impressum: <NuxtLink
+              to="/impressum"
+              class="text-primary hover:underline"
+            >/impressum</NuxtLink>
           </p>
           <p class="mt-2 text-muted">
-            Kontakt Datenschutz-Beauftragter: <a href="mailto:datenschutz@praxis-hd.de" class="text-primary hover:underline">datenschutz@praxis-hd.de</a>
+            Kontakt Datenschutz-Beauftragter: <a
+              href="mailto:datenschutz@praxis-hd.de"
+              class="text-primary hover:underline"
+            >datenschutz@praxis-hd.de</a>
           </p>
         </section>
 
@@ -58,7 +64,10 @@ useHead({
             Ansprechpartner für den Datenschutz ist einer der oben genannten Praxisinhaber selbst, in Person von Herrn Thomas Holstein-Diepold.
           </p>
           <p class="mt-4 text-muted">
-            <NuxtLink to="/platzhalter-patienteninformationen-datenschutz" class="text-primary hover:underline">Patienteninformationen zum Datenschutz (Download)</NuxtLink>
+            <NuxtLink
+              to="/platzhalter-patienteninformationen-datenschutz"
+              class="text-primary hover:underline"
+            >Patienteninformationen zum Datenschutz (Download)</NuxtLink>
           </p>
         </section>
 
@@ -214,7 +223,17 @@ useHead({
             Falls die Nutzer nicht möchten, dass Cookies auf ihrem Rechner gespeichert werden, werden sie gebeten die entsprechende Option in den Systemeinstellungen ihres Browsers zu deaktivieren. Gespeicherte Cookies können in den Systemeinstellungen des Browsers gelöscht werden. Der Ausschluss von Cookies kann zu Funktionseinschränkungen dieses Onlineangebotes führen.
           </p>
           <p class="mt-4 text-muted">
-            Ein genereller Widerspruch gegen den Einsatz der zu Zwecken des Onlinemarketing eingesetzten Cookies kann bei einer Vielzahl der Dienste, vor allem im Fall des Trackings, über die US-amerikanische Seite <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">http://www.aboutads.info/choices/</a> oder die EU-Seite <a href="https://www.youronlinechoices.com/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">http://www.youronlinechoices.com/</a> erklärt werden. Des Weiteren kann die Speicherung von Cookies mittels deren Abschaltung in den Einstellungen des Browsers erreicht werden. Bitte beachten Sie, dass dann gegebenenfalls nicht alle Funktionen dieses Onlineangebotes genutzt werden können.
+            Ein genereller Widerspruch gegen den Einsatz der zu Zwecken des Onlinemarketing eingesetzten Cookies kann bei einer Vielzahl der Dienste, vor allem im Fall des Trackings, über die US-amerikanische Seite <a
+              href="https://www.aboutads.info/choices/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary hover:underline"
+            >http://www.aboutads.info/choices/</a> oder die EU-Seite <a
+              href="https://www.youronlinechoices.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary hover:underline"
+            >http://www.youronlinechoices.com/</a> erklärt werden. Des Weiteren kann die Speicherung von Cookies mittels deren Abschaltung in den Einstellungen des Browsers erreicht werden. Bitte beachten Sie, dass dann gegebenenfalls nicht alle Funktionen dieses Onlineangebotes genutzt werden können.
           </p>
         </section>
 
