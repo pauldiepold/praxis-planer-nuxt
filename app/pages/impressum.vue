@@ -1,7 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
   title: 'Impressum',
-  layout: 'home',
 })
 
 useHead({

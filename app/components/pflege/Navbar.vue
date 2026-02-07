@@ -52,19 +52,19 @@ const toggleMenu = () => {
           class="hidden lg:block"
         >
           <ul class="flex space-x-6">
-            <LayoutHeaderLink
+            <PflegeHeaderLink
               to="/pflege-planer"
               label="Startseite"
             />
-            <LayoutHeaderLink
+            <PflegeHeaderLink
               to="/pflege-planer/students"
               label="Schülerinnen"
             />
-            <LayoutHeaderLink
+            <PflegeHeaderLink
               to="/pflege-planer/schools"
               label="Pflegeschulen"
             />
-            <LayoutHeaderLink
+            <PflegeHeaderLink
               to="/pflege-planer/companies"
               label="Betriebe"
             />
@@ -119,25 +119,25 @@ const toggleMenu = () => {
         class="bg-muted absolute right-0 left-0 z-50 lg:hidden"
       >
         <ul class="space-y-4 px-4 py-4">
-          <LayoutHeaderLinkMobile
+          <PflegeHeaderLinkMobile
             to="/pflege-planer"
             label="Startseite"
             :is-menu-open="isMenuOpen"
             @close-menu="isMenuOpen = false"
           />
-          <LayoutHeaderLinkMobile
+          <PflegeHeaderLinkMobile
             to="/pflege-planer/students"
             label="Schülerinnen"
             :is-menu-open="isMenuOpen"
             @close-menu="isMenuOpen = false"
           />
-          <LayoutHeaderLinkMobile
+          <PflegeHeaderLinkMobile
             to="/pflege-planer/schools"
             label="Pflegeschulen"
             :is-menu-open="isMenuOpen"
             @close-menu="isMenuOpen = false"
           />
-          <LayoutHeaderLinkMobile
+          <PflegeHeaderLinkMobile
             to="/pflege-planer/companies"
             label="Betriebe"
             :is-menu-open="isMenuOpen"

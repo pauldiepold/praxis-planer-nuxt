@@ -1,7 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
   title: 'Datenschutz',
-  layout: 'home',
 })
 
 useHead({

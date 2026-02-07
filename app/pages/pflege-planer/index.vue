@@ -220,7 +220,6 @@ onMounted(async () => {
 
 definePageMeta({
   title: 'Startseite',
-  layout: 'fullwidth',
 })
 
 // Seitenspezifischer Titel
@@ -347,7 +346,7 @@ useHead({
             v-if="weeksByMonth[month-1] && (weeksByMonth[month-1]?.length ?? 0) > 0"
             class="space-y-3"
           >
-            <CalendarWeek
+            <PflegeWeek
               v-for="week in (weeksByMonth[month-1] || [])"
               :key="week.id"
               :week="week"

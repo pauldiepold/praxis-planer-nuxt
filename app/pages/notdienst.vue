@@ -3,7 +3,6 @@ import type { EmergencyService } from '~/components/praxis/EmergencyAndClinics.v
 
 definePageMeta({
   title: 'Notdienst',
-  layout: 'home',
 })
 
 useHead({

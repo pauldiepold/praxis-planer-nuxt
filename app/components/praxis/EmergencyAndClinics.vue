@@ -44,10 +44,10 @@ defineProps<{
 
 <template>
   <div>
-    <PraxisPageSection id="bereitschaftsdienst">
-      <PraxisCard left-border="accent">
+    <BasePageSection id="bereitschaftsdienst">
+      <BaseCard left-border="accent">
         <template #header>
-          <PraxisHeadingWithIcon
+          <BaseHeadingWithIcon
             icon="i-lucide-hospital"
             layout="inline"
             size="md"
@@ -55,7 +55,7 @@ defineProps<{
             <p class="text-base font-semibold text-highlighted">
               Kinderärztlicher Bereitschaftsdienst
             </p>
-          </PraxisHeadingWithIcon>
+          </BaseHeadingWithIcon>
         </template>
 
         <div class="grid gap-6 lg:grid-cols-2">
@@ -123,10 +123,10 @@ defineProps<{
             </p>
           </div>
         </div>
-      </PraxisCard>
-    </PraxisPageSection>
+      </BaseCard>
+    </BasePageSection>
 
-    <PraxisPageSection
+    <BasePageSection
       id="notfaelle"
       bg-class="bg-red-600 text-white"
     >
@@ -178,9 +178,9 @@ defineProps<{
           </div>
         </div>
       </div>
-    </PraxisPageSection>
+    </BasePageSection>
 
-    <PraxisPageSection
+    <BasePageSection
       id="kliniken"
       heading="Nahegelegene Kinderkliniken"
       bg-class="bg-neutral-100"
@@ -238,6 +238,6 @@ defineProps<{
           </div>
         </div>
       </div>
-    </PraxisPageSection>
+    </BasePageSection>
   </div>
 </template>

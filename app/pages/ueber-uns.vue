@@ -1,7 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
   title: 'Über uns',
-  layout: 'home',
 })
 
 useHead({
@@ -169,7 +168,7 @@ const teamMembers: TeamMember[] = [
           </h2>
         </div>
 
-        <PraxisCard
+        <BaseCard
           class="bg-muted"
           content-class="p-12 text-center"
         >
@@ -180,7 +179,7 @@ const teamMembers: TeamMember[] = [
           <p class="text-muted">
             Hier folgen Photos der Praxisräumlichkeiten.
           </p>
-        </PraxisCard>
+        </BaseCard>
       </UContainer>
     </section>
   </div>

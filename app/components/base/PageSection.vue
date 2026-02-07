@@ -13,7 +13,7 @@ defineProps<{
     :class="bgClass"
   >
     <UContainer class="space-y-10">
-      <PraxisSectionHeading
+      <BaseSectionHeading
         v-if="heading"
         :id="id"
         :heading="heading"

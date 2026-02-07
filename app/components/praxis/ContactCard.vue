@@ -30,7 +30,7 @@ defineProps<{
 
 <template>
   <div class="space-y-6">
-    <PraxisCard>
+    <BaseCard>
       <div class="grid gap-6 md:grid-cols-2">
         <div class="space-y-4">
           <div class="space-y-0.5">
@@ -108,9 +108,9 @@ defineProps<{
       </div>
 
     <!-- Barrierefrei + Parken, je halbe Breite -->
-    </PraxisCard>
+    </BaseCard>
     <div class="mt-6 grid gap-6 sm:grid-cols-2">
-      <PraxisCard>
+      <BaseCard>
         <template #header>
           <div class="mb-1 flex items-center gap-2">
             <UIcon
@@ -128,9 +128,9 @@ defineProps<{
         <p class="mt-1 text-xs text-muted">
           {{ accessibility.details }}
         </p>
-      </PraxisCard>
+      </BaseCard>
 
-      <PraxisCard>
+      <BaseCard>
         <template #header>
           <div class="mb-1 flex items-center gap-2">
             <UIcon
@@ -148,7 +148,7 @@ defineProps<{
         <p class="mt-1 text-xs text-muted">
           {{ parking.details }}
         </p>
-      </PraxisCard>
+      </BaseCard>
     </div>
   </div>
 </template>

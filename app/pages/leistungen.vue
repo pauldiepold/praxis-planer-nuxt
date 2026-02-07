@@ -1,7 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
   title: 'Leistungsspektrum',
-  layout: 'home',
 })
 
 useHead({
@@ -162,14 +161,14 @@ const categories = [
       </div>
 
       <div class="mt-12 text-center">
-        <PraxisCard class="inline-block">
+        <BaseCard class="inline-block">
           <p class="mb-2 text-lg font-medium text-highlighted">
             Noch Wünsche? – Fragen Sie nach!
           </p>
           <p class="text-muted">
             Sprechen Sie uns gerne an, wenn Sie weitere Fragen zu unserem Leistungsspektrum haben.
           </p>
-        </PraxisCard>
+        </BaseCard>
       </div>
     </UContainer>
   </div>

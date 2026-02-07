@@ -98,13 +98,13 @@ defineProps<{
             v-for="(item, i) in interests"
             :key="i"
           >
-            <PraxisIconWithText
+            <BaseIconWithText
               :icon="item.icon"
               size="sm"
               icon-class="text-primary"
             >
               {{ item.text }}
-            </PraxisIconWithText>
+            </BaseIconWithText>
           </li>
         </ul>
       </div>

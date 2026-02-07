@@ -1,7 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
   title: 'Startseite',
-  layout: 'home',
 })
 
 useHead({
@@ -118,7 +117,7 @@ const phoneTel = 'tel:+4955519099307'
           </div>
 
           <div class="space-y-6">
-            <PraxisCard left-border="accent">
+            <BaseCard left-border="accent">
               <h3 class="font-semibold text-lg text-highlighted mb-2">
                 Praxis App als E-Mail-Ersatz
               </h3>
@@ -127,9 +126,9 @@ const phoneTel = 'tel:+4955519099307'
                 Hierüber können wir datenschutzkonform mit Ihnen kommunizieren, einschließlich Austausch von Dokumenten
                 wie Fotos, Laborbefunde oder Protokollen. E-Mails werden nur noch unregelmäßig gelesen.
               </p>
-            </PraxisCard>
+            </BaseCard>
 
-            <PraxisCard left-border="primary">
+            <BaseCard left-border="primary">
               <h3 class="font-semibold text-lg text-highlighted mb-2">
                 Neues Leistungsangebot: Osteopathie
               </h3>
@@ -138,7 +137,7 @@ const phoneTel = 'tel:+4955519099307'
                 Osteopathischer Säuglings- und Kinderbehandlung erweitert. Termine, auch für praxisfremde Kinder,
                 vergeben wir auf Anfrage telefonisch oder über die Chat-Funktion der PraxisApp.
               </p>
-            </PraxisCard>
+            </BaseCard>
           </div>
         </div>
       </UContainer>
@@ -152,15 +151,15 @@ const phoneTel = 'tel:+4955519099307'
             to="/termine"
             class="group block"
           >
-            <PraxisCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
-              <PraxisHeadingWithIcon
+            <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
+              <BaseHeadingWithIcon
                 icon="i-lucide-calendar"
                 layout="responsive"
               >
                 <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
                   Termine & Kontakt
                 </h3>
-              </PraxisHeadingWithIcon>
+              </BaseHeadingWithIcon>
               <p class="text-sm text-muted mb-3">
                 Sprechzeiten, Anfahrt, Terminbuchung und Erreichbarkeit.
               </p>
@@ -171,22 +170,22 @@ const phoneTel = 'tel:+4955519099307'
                   class="size-4 shrink-0"
                 />
               </span>
-            </PraxisCard>
+            </BaseCard>
           </NuxtLink>
 
           <NuxtLink
             to="/notdienst"
             class="group block"
           >
-            <PraxisCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
-              <PraxisHeadingWithIcon
+            <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
+              <BaseHeadingWithIcon
                 icon="i-lucide-hospital"
                 layout="responsive"
               >
                 <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
                   Notdienst
                 </h3>
-              </PraxisHeadingWithIcon>
+              </BaseHeadingWithIcon>
               <p class="text-sm text-muted mb-3">
                 Außerhalb der Sprechzeiten: Bereitschaftsdienst und Kinderkliniken.
               </p>
@@ -197,22 +196,22 @@ const phoneTel = 'tel:+4955519099307'
                   class="size-4 shrink-0"
                 />
               </span>
-            </PraxisCard>
+            </BaseCard>
           </NuxtLink>
 
           <NuxtLink
             to="/leistungen"
             class="group block"
           >
-            <PraxisCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
-              <PraxisHeadingWithIcon
+            <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
+              <BaseHeadingWithIcon
                 icon="i-lucide-stethoscope"
                 layout="responsive"
               >
                 <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
                   Leistungen
                 </h3>
-              </PraxisHeadingWithIcon>
+              </BaseHeadingWithIcon>
               <p class="text-sm text-muted mb-3">
                 Von Vorsorgen über Allergietests bis zur Neuropädiatrie – unser umfassendes Angebot.
               </p>
@@ -223,14 +222,14 @@ const phoneTel = 'tel:+4955519099307'
                   class="size-4 shrink-0"
                 />
               </span>
-            </PraxisCard>
+            </BaseCard>
           </NuxtLink>
 
           <NuxtLink
             to="/ueber-uns"
             class="group block"
           >
-            <PraxisCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
+            <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
               <div class="flex flex-row items-start gap-3 md:flex-col md:gap-2 mb-2">
                 <div class="size-10 shrink-0 rounded-full bg-primary/10 flex items-center justify-center">
                   <span class="text-primary font-bold text-sm">HD</span>
@@ -249,7 +248,7 @@ const phoneTel = 'tel:+4955519099307'
                   class="size-4 shrink-0"
                 />
               </span>
-            </PraxisCard>
+            </BaseCard>
           </NuxtLink>
         </div>
       </UContainer>

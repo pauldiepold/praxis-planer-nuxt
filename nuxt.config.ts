@@ -38,15 +38,11 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    // Öffentliche statische Praxis-Seiten: Pre-Rendering für bessere Performance & SEO
-    '/': { prerender: true },
-    '/datenschutz': { prerender: true },
-    '/impressum': { prerender: true },
-    '/leistungen': { prerender: true },
-    '/notdienst': { prerender: true },
-    '/patienteninfos': { prerender: true },
-    '/termine': { prerender: true },
-    '/ueber-uns': { prerender: true },
+    // Default: alle Routen beim Build vorrendern (statisch). Default-Layout = praxis (app/layouts/default.vue)
+    '/**': { prerender: true },
+    // Pflege-Planer: nicht vorrendern (SPA/on-demand), eigenes Layout
+    '/pflege-planer': { appLayout: 'pflege-planer-landing', prerender: false },
+    '/pflege-planer/**': { appLayout: 'pflege-planer', prerender: false },
   },
 
   compatibilityDate: '2025-12-11',

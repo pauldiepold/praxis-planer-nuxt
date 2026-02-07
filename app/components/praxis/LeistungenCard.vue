@@ -27,10 +27,10 @@ const iconColor = computed(() => props.iconColorClass ?? props.colorClass ?? 'te
 </script>
 
 <template>
-  <PraxisCard class="flex h-full flex-col transition-shadow hover:shadow-lg">
+  <BaseCard class="flex h-full flex-col transition-shadow hover:shadow-lg">
     <template #header>
       <div class="mb-4">
-        <PraxisHeadingWithIcon
+        <BaseHeadingWithIcon
           :icon="icon"
           layout="inline"
           :icon-box-class="iconBox"
@@ -39,7 +39,7 @@ const iconColor = computed(() => props.iconColorClass ?? props.colorClass ?? 'te
           <h3 class="text-xl font-semibold leading-tight text-highlighted">
             {{ title }}
           </h3>
-        </PraxisHeadingWithIcon>
+        </BaseHeadingWithIcon>
       </div>
     </template>
     <ul class="list-none space-y-2 pl-0">
@@ -67,5 +67,5 @@ const iconColor = computed(() => props.iconColorClass ?? props.colorClass ?? 'te
     >
       ℹ️ {{ note }}
     </p>
-  </PraxisCard>
+  </BaseCard>
 </template>

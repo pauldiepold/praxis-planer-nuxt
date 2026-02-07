@@ -15,7 +15,7 @@ defineProps<{
 </script>
 
 <template>
-  <PraxisCard
+  <BaseCard
     subtle-border
   >
     <div class="grid gap-6 lg:grid-cols-2">
@@ -90,5 +90,5 @@ defineProps<{
         </div>
       </div>
     </div>
-  </PraxisCard>
+  </BaseCard>
 </template>

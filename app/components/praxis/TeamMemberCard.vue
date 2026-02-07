@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-  <PraxisCard class="text-center transition-shadow hover:shadow-md">
+  <BaseCard class="text-center transition-shadow hover:shadow-md">
     <div class="mx-auto mb-4 flex h-24 w-24 items-center justify-center overflow-hidden rounded-xl bg-primary/10">
       <img
         v-if="image"
@@ -28,5 +28,5 @@ defineProps<{
     <p class="text-sm text-muted">
       {{ role }}
     </p>
-  </PraxisCard>
+  </BaseCard>
 </template>

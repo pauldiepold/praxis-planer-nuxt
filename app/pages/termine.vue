@@ -4,7 +4,6 @@ import { DOCTOLIB_URL } from '~/utils/doctolib'
 
 definePageMeta({
   title: 'Termine & Kontakt',
-  layout: 'home',
 })
 
 useHead({
@@ -80,7 +79,7 @@ const emails = [
       </UContainer>
     </section>
 
-    <PraxisPageSection
+    <BasePageSection
       id="termine"
       heading="Termine & Erreichbarkeit"
     >
@@ -88,9 +87,9 @@ const emails = [
         :phone-hours="phoneHours"
         :appointment-links="{ doctolibUrl: DOCTOLIB_URL }"
       />
-    </PraxisPageSection>
+    </BasePageSection>
 
-    <PraxisPageSection
+    <BasePageSection
       id="anfahrt"
       heading="Praxis & Anfahrt"
       bg-class="bg-primary-50"
@@ -100,9 +99,9 @@ const emails = [
         :accessibility="accessibility"
         :parking="parking"
       />
-    </PraxisPageSection>
+    </BasePageSection>
 
-    <PraxisPageSection
+    <BasePageSection
       id="app"
       heading="Praxis App"
     >
@@ -110,14 +109,14 @@ const emails = [
         :app-links="appLinks"
         :use-cases="appUseCases"
       />
-    </PraxisPageSection>
+    </BasePageSection>
 
-    <PraxisPageSection
+    <BasePageSection
       id="email"
       heading="E-Mail"
       bg-class="bg-primary-50"
     >
       <PraxisEmailContacts :emails="emails" />
-    </PraxisPageSection>
+    </BasePageSection>
   </div>
 </template>

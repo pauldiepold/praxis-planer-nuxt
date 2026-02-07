@@ -19,8 +19,8 @@ defineProps<{
 
 <template>
   <div class="space-y-6">
-    <PraxisCard>
-      <PraxisHeadingWithIcon
+    <BaseCard>
+      <BaseHeadingWithIcon
         icon="i-lucide-clock"
         layout="inline"
         size="md"
@@ -28,7 +28,7 @@ defineProps<{
         <p class="font-semibold text-highlighted">
           Telefonzeiten
         </p>
-      </PraxisHeadingWithIcon>
+      </BaseHeadingWithIcon>
 
       <div class="grid gap-4 lg:grid-cols-2 pt-4 items-center">
         <div class="space-y-2">
@@ -64,15 +64,15 @@ defineProps<{
           </div>
         </div>
       </div>
-    </PraxisCard>
+    </BaseCard>
 
     <div class="grid gap-4 lg:grid-cols-7">
-      <PraxisCard
+      <BaseCard
         left-border="primary"
         class="lg:col-span-2"
       >
         <template #header>
-          <PraxisHeadingWithIcon
+          <BaseHeadingWithIcon
             icon="i-lucide-stethoscope"
             layout="inline"
             size="md"
@@ -80,20 +80,20 @@ defineProps<{
             <p class="font-semibold text-highlighted">
               Terminsprechstunde
             </p>
-          </PraxisHeadingWithIcon>
+          </BaseHeadingWithIcon>
         </template>
         <p class="text-sm text-muted">
           Wir arbeiten im Rahmen einer Terminsprechstunde. Um unnötige Wartezeiten zu vermeiden, bitten wir Sie,
           vor jedem Besuch einen Termin online zu vereinbaren oder anzurufen.
         </p>
-      </PraxisCard>
+      </BaseCard>
 
-      <PraxisCard
+      <BaseCard
         left-border="accent"
         class="lg:col-span-3"
       >
         <template #header>
-          <PraxisHeadingWithIcon
+          <BaseHeadingWithIcon
             icon="i-lucide-triangle-alert"
             layout="inline"
             size="md"
@@ -102,7 +102,7 @@ defineProps<{
             <p class="font-semibold text-highlighted">
               Akutsprechstunde
             </p>
-          </PraxisHeadingWithIcon>
+          </BaseHeadingWithIcon>
         </template>
         <div class="space-y-2 text-sm text-muted">
           <p>
@@ -118,14 +118,14 @@ defineProps<{
             die Akutsprechstunde an).
           </p>
         </div>
-      </PraxisCard>
+      </BaseCard>
 
-      <PraxisCard
+      <BaseCard
         left-border="sky-blue"
         class="lg:col-span-2"
       >
         <template #header>
-          <PraxisHeadingWithIcon
+          <BaseHeadingWithIcon
             icon="i-lucide-video"
             layout="inline"
             size="md"
@@ -133,12 +133,12 @@ defineProps<{
             <p class="font-semibold text-highlighted">
               Videosprechstunde
             </p>
-          </PraxisHeadingWithIcon>
+          </BaseHeadingWithIcon>
         </template>
         <p class="text-sm text-muted">
           Wir bieten auch eine Videosprechstunde an, die über den Online-Terminkalender zu buchen ist.
         </p>
-      </PraxisCard>
+      </BaseCard>
     </div>
 
     <div class="flex justify-center">
@@ -154,7 +154,7 @@ defineProps<{
       </UButton>
     </div>
 
-    <PraxisCard subtle-border>
+    <BaseCard subtle-border>
       <div class="space-y-3">
         <p class="font-semibold text-highlighted">
           Wichtige Hinweise zur Online-Terminvergabe
@@ -176,6 +176,6 @@ defineProps<{
           </li>
         </ul>
       </div>
-    </PraxisCard>
+    </BaseCard>
   </div>
 </template>

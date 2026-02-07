@@ -33,6 +33,14 @@
         >
           zum GitHub-Repo
         </UButton>
+        <UButton
+          href="/"
+          icon="i-lucide-home"
+          variant="ghost"
+          class="hover:text-primary transition-colors"
+        >
+          zur regulären Homepage
+        </UButton>
       </div>
     </div>
   </footer>
