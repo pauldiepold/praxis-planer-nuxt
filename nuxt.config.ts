@@ -2,11 +2,13 @@
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
+    '@nuxt/content',
     '@nuxt/eslint',
     '@nuxthub/core',
     '@nuxt/fonts',
     'nuxt-auth-utils',
     '@pinia/nuxt',
+    'nuxt-studio',
   ],
 
   ssr: false,
@@ -24,6 +26,10 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  content: {
+    experimental: { sqliteConnector: 'native' as const },
+  },
+
   runtimeConfig: {
     allowedUsers: process.env.NUXT_ALLOWED_USERS || '',
     oauth: {
@@ -40,6 +46,9 @@ export default defineNuxtConfig({
   routeRules: {
     // Default: alle Routen beim Build vorrendern (statisch). Default-Layout = praxis (app/layouts/default.vue)
     '/**': { prerender: true },
+    // Nuxt Studio: nicht vorrendern (wird bei Production mit SSR für Auth benötigt)
+    '/_studio': { prerender: false },
+    '/_studio/**': { prerender: false },
     // Pflege-Planer: nicht vorrendern (SPA/on-demand), eigenes Layout
     '/pflege-planer': { appLayout: 'pflege-planer-landing', prerender: false },
     '/pflege-planer/**': { appLayout: 'pflege-planer', prerender: false },
@@ -73,5 +82,17 @@ export default defineNuxtConfig({
       prefix: 'praxis',
       dir: './app/assets/icons',
     }],
+  },
+
+  studio: {
+    route: '/_studio',
+    // Repository für Production-Publish: Cloudflare erkennt Repo nicht automatisch.
+    // Bitte owner/repo/branch anpassen (siehe https://nuxt.studio/setup):
+    repository: {
+      provider: 'github',
+      owner: 'pauldiepold',
+      repo: 'praxis-planer-nuxt',
+      branch: 'neue-website',
+    },
   },
 })

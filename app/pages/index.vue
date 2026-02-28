@@ -22,84 +22,71 @@ const appUseCases = [
 
 const phoneDisplay = '05551 90 99 307'
 const phoneTel = 'tel:+4955519099307'
+
+const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
+  queryCollection('aktuelles')
+    .where('hidden', '=', false)
+    .order('date', 'DESC')
+    .limit(3)
+    .all(),
+)
 </script>
 
 <template>
   <div>
-    <!-- Hero Section mit Hintergrundbild – füllt Viewport, kein Weiß sichtbar -->
-    <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
-      <div
-        class="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        :style="{ backgroundImage: 'url(/hero-empfang.webp)' }"
-      />
-      <!-- Fade: oben dunkler, unten ins Weiße für ruhigen Übergang -->
-      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-white" />
+    <!-- Geteilte Hero Section: Text links, Bild rechts -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 min-h-[55vh] lg:min-h-[60vh]">
+      <!-- Linke Hälfte: Begrüßung, Namen als Unterschrift, CTAs -->
+      <div class="flex flex-col justify-center bg-primary-50 dark:bg-primary-950/30 px-6 py-12 lg:py-16 lg:pl-12 xl:pl-20">
+        <div class="max-w-lg">
+          <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-highlighted mb-4 leading-tight">
+            Herzlich willkommen!
+          </h1>
+          <p class="text-base md:text-lg text-muted-foreground mb-2">
+            Wir freuen uns darauf, Sie und Ihre Kinder beim Heranwachsen zu begleiten.
+          </p>
+          <p class="text-sm md:text-base text-muted-foreground/90 mb-8 font-medium">
+            Th. Holstein-Diepold & Dr. K. Diepold
+          </p>
 
-      <div class="relative w-full pt-8 pb-12 md:py-16 text-center">
-        <UContainer>
-          <div class="max-w-3xl mx-auto">
-            <p class="text-white/90 font-medium mb-2 text-base md:text-lg drop-shadow-sm">
-              Praxis für Kinder- und Jugendmedizin
-            </p>
-            <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2 leading-tight drop-shadow-md">
-              Thomas Holstein-Diepold & Dr. Katharina Diepold
-            </h1>
-            <p class="text-base md:text-lg text-white/85 mb-6 max-w-xl mx-auto drop-shadow-sm">
-              Herzlich willkommen! Wir freuen uns darauf, Sie und Ihre Kinder beim Heranwachsen zu begleiten.
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-3 justify-center items-center mb-6">
-              <UButton
-                to="/termine"
-                size="md"
-                class="font-semibold text-sm md:text-base px-5 py-3 shadow-lg !bg-[var(--praxis-accent)] hover:!bg-[var(--praxis-accent)] hover:!opacity-90 active:!bg-[var(--praxis-accent)] text-gray-900 max-w-xs sm:max-w-none"
-              >
-                <UIcon
-                  name="i-lucide-calendar"
-                  class="size-4"
-                />
-                Termine & Kontakt
-              </UButton>
-              <UButton
-                :to="phoneTel"
-                size="md"
-                variant="outline"
-                color="neutral"
-                class="font-semibold text-sm md:text-base px-5 py-3 bg-white/20 hover:bg-white/30 text-white !border-white/30 ring-0 focus:ring-0 backdrop-blur-sm max-w-xs sm:max-w-none"
-              >
-                <UIcon
-                  name="i-lucide-phone"
-                  class="size-4"
-                />
-                {{ phoneDisplay }}
-              </UButton>
-            </div>
-
-            <div class="rounded-xl p-4 md:p-5 max-w-xl mx-auto border border-white/20 dark:border-gray-500/30 shadow-md bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm text-left">
-              <div class="flex items-start gap-3">
-                <UIcon
-                  name="i-lucide-stethoscope"
-                  class="size-5 text-primary mt-0.5 shrink-0"
-                />
-                <p class="font-medium text-sm md:text-base text-foreground">
-                  Wir sind eine Terminpraxis
-                </p>
-              </div>
-              <p class="text-muted-foreground text-sm mt-2">
-                Für kurze Wartezeiten vergeben wir alle Termine vorab. Täglich reservieren wir Zeit für die
-                <span class="font-medium text-foreground">Akutsprechstunde</span>
-                – auch kurzfristige Anliegen bekommen einen Termin.
-              </p>
-            </div>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <UButton
+              to="/termine"
+              size="md"
+              class="font-semibold !bg-[var(--praxis-accent)] hover:!opacity-90 text-gray-900"
+            >
+              <UIcon
+                name="i-lucide-calendar"
+                class="size-4"
+              />
+              Termine & Kontakt
+            </UButton>
+            <UButton
+              :to="phoneTel"
+              size="md"
+              variant="outline"
+              color="neutral"
+              class="font-semibold"
+            >
+              <UIcon
+                name="i-lucide-phone"
+                class="size-4"
+              />
+              {{ phoneDisplay }}
+            </UButton>
           </div>
-        </UContainer>
+        </div>
       </div>
 
-      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 animate-bounce">
-        <UIcon
-          name="i-lucide-chevron-down"
-          class="size-6 text-gray-600/80"
-        />
+      <!-- Rechte Hälfte: Bild -->
+      <div class="relative min-h-[40vh] lg:min-h-0 bg-gray-200 dark:bg-gray-800">
+        <img
+          src="/hero-empfang.webp"
+          alt="Praxis Empfang"
+          class="absolute inset-0 w-full h-full object-cover"
+          width="800"
+          height="600"
+        >
       </div>
     </section>
 
@@ -115,28 +102,24 @@ const phoneTel = 'tel:+4955519099307'
           </div>
 
           <div class="space-y-6">
-            <BaseCard left-border="accent">
-              <h3 class="font-semibold text-lg text-highlighted mb-2">
-                Praxis App als E-Mail-Ersatz
-              </h3>
-              <p class="text-muted">
-                Seit September 2025 nutzen wir als E-Mail-Ersatz den Chat der PraxisApp „Meine Pädiatrische Praxis".
-                Hierüber können wir datenschutzkonform mit Ihnen kommunizieren, einschließlich Austausch von Dokumenten
-                wie Fotos, Laborbefunde oder Protokollen. E-Mails werden nur noch unregelmäßig gelesen.
-              </p>
-            </BaseCard>
-
-            <BaseCard left-border="primary">
-              <h3 class="font-semibold text-lg text-highlighted mb-2">
-                Neues Leistungsangebot: Osteopathie
-              </h3>
-              <p class="text-muted">
-                Herr Holstein-Diepold hat sein Behandlungsspektrum mit einer Fortbildung in Manueller und
-                Osteopathischer Säuglings- und Kinderbehandlung erweitert. Termine, auch für praxisfremde Kinder,
-                vergeben wir auf Anfrage telefonisch oder über die Chat-Funktion der PraxisApp.
-              </p>
-            </BaseCard>
+            <NeuigkeitCard
+              v-for="item in neuigkeiten"
+              :key="item.path"
+              :item="item"
+            />
           </div>
+          <p class="mt-6">
+            <NuxtLink
+              to="/aktuelles"
+              class="text-primary font-medium text-sm inline-flex items-center gap-1 hover:underline"
+            >
+              Alle Neuigkeiten anzeigen
+              <UIcon
+                name="i-lucide-chevron-right"
+                class="size-4 shrink-0"
+              />
+            </NuxtLink>
+          </p>
         </div>
       </UContainer>
     </section>
