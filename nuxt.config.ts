@@ -12,7 +12,6 @@ export default defineNuxtConfig({
   ],
 
   ssr: false,
-
   devtools: { enabled: true },
 
   app: {
@@ -54,6 +53,10 @@ export default defineNuxtConfig({
     '/pflege-planer/**': { appLayout: 'pflege-planer', prerender: false },
   },
 
+  experimental: {
+    viteEnvironmentApi: true,
+  },
+
   compatibilityDate: '2025-12-11',
 
   nitro: {
@@ -64,6 +67,20 @@ export default defineNuxtConfig({
 
   hub: {
     db: 'sqlite',
+  },
+
+  vite: {
+    server: {
+      watch: {
+        usePolling: true,
+      },
+    },
+    optimizeDeps: {
+      include: [
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+      ],
+    },
   },
 
   eslint: {
@@ -93,6 +110,9 @@ export default defineNuxtConfig({
       owner: 'pauldiepold',
       repo: 'praxis-planer-nuxt',
       branch: 'neue-website',
+    },
+    editor: {
+      iconLibraries: ['lucide'],
     },
   },
 })

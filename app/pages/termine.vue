@@ -60,9 +60,9 @@ const appUseCases = [
 ] as const
 
 const emails = [
-  { label: 'Beide Ärzt:innen', email: 'aerzte@praxis-hd.de' },
   { label: 'Dr. Katharina Diepold', email: 'dr.diepold@praxis-hd.de' },
   { label: 'Thomas Holstein-Diepold', email: 'kinderarzt@praxis-hd.de' },
+  { label: 'Beide', email: 'aerzte@praxis-hd.de' },
 ] as const
 </script>
 
@@ -73,37 +73,22 @@ const emails = [
         <h1 class="mb-2 text-3xl font-bold text-highlighted md:text-4xl">
           Termine & Kontakt
         </h1>
-        <p class="text-muted">
-          Sprechzeiten, Anfahrt, Terminbuchung und Erreichbarkeit
-        </p>
       </UContainer>
     </section>
 
     <BasePageSection
       id="termine"
-      heading="Termine & Erreichbarkeit"
+      heading="Online-Terminvergabe"
     >
       <PraxisAppointmentAndHours
-        :phone-hours="phoneHours"
         :appointment-links="{ doctolibUrl: DOCTOLIB_URL }"
-      />
-    </BasePageSection>
-
-    <BasePageSection
-      id="anfahrt"
-      heading="Praxis & Anfahrt"
-      bg-class="bg-primary-50"
-    >
-      <PraxisContactCard
-        :contact="contact"
-        :accessibility="accessibility"
-        :parking="parking"
       />
     </BasePageSection>
 
     <BasePageSection
       id="app"
       heading="Praxis App"
+      bg-class="bg-primary-50"
     >
       <PraxisAppCommunication
         :app-links="appLinks"
@@ -112,8 +97,20 @@ const emails = [
     </BasePageSection>
 
     <BasePageSection
+      id="anfahrt"
+      heading="Telefon, Kontakt und Anfahrt"
+    >
+      <PraxisContactCard
+        :contact="contact"
+        :phone-hours="phoneHours"
+        :accessibility="accessibility"
+        :parking="parking"
+      />
+    </BasePageSection>
+
+    <BasePageSection
       id="email"
-      heading="E-Mail"
+      heading="E-Mail an die Ärztin oder den Arzt"
       bg-class="bg-primary-50"
     >
       <PraxisEmailContacts :emails="emails" />

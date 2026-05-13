@@ -18,31 +18,50 @@ defineProps<{
   <BaseCard
     subtle-border
   >
-    <div class="grid gap-6 lg:grid-cols-2">
-      <div class="space-y-4">
-        <div class="flex items-center gap-3">
-          <div class="rounded-lg flex shrink-0 items-center justify-center bg-primary/10 p-2">
-            <UIcon
-              name="i-lucide-smartphone"
-              class="size-5 text-primary"
-            />
-          </div>
-          <div class="space-y-0.5">
-            <p class=" font-semibold text-highlighted">
-              Meine pädiatrische Praxis
-            </p>
-            <p class="text-sm text-muted">
-              Sichere & datenschutzkonforme Kommunikation
-            </p>
-          </div>
+    <div class="mb-6 space-y-3">
+      <div class="flex items-center gap-4">
+        <div class="rounded-lg flex shrink-0 items-center justify-center bg-primary/10 p-3">
+          <UIcon
+            name="i-lucide-smartphone"
+            class="size-6 text-primary"
+          />
         </div>
+        <h3 class="text-xl font-bold text-highlighted md:text-2xl">
+          Schreiben Sie uns über die Praxis App
+        </h3>
+      </div>
+      <p class="text-base text-default">
+        Für Fragen an das Praxisteam nutzen Sie bitte die App <strong>„Meine pädiatrische Praxis“</strong> — sicher,
+        datenschutzkonform und direkt aus Ihrem Alltag heraus. Der Chat wird während der Öffnungszeiten zeitnah gelesen;
+        wir antworten je nach Dringlichkeit, spätestens nach 2–3 Werktagen.
+      </p>
+    </div>
 
-        <p class="text-sm text-muted">
-          Für Fragen an das Praxisteam nutzen Sie bitte die Praxis App. Der Chat wird während der Öffnungszeiten zeitnah
-          gelesen. Wir antworten je nach Dringlichkeit, spätestens nach 2–3 Werktagen. Sie erhalten eine Nachricht, wenn
-          Ihr Anliegen bearbeitet wurde.
+    <div class="grid gap-6 lg:grid-cols-2">
+      <div>
+        <div class="rounded-lg bg-primary-50 p-4">
+          <p class="mb-3 text-sm font-medium text-highlighted">
+            Das können Sie über den Chat anfragen
+          </p>
+          <ul class="space-y-2 text-sm text-muted">
+            <li
+              v-for="item in useCases"
+              :key="item.label"
+              class="flex items-start gap-2"
+            >
+              <UIcon
+                name="i-lucide-check"
+                class="mt-0.5 size-4 shrink-0 text-primary"
+              />
+              <span>{{ item.label }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="space-y-4">
+        <p class="text-sm font-medium text-highlighted">
+          App herunterladen
         </p>
-
         <div class="flex flex-wrap gap-2">
           <UButton
             :to="appLinks.appStoreUrl"
@@ -71,26 +90,6 @@ defineProps<{
           />
           Tipp: Eltern sollten ein gemeinsames Login nutzen, damit der Chat richtig funktioniert.
         </p>
-      </div>
-      <div>
-        <div class="rounded-lg bg-primary-50 p-4">
-          <p class="mb-3 text-sm font-medium text-highlighted">
-            Das können Sie über den Chat anfragen
-          </p>
-          <ul class="space-y-2 text-sm text-muted">
-            <li
-              v-for="item in useCases"
-              :key="item.label"
-              class="flex items-start gap-2"
-            >
-              <UIcon
-                name="i-lucide-check"
-                class="mt-0.5 size-4 shrink-0 text-primary"
-              />
-              <span>{{ item.label }}</span>
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   </BaseCard>

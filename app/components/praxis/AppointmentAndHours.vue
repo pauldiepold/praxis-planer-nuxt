@@ -1,71 +1,15 @@
 <script setup lang="ts">
-export type PraxisPhoneHours = {
-  summary: string
-  days: ReadonlyArray<Readonly<{ day: string, time: string }>>
-  note?: string
-  phoneDisplay: string
-  phoneTel: string
-}
-
 export type PraxisAppointmentLinks = {
   doctolibUrl: string
 }
 
 defineProps<{
-  phoneHours: PraxisPhoneHours
   appointmentLinks: PraxisAppointmentLinks
 }>()
 </script>
 
 <template>
   <div class="space-y-6">
-    <BaseCard>
-      <BaseHeadingWithIcon
-        icon="i-lucide-clock"
-        layout="inline"
-        size="md"
-      >
-        <p class="font-semibold text-highlighted">
-          Telefonzeiten
-        </p>
-      </BaseHeadingWithIcon>
-
-      <div class="grid gap-4 lg:grid-cols-2 pt-4 items-center">
-        <div class="space-y-2">
-          <div class="flex items-center gap-2">
-            <span class="text-muted">Montag – Freitag:</span>
-            <span class="font-semibold">8:30 – 12:00 Uhr</span>
-          </div>
-          <p
-            v-if="phoneHours.note"
-            class="text-sm text-muted"
-          >
-            {{ phoneHours.note }}
-          </p>
-        </div>
-
-        <div class="space-y-4">
-          <div class="flex items-center gap-3">
-            <UIcon
-              name="i-lucide-phone"
-              class="size-5 shrink-0 text-primary"
-            />
-            <div>
-              <p class="text-xs text-muted">
-                Telefon
-              </p>
-              <a
-                :href="phoneHours.phoneTel"
-                class="font-medium text-primary hover:underline"
-              >
-                {{ phoneHours.phoneDisplay }}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </BaseCard>
-
     <div class="grid gap-4 lg:grid-cols-7">
       <BaseCard
         left-border="primary"
@@ -109,11 +53,13 @@ defineProps<{
             Von Montag bis Freitag bieten wir am Ende des Vormittags eine Akutsprechstunde an – für Fieber oder andere
             akute Krankheitsbilder bzw. dringende Fragestellungen.
           </p>
-          <p class="font-medium text-highlighted">
-            Für länger andauernde Beschwerden ist diese Sprechstunde nicht geeignet.
-          </p>
+
+          <ul class="text-sm list-disc space-y-2 pl-5">
+            <li>Bitte melden Sie sich immer vorher an.</li>
+            <li>Für schon länger andauernde Beschwerden ist diese Sprechstunde nicht geeignet.</li>
+          </ul>
           <p>
-            Bitte melden Sie sich vorher an. Einen Akuttermin können Sie frühestens einen Tag im Voraus online buchen –
+            Einen Akuttermin können Sie frühestens einen Tag im Voraus online buchen –
             bitte suchen Sie nach einem Termin bei Herrn Holstein-Diepold oder Frau Dr. Diepold (nicht immer bieten beide
             die Akutsprechstunde an).
           </p>

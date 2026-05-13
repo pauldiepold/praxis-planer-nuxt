@@ -33,7 +33,6 @@ const categories = [
     services: [
       'Schutzimpfungen nach STIKO-Empfehlungen',
       'Reiseimpfungen nach individuell ermitteltem Bedarf',
-      'Eltern und Großeltern können auch geimpft werden!',
     ],
   },
   // Schwerpunkt: eigenständig, Platz für später mehr Inhalt
@@ -42,17 +41,16 @@ const categories = [
     icon: 'i-lucide-brain',
     services: [
       'Betreuung, sowie Diagnostik und Therapie neuropädiatrischer Krankheitsbilder (Fr. Dr. Diepold)',
+      'keine EEG-Untersuchungen möglich',
     ],
   },
   // Weitere Spezialleistungen
   {
-    title: 'Spezialleistungen',
-    icon: 'i-lucide-sparkles',
+    title: 'Osteopathie',
+    icon: 'i-lucide-hand-heart',
     services: [
       'Manuelle sowie Osteopathische Säuglings- und Kinderbehandlung (Hr. Th. Holstein-Diepold)',
-      'Amblyopiescreening: umfassender Sehtest für Kinder ab dem 6. Lebensmonat. Schnelle und zuverlässige Methode, auch bei kleinen und unkooperativen Kindern, um die Notwendigkeit einer weitergehenden Augenarztuntersuchung zu prüfen.',
     ],
-    useNoteSlot: 'amblyopie',
   },
   {
     title: 'Ultraschalluntersuchungen',
@@ -76,13 +74,12 @@ const categories = [
     title: 'Labor',
     icon: 'i-lucide-microscope',
     services: [
-      'Allgemeine Laboruntersuchungen, z.B. Zöliakie, Anämie, usw.; wir versenden in das Labor „wagnerstibbe“ in Göttingen',
+      'Allgemeine Laboruntersuchungen, z.B. Zöliakie, Anämie, usw.',
       'Urinstreifentest und Urinmikroskopie',
       'CRP Schnelltests',
       'Streptokokken A Schnelltest (Scharlach)',
       'Blutsenkungsgeschwindigkeit und Blutzuckerbestimmungen',
     ],
-    useNoteSlot: 'labor',
   },
   {
     title: 'Lungenfunktion & Sauerstoffsättigung',
@@ -100,6 +97,7 @@ const categories = [
       'Sporteignungsuntersuchungen',
       'Betreuung chronisch kranker Patienten (z.B. Entwicklungsstörungen, Frühgeborene mit kompliziertem Krankheitsverlauf, Asthma- und Allergiepatienten, Teilnahme am DMP)',
       'Betreuung der Wochenstation und des Kreißsaals im Helios-Albert-Schweitzer-Krankenhaus Northeim',
+      'Amblyopiescreening: umfassender Sehtest für Kinder ab dem 6. Lebensmonat. Schnelle und zuverlässige Methode, auch bei kleinen und unkooperativen Kindern, um die Notwendigkeit einer weitergehenden Augenarztuntersuchung zu prüfen.',
     ],
   },
 ]
@@ -114,8 +112,7 @@ const categories = [
         </h1>
         <p class="text-muted">
           Wir erbringen die allgemein üblichen Leistungen einer Kinder- und Jugendarztpraxis
-          sowie einige Sonderleistungen. Seit der Verstärkung durch Frau Dr. Diepold erweitert
-          sich das Leistungsspektrum ab Dezember 2020 um den neuropädiatrischen Formenkreis.
+          sowie einige Sonderleistungen.
         </p>
       </UContainer>
     </section>
@@ -131,33 +128,7 @@ const categories = [
           :icon-color-class="iconColorClass"
           :dot-class="dotClass"
           :services="cat.services"
-        >
-          <template
-            v-if="cat.useNoteSlot === 'amblyopie'"
-            #note
-          >
-            <span class="inline">
-              Diese Untersuchung wird nur von wenigen gesetzlichen Krankenkassen übernommen
-              und kann in diesem Fall nur als sog. „Igel-Leistung“ (Selbstzahler) angeboten werden.
-              Oft ist eine nachträgliche Kostenerstattung durch die gesetzliche Krankenkasse möglich.
-              <a
-                :href="visionScreenUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-              >Info VisionScreen</a>
-            </span>
-          </template>
-          <template
-            v-else-if="cat.useNoteSlot === 'labor'"
-            #note
-          >
-            <a
-              :href="wagnerstibbeUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >Labor wagnerstibbe</a> in Göttingen
-          </template>
-        </PraxisLeistungenCard>
+        />
       </div>
 
       <div class="mt-12 text-center">

@@ -5,6 +5,19 @@
   --font-sans: 'Inter', system-ui, sans-serif;
   --breakpoint-lg: 68rem;
   --breakpoint-xl: 80rem;
+
+  /* Eigene Rot-Palette: weniger Orange, voller/crimson-artiger. Genutzt u. a. für Neuigkeit-Karten (border=red). */
+  --color-red-50: hsl(354 80% 97%);
+  --color-red-100: hsl(354 75% 93%);
+  --color-red-200: hsl(354 68% 84%);
+  --color-red-300: hsl(354 62% 72%);
+  --color-red-400: hsl(354 60% 56%);
+  --color-red-500: hsl(354 68% 46%);
+  --color-red-600: hsl(354 75% 40%);
+  --color-red-700: hsl(354 78% 33%);
+  --color-red-800: hsl(354 72% 27%);
+  --color-red-900: hsl(354 65% 22%);
+  --color-red-950: hsl(354 72% 12%);
 }
 
 :root {

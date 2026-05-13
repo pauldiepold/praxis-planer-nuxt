@@ -54,7 +54,7 @@ const clinics = [
     phoneDisplay: '0551 39 – 66210 oder 66240',
     phoneTel: 'tel:+495513966210',
     mapsUrl: 'https://goo.gl/maps/SPzNkJATekR2',
-    websiteUrl: 'http://www.med.uni-goettingen.de/',
+    websiteUrl: 'https://kinderklinik.umg.eu/',
     extra: 'Osteingang 1. Stock',
   },
   {

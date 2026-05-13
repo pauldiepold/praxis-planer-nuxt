@@ -11,6 +11,14 @@ export type PraxisContact = {
   mapsUrl: string
 }
 
+export type PraxisPhoneHours = {
+  summary: string
+  days: ReadonlyArray<Readonly<{ day: string, time: string }>>
+  note?: string
+  phoneDisplay: string
+  phoneTel: string
+}
+
 export type PraxisAccessibility = {
   summary: string
   details: string
@@ -23,6 +31,7 @@ export type PraxisParking = {
 
 defineProps<{
   contact: PraxisContact
+  phoneHours: PraxisPhoneHours
   accessibility: PraxisAccessibility
   parking: PraxisParking
 }>()
@@ -31,7 +40,63 @@ defineProps<{
 <template>
   <div class="space-y-6">
     <BaseCard>
-      <div class="grid gap-6 md:grid-cols-2">
+      <div class="grid gap-8 md:grid-cols-2">
+        <div class="space-y-4">
+          <BaseHeadingWithIcon
+            icon="i-lucide-clock"
+            layout="inline"
+            size="md"
+          >
+            <p class="font-semibold text-highlighted">
+              Telefonzeiten
+            </p>
+          </BaseHeadingWithIcon>
+
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="text-muted">Montag – Freitag:</span>
+              <span class="font-semibold">8:30 – 12:00 Uhr</span>
+            </div>
+            <p
+              v-if="phoneHours.note"
+              class="text-sm text-muted"
+            >
+              {{ phoneHours.note }}
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3 pt-2">
+            <UIcon
+              name="i-lucide-phone"
+              class="size-5 shrink-0 text-primary"
+            />
+            <div>
+              <p class="text-xs text-muted">
+                Telefon
+              </p>
+              <a
+                :href="contact.phoneTel"
+                class="font-medium text-primary hover:underline"
+              >
+                {{ contact.phoneDisplay }}
+              </a>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <UIcon
+              name="i-lucide-printer"
+              class="size-5 shrink-0 text-muted"
+            />
+            <div>
+              <p class="text-xs text-muted">
+                Telefax
+              </p>
+              <span class="text-highlighted">{{ contact.faxDisplay }}</span>
+            </div>
+          </div>
+        </div>
+
         <div class="space-y-4">
           <div class="space-y-0.5">
             <h3 class="font-semibold text-highlighted">
@@ -72,42 +137,7 @@ defineProps<{
             </UButton>
           </div>
         </div>
-
-        <div class="space-y-4">
-          <div class="flex items-center gap-3">
-            <UIcon
-              name="i-lucide-phone"
-              class="size-5 shrink-0 text-primary"
-            />
-            <div>
-              <p class="text-xs text-muted">
-                Telefon
-              </p>
-              <a
-                :href="contact.phoneTel"
-                class="font-medium text-primary hover:underline"
-              >
-                {{ contact.phoneDisplay }}
-              </a>
-            </div>
-          </div>
-
-          <div class="flex items-center gap-3">
-            <UIcon
-              name="i-lucide-printer"
-              class="size-5 shrink-0 text-muted"
-            />
-            <div>
-              <p class="text-xs text-muted">
-                Telefax
-              </p>
-              <span class="text-highlighted">{{ contact.faxDisplay }}</span>
-            </div>
-          </div>
-        </div>
       </div>
-
-    <!-- Barrierefrei + Parken, je halbe Breite -->
     </BaseCard>
     <div class="mt-6 grid gap-6 sm:grid-cols-2">
       <BaseCard>

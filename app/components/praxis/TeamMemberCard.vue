@@ -8,18 +8,18 @@ defineProps<{
 </script>
 
 <template>
-  <BaseCard class="text-center transition-shadow hover:shadow-md">
-    <div class="mx-auto mb-4 flex h-24 w-24 items-center justify-center overflow-hidden rounded-xl bg-primary/10">
+  <BaseCard class="text-center transition-shadow hover:shadow-md" content-class="p-3 sm:p-4">
+    <div class="mx-auto mb-3 flex aspect-[3/4] w-40 items-center justify-center overflow-hidden rounded-2xl bg-primary/10 sm:w-32">
       <img
         v-if="image"
         :src="image"
         :alt="name"
-        class="h-full w-full object-cover"
+        class="h-full w-full object-cover object-top"
       >
       <UIcon
         v-else
-        name="i-lucide-users"
-        class="size-10 text-primary opacity-60"
+        name="i-lucide-user-round"
+        class="size-12 text-primary opacity-60"
       />
     </div>
     <h3 class="font-semibold text-highlighted">

@@ -39,6 +39,7 @@ const doctors: Doctor[] = [
     ],
     qualifications: ['Neuropädiatrie', 'Palliativmedizin'],
     interests: [
+      { icon: 'i-lucide-stethoscope', text: 'ärztliche Betreuung des Kinderhospizes "Sternenlichter" in Göttingen' },
       { icon: 'i-lucide-heart', text: 'Mitglied IPPNW seit 1992' },
       { icon: 'i-lucide-music', text: 'Geigerin und im Vorstand im Orchester der deutschen Kinderärzte' },
     ],
@@ -76,13 +77,16 @@ type TeamMember = { name: string, role: string, image?: string }
 const doctorsSharedPersonal = 'Wir sind seit 2002 verheiratet, haben zwei erwachsene Kinder und leben in Göttingen.'
 
 const teamMembers: TeamMember[] = [
-  { name: 'Regine Feil', role: 'MFA' },
-  { name: 'Kerstin Voigt', role: 'MFA' },
-  { name: 'Elena Lorenz', role: 'MFA' },
-  { name: 'Zeynep Boga', role: 'MFA' },
-  { name: 'Marina Gottfried', role: 'MFA' },
-  { name: 'Pauline Mönkemeyer', role: 'Auszubildende' },
-  { name: 'Malak El Batal', role: 'Auszubildende' },
+  { name: 'Regine Feil', role: 'MFA', image: '/team/staff/01-feil.webp' },
+  { name: 'Kerstin Voigt', role: 'MFA', image: '/team/staff/02-voigt.webp' },
+  { name: 'Elena Lorenz', role: 'MFA', image: '/team/staff/03-lorenz.webp' },
+  { name: 'Zeynep Boga', role: 'MFA', image: '/team/staff/04-boga.webp' },
+  { name: 'Marina Gottfried', role: 'MFA', image: '/team/staff/05-gottfried.webp' },
+  { name: 'Pauline Mönkemeyer', role: 'Auszubildende', image: '/team/staff/06-moenkemeyer.webp' },
+  { name: 'Malak El Batal', role: 'Auszubildende', image: '/team/staff/07-batal.webp' },
+  { name: 'Tanja Preußner', role: 'Mitarbeiterin' },
+  { name: 'Irina Friedrich', role: 'Reinigungskraft' },
+  { name: 'Maria', role: 'Reinigungskraft' },
   { name: 'Peter Reese', role: 'Freier Mitarbeiter' },
 ]
 </script>

@@ -54,6 +54,13 @@ const currentYear = new Date().getFullYear()
                 05551 90 99 307
               </a>
             </li>
+            <li class="flex items-center gap-2">
+              <UIcon
+                name="i-lucide-printer"
+                class="h-4 w-4 shrink-0"
+              />
+              <span>05551 90 99 308</span>
+            </li>
           </ul>
         </div>
 

@@ -2,7 +2,6 @@
 import { format, parseISO } from 'date-fns'
 import { de } from 'date-fns/locale'
 
-/** Item-Typ für NeuigkeitCard (border = green | yellow | red, wird bei anderen Werten auf green gemappt). */
 export type NeuigkeitCardItem = {
   path: string
   title: string
@@ -20,6 +19,16 @@ const border = computed(() => {
   return (b === 'green' || b === 'yellow' || b === 'red' ? b : 'green') as 'green' | 'yellow' | 'red'
 })
 
+const cardClass = computed(() => {
+  if (border.value === 'red') {
+    return 'rounded-lg border border-red-300 dark:border-red-900/60 border-l-[5px] border-l-red-600 dark:border-l-red-500 bg-red-100/70 dark:bg-red-950/25 shadow-sm'
+  }
+  if (border.value === 'yellow') {
+    return 'rounded-lg border border-default border-l-4 border-l-[var(--neuigkeit-yellow,#eab308)] bg-default shadow-sm'
+  }
+  return 'rounded-lg border border-default border-l-4 border-l-primary bg-default shadow-sm'
+})
+
 function formatDate(date: string | undefined): string {
   if (!date) return ''
   try {
@@ -32,24 +41,24 @@ function formatDate(date: string | undefined): string {
 </script>
 
 <template>
-  <BaseCard
-    :left-border="border"
-    content-class="!pb-2 !px-6"
+  <div
+    class="px-6 pb-3! pt-4"
+    :class="cardClass"
   >
-    <div class="flex flex-wrap items-baseline gap-2 mb-2">
-      <h3 class="font-semibold text-lg text-highlighted">
-        {{ item.title }}
-      </h3>
+    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5 sm:gap-3 mb-1.5">
       <time
         v-if="item.date"
         :datetime="item.date"
-        class="text-sm text-muted"
+        class="text-sm text-muted shrink-0 whitespace-nowrap sm:order-2 sm:pt-1"
       >
         {{ formatDate(item.date) }}
       </time>
+      <h3 class="font-semibold text-lg mb-2 leading-tight text-highlighted sm:order-1">
+        {{ item.title }}
+      </h3>
     </div>
-    <div class="text-muted-foreground text-sm prose prose-sm max-w-none dark:prose-invert [&>*:last-child]:mb-0">
+    <div class="text-sm text-muted-foreground max-w-none [&_p]:my-1 [&_p]:leading-normal [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0 [&_li]:leading-normal [&>*:first-child]:!mt-0 [&>*:last-child]:!mb-0">
       <ContentRenderer :value="item" />
     </div>
-  </BaseCard>
+  </div>
 </template>

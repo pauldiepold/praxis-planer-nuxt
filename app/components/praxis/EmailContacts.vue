@@ -11,16 +11,18 @@ defineProps<{
 
 <template>
   <BaseCard>
-    <div class="space-y-4">
-      <div class="flex items-center gap-2">
-        <UIcon
-          name="i-lucide-mail"
-          class="size-5 shrink-0 text-muted"
-        />
-        <p class="text-sm text-muted">
-          Ihre Post wird zwar zeitnah, jedoch nicht verlässlich tagesaktuell beantwortet. Für schnellere Kommunikation empfehlen wir die Praxis App.
-        </p>
-      </div>
+    <div class="space-y-6">
+      <UAlert
+        color="warning"
+        variant="subtle"
+        icon="i-lucide-triangle-alert"
+        title="Keine Terminanfragen per E-Mail"
+        description="Für Termine nutzen Sie bitte die Praxis App oder die Online-Terminvergabe."
+        :ui="{
+          title: 'text-highlighted',
+          description: 'text-default',
+        }"
+      />
 
       <div class="grid gap-6 sm:grid-cols-3">
         <div
@@ -38,6 +40,16 @@ defineProps<{
             {{ item.email }}
           </a>
         </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <UIcon
+          name="i-lucide-info"
+          class="size-4 shrink-0 text-muted"
+        />
+        <p class="text-sm text-muted">
+          E-Mails werden zeitnah, jedoch nicht tagesaktuell bearbeitet.
+        </p>
       </div>
     </div>
   </BaseCard>

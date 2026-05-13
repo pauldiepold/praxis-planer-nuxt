@@ -20,9 +20,6 @@ const appUseCases = [
   { label: 'Terminanfragen' },
 ] as const
 
-const phoneDisplay = '05551 90 99 307'
-const phoneTel = 'tel:+4955519099307'
-
 const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
   queryCollection('aktuelles')
     .where('hidden', '=', false)
@@ -34,26 +31,31 @@ const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
 
 <template>
   <div>
-    <!-- Geteilte Hero Section: Text links, Bild rechts -->
-    <section class="grid grid-cols-1 lg:grid-cols-2 min-h-[55vh] lg:min-h-[60vh]">
-      <!-- Linke Hälfte: Begrüßung, Namen als Unterschrift, CTAs -->
-      <div class="flex flex-col justify-center bg-primary-50 dark:bg-primary-950/30 px-6 py-12 lg:py-16 lg:pl-12 xl:pl-20">
-        <div class="max-w-lg">
-          <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-highlighted mb-4 leading-tight">
-            Herzlich willkommen!
+    <!-- Hero: Verlauf, zentriert, ohne Bild -->
+    <section class="relative bg-gradient-to-br from-primary via-primary/90 to-primary-700 pt-12 pb-8 md:pt-16 md:pb-10 overflow-hidden">
+      <!-- Dekorative Elemente -->
+      <div class="absolute inset-0 opacity-10 pointer-events-none">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl" />
+        <div class="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full translate-y-1/3 -translate-x-1/4 blur-2xl" />
+      </div>
+      <UContainer class="text-center relative z-10">
+        <div class="max-w-xl mx-auto">
+          <h1 class="text-xl md:text-2xl font-semibold text-white leading-tight mb-4">
+            Guten Tag liebe Eltern, Kinder und Jugendliche!
           </h1>
-          <p class="text-base md:text-lg text-muted-foreground mb-2">
-            Wir freuen uns darauf, Sie und Ihre Kinder beim Heranwachsen zu begleiten.
+          <p class="text-sm md:text-base text-white/90 max-w-lg mx-auto leading-relaxed mt-1 mb-0">
+            Herzlich willkommen auf unserer Praxis-Webseite. Diese Seite soll Ihnen helfen, uns kennenzulernen, Kontakt mit uns aufzunehmen und weitere Informationen zu erhalten. Wir freuen uns darauf, Sie und Ihre Kinder beim Heranwachsen zu begleiten.
           </p>
-          <p class="text-sm md:text-base text-muted-foreground/90 mb-8 font-medium">
-            Th. Holstein-Diepold & Dr. K. Diepold
+          <p class="text-base md:text-lg font-medium text-white/95 mt-5 mb-5 leading-tight">
+            Th. Holstein-Diepold, Dr. K. Diepold und das Praxisteam
           </p>
-
-          <div class="flex flex-col sm:flex-row gap-3">
+          <div class="mt-5 flex justify-center">
             <UButton
               to="/termine"
-              size="md"
-              class="font-semibold !bg-[var(--praxis-accent)] hover:!opacity-90 text-gray-900"
+              size="lg"
+              color="neutral"
+              variant="outline"
+              class="font-semibold"
             >
               <UIcon
                 name="i-lucide-calendar"
@@ -61,33 +63,9 @@ const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
               />
               Termine & Kontakt
             </UButton>
-            <UButton
-              :to="phoneTel"
-              size="md"
-              variant="outline"
-              color="neutral"
-              class="font-semibold"
-            >
-              <UIcon
-                name="i-lucide-phone"
-                class="size-4"
-              />
-              {{ phoneDisplay }}
-            </UButton>
           </div>
         </div>
-      </div>
-
-      <!-- Rechte Hälfte: Bild -->
-      <div class="relative min-h-[40vh] lg:min-h-0 bg-gray-200 dark:bg-gray-800">
-        <img
-          src="/hero-empfang.webp"
-          alt="Praxis Empfang"
-          class="absolute inset-0 w-full h-full object-cover"
-          width="800"
-          height="600"
-        >
-      </div>
+      </UContainer>
     </section>
 
     <!-- Aktuelle Informationen -->
@@ -95,7 +73,7 @@ const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
       <UContainer>
         <div class="max-w-4xl mx-auto">
           <div class="flex items-center gap-3 mb-6">
-            <div class="h-1 w-12 rounded-full bg-[var(--praxis-accent)]" />
+            <div class="h-1 w-12 rounded-full bg-gray-800" />
             <h2 class="text-2xl md:text-3xl font-bold text-highlighted">
               Aktuelle Informationen
             </h2>
@@ -142,7 +120,7 @@ const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
                 </h3>
               </BaseHeadingWithIcon>
               <p class="text-sm text-muted mb-3">
-                Sprechzeiten, Anfahrt, Terminbuchung und Erreichbarkeit.
+                Terminbuchung, Erreichbarkeit, Sprechzeiten und Anfahrt.
               </p>
               <span class="text-primary font-medium text-sm flex items-center gap-1">
                 Mehr erfahren
