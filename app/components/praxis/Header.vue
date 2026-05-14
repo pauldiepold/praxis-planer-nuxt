@@ -30,9 +30,9 @@ const items = computed<NavigationMenuItem[]>(() => [
     active: route.path === '/termine',
   },
   {
-    label: 'Notdienst',
-    to: '/notdienst',
-    active: route.path === '/notdienst',
+    label: 'Notfälle',
+    to: '/notfaelle',
+    active: route.path === '/notfaelle',
   },
 ])
 </script>

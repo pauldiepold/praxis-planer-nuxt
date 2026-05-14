@@ -49,7 +49,7 @@ function formatDate(date: string | undefined): string {
       <time
         v-if="item.date"
         :datetime="item.date"
-        class="text-sm text-muted shrink-0 whitespace-nowrap sm:order-2 sm:pt-1"
+        class="text-xs text-muted shrink-0 whitespace-nowrap sm:order-2 sm:pt-1"
       >
         {{ formatDate(item.date) }}
       </time>

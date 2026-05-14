@@ -111,7 +111,7 @@ defineProps<{
                     <td class="px-4 py-2 text-muted">
                       {{ hour.day }}
                     </td>
-                    <td class="px-4 py-2 font-medium text-highlighted">
+                    <td class="px-4 py-2 font-medium text-highlighted whitespace-nowrap">
                       {{ hour.time }}
                     </td>
                   </tr>

@@ -92,8 +92,8 @@ defineProps<{
         :to="appointmentLinks.doctolibUrl"
         target="_blank"
         size="lg"
-        color="secondary"
-        class="text-black"
+        block
+        class="doctolib-button text-white sm:w-auto"
         icon="i-lucide-calendar"
       >
         Termin online buchen (Doctolib)
@@ -125,3 +125,13 @@ defineProps<{
     </BaseCard>
   </div>
 </template>
+
+<style scoped>
+.doctolib-button {
+  background-color: #0596de !important;
+}
+
+.doctolib-button:hover {
+  background-color: #047cb8 !important;
+}
+</style>

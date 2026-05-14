@@ -86,18 +86,17 @@ const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
               :item="item"
             />
           </div>
-          <p class="mt-6">
-            <NuxtLink
+          <div class="mt-8">
+            <UButton
               to="/aktuelles"
-              class="text-primary font-medium text-sm inline-flex items-center gap-1 hover:underline"
+              color="primary"
+              variant="subtle"
+              trailing-icon="i-lucide-chevron-right"
+              class="font-medium"
             >
               Alle Neuigkeiten anzeigen
-              <UIcon
-                name="i-lucide-chevron-right"
-                class="size-4 shrink-0"
-              />
-            </NuxtLink>
-          </p>
+            </UButton>
+          </div>
         </div>
       </UContainer>
     </section>
@@ -105,10 +104,45 @@ const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
     <!-- Quick Links -->
     <section class="py-16 bg-primary-50">
       <UContainer>
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          <NuxtLink
+            to="/ueber-uns"
+            class="group block md:col-span-2 md:col-start-2 lg:col-start-auto"
+          >
+            <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
+              <div class="flex flex-row items-start gap-3 md:flex-col md:gap-2 mb-2">
+                <div class="flex shrink-0 -space-x-3">
+                  <img
+                    src="/team/doctors/diepold-small.webp"
+                    alt="Dr. Katharina Diepold"
+                    class="size-10 rounded-full object-cover ring-2 ring-default"
+                  >
+                  <img
+                    src="/team/doctors/holstein-small.webp"
+                    alt="Thomas Holstein-Diepold"
+                    class="size-10 rounded-full object-cover ring-2 ring-default"
+                  >
+                </div>
+                <h3 class="font-semibold text-lg text-highlighted group-hover:text-primary transition-colors min-w-0 md:mb-0">
+                  Über uns
+                </h3>
+              </div>
+              <p class="text-sm text-muted mb-3">
+                Lernen Sie Frau Dr. Diepold, Herrn Holstein-Diepold und unser Praxisteam kennen.
+              </p>
+              <span class="text-primary font-medium text-sm flex items-center gap-1">
+                Mehr erfahren
+                <UIcon
+                  name="i-lucide-chevron-right"
+                  class="size-4 shrink-0"
+                />
+              </span>
+            </BaseCard>
+          </NuxtLink>
+
           <NuxtLink
             to="/termine"
-            class="group block"
+            class="group block md:col-span-2"
           >
             <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
               <BaseHeadingWithIcon
@@ -133,34 +167,8 @@ const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
           </NuxtLink>
 
           <NuxtLink
-            to="/notdienst"
-            class="group block"
-          >
-            <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
-              <BaseHeadingWithIcon
-                icon="i-lucide-hospital"
-                layout="responsive"
-              >
-                <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
-                  Notdienst
-                </h3>
-              </BaseHeadingWithIcon>
-              <p class="text-sm text-muted mb-3">
-                Außerhalb der Sprechzeiten: Bereitschaftsdienst und Kinderkliniken.
-              </p>
-              <span class="text-primary font-medium text-sm flex items-center gap-1">
-                Mehr erfahren
-                <UIcon
-                  name="i-lucide-chevron-right"
-                  class="size-4 shrink-0"
-                />
-              </span>
-            </BaseCard>
-          </NuxtLink>
-
-          <NuxtLink
             to="/leistungen"
-            class="group block"
+            class="group block md:col-span-2"
           >
             <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
               <BaseHeadingWithIcon
@@ -185,20 +193,46 @@ const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
           </NuxtLink>
 
           <NuxtLink
-            to="/ueber-uns"
-            class="group block"
+            to="/patienteninfos"
+            class="group block md:col-span-2 lg:col-start-2"
           >
             <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
-              <div class="flex flex-row items-start gap-3 md:flex-col md:gap-2 mb-2">
-                <div class="size-10 shrink-0 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span class="text-primary font-bold text-sm">HD</span>
-                </div>
-                <h3 class="font-semibold text-lg text-highlighted group-hover:text-primary transition-colors min-w-0 md:mb-0">
-                  Über uns
+              <BaseHeadingWithIcon
+                icon="i-lucide-info"
+                layout="responsive"
+              >
+                <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
+                  Patienteninfos
                 </h3>
-              </div>
+              </BaseHeadingWithIcon>
               <p class="text-sm text-muted mb-3">
-                Lernen Sie Frau Dr. Diepold, Herrn Holstein-Diepold und unser Praxisteam kennen.
+                Verlässliche Anlaufstellen zu Gesundheit, Medien und chronischen Erkrankungen.
+              </p>
+              <span class="text-primary font-medium text-sm flex items-center gap-1">
+                Mehr erfahren
+                <UIcon
+                  name="i-lucide-chevron-right"
+                  class="size-4 shrink-0"
+                />
+              </span>
+            </BaseCard>
+          </NuxtLink>
+
+          <NuxtLink
+            to="/notfaelle"
+            class="group block md:col-span-2"
+          >
+            <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
+              <BaseHeadingWithIcon
+                icon="i-lucide-hospital"
+                layout="responsive"
+              >
+                <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
+                  Notfälle
+                </h3>
+              </BaseHeadingWithIcon>
+              <p class="text-sm text-muted mb-3">
+                Außerhalb der Sprechzeiten: Bereitschaftsdienst und Kinderkliniken.
               </p>
               <span class="text-primary font-medium text-sm flex items-center gap-1">
                 Mehr erfahren

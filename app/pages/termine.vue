@@ -87,7 +87,6 @@ const emails = [
 
     <BasePageSection
       id="app"
-      heading="Praxis App"
       bg-class="bg-primary-50"
     >
       <PraxisAppCommunication

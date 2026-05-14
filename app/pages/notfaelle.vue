@@ -2,11 +2,11 @@
 import type { EmergencyService } from '~/components/praxis/EmergencyAndClinics.vue'
 
 definePageMeta({
-  title: 'Notdienst',
+  title: 'Notfälle',
 })
 
 useHead({
-  title: 'Notdienst – Außerhalb der Sprechzeiten',
+  title: 'Notfälle – Außerhalb der Sprechzeiten',
 })
 
 const emergencyNumbers = [
@@ -90,7 +90,7 @@ const clinics = [
     <section class="bg-primary-50 py-12">
       <UContainer>
         <h1 class="mb-2 text-3xl font-bold text-highlighted md:text-4xl">
-          Notdienst
+          Notfälle
         </h1>
         <p class="text-muted">
           Außerhalb unserer Sprechzeiten: Bereitschaftsdienst, Notfallnummern und Kinderkliniken

@@ -91,7 +91,7 @@ const currentYear = new Date().getFullYear()
           </p>
         </div>
 
-        <!-- Schnelllinks: Termine und Notdienst zuerst (was Nutzer:innen am häufigsten suchen), dann Infoseiten -->
+        <!-- Schnelllinks: Termine und Notfälle zuerst (was Nutzer:innen am häufigsten suchen), dann Infoseiten -->
         <div>
           <h3 class="font-semibold text-lg mb-4">
             Schnelllinks
@@ -107,10 +107,10 @@ const currentYear = new Date().getFullYear()
             </li>
             <li>
               <NuxtLink
-                to="/notdienst"
+                to="/notfaelle"
                 class="text-primary-50/80 hover:text-primary-50 transition-colors"
               >
-                Notdienst
+                Notfälle
               </NuxtLink>
             </li>
             <li>
