@@ -85,8 +85,6 @@ const teamMembers: TeamMember[] = [
   { name: 'Pauline Mönkemeyer', role: 'Auszubildende', image: '/team/staff/06-moenkemeyer.webp' },
   { name: 'Malak El Batal', role: 'Auszubildende', image: '/team/staff/07-batal.webp' },
   { name: 'Tanja Preußner', role: 'Mitarbeiterin' },
-  { name: 'Irina Friedrich', role: 'Reinigungskraft' },
-  { name: 'Maria', role: 'Reinigungskraft' },
   { name: 'Peter Reese', role: 'Freier Mitarbeiter' },
 ]
 </script>
