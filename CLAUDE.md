@@ -41,3 +41,17 @@ Cloudflare Pages direkt via `wrangler` (kein NuxtHub-Dashboard). D1-Binding `DB`
 - **Komponenten-Präfixe**: `Praxis*` = öffentliche Website, `Pflege*` = Planer, `Base*` = geteilt.
 - **UI/Sprache**: ausschließlich Nuxt UI (`U*`), UI-Texte deutsch (Locale in `app/app.vue`).
 - **Stil**: `@nuxt/eslint` mit `stylistic: true` – Formatierung via `pnpm lint:fix`, nicht manuell.
+
+## Agent skills
+
+### Issue tracker
+
+Issues leben in GitHub Issues dieses Repos. Siehe `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Standard-Vokabular: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. Siehe `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` + `docs/adr/` im Repo-Root. Siehe `docs/agents/domain.md`.

@@ -11,7 +11,6 @@ export default defineNuxtConfig({
     'nuxt-studio',
   ],
 
-  ssr: false,
   devtools: { enabled: true },
 
   app: {
@@ -49,7 +48,7 @@ export default defineNuxtConfig({
     '/_studio': { prerender: false },
     '/_studio/**': { prerender: false },
     // Pflege-Planer: nicht vorrendern (SPA/on-demand), eigenes Layout
-    '/pflege-planer': { appLayout: 'pflege-planer-landing', prerender: false },
+    '/pflege-planer': { appLayout: 'pflege-planer', prerender: false },
     '/pflege-planer/**': { appLayout: 'pflege-planer', prerender: false },
   },
 

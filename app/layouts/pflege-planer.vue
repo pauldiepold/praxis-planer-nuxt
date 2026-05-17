@@ -9,9 +9,7 @@ onMounted(() => {
     <PflegeNavbar />
 
     <main class="flex-grow py-4 md:py-8">
-      <UContainer>
-        <slot />
-      </UContainer>
+      <slot />
     </main>
 
     <PflegeFooter />

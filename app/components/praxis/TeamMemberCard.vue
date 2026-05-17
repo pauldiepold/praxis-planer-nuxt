@@ -4,6 +4,7 @@ defineProps<{
   role: string
   /** Pfad zum Porträt (z.B. /team/staff/regine-feil.jpg). Wenn nicht gesetzt, wird ein Platzhalter-Icon angezeigt. */
   image?: string
+  objectFit?: 'cover' | 'contain'
 }>()
 </script>
 
@@ -14,7 +15,7 @@ defineProps<{
         v-if="image"
         :src="image"
         :alt="name"
-        class="h-full w-full object-cover object-top"
+        :class="objectFit === 'contain' ? 'h-full w-full object-contain' : 'h-full w-full object-cover object-top'"
       >
       <UIcon
         v-else

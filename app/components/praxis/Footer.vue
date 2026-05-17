@@ -151,7 +151,7 @@ const currentYear = new Date().getFullYear()
               aria-hidden="true"
             >•</span>
             <NuxtLink
-              to="/pflege-planer"
+              to="/login"
               class="hover:text-primary-50 transition-colors"
             >
               Anmelden

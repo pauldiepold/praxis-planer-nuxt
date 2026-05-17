@@ -71,7 +71,7 @@ const doctors: Doctor[] = [
   },
 ]
 
-type TeamMember = { name: string, role: string, image?: string }
+type TeamMember = { name: string, role: string, image?: string, objectFit?: 'cover' | 'contain' }
 // Optional pro Person: image: '/team/staff/slug.jpg' – Bild in public/team/staff/ ablegen
 /** Gemeinsamer privater Abschnitt (einmal unter beiden Ärzten, zentriert) */
 const doctorsSharedPersonal = 'Wir sind seit 2002 verheiratet, haben zwei erwachsene Kinder und leben in Göttingen.'
@@ -85,7 +85,7 @@ const teamMembers: TeamMember[] = [
   { name: 'Pauline Mönkemeyer', role: 'Auszubildende', image: '/team/staff/06-moenkemeyer.webp' },
   { name: 'Malak El Batal', role: 'Auszubildende', image: '/team/staff/07-batal.webp' },
   { name: 'Tanja Preußner', role: 'Mitarbeiterin' },
-  { name: 'Peter Reese', role: 'Freier Mitarbeiter' },
+  { name: 'Peter Reese', role: 'Freier Mitarbeiter', image: '/team/staff/09-reese.jpg' },
 ]
 </script>
 
@@ -109,7 +109,7 @@ const teamMembers: TeamMember[] = [
         <div class="mb-10 flex items-center gap-3">
           <div class="h-1 w-12 rounded-full bg-primary" />
           <h2 class="text-2xl font-bold text-highlighted md:text-3xl">
-            Unsere Ärzt:innen
+            Ärztin und Arzt
           </h2>
         </div>
 
@@ -156,6 +156,7 @@ const teamMembers: TeamMember[] = [
             :name="member.name"
             :role="member.role"
             :image="member.image"
+            :object-fit="member.objectFit"
           />
         </div>
       </UContainer>

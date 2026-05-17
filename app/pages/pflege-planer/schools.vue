@@ -9,7 +9,6 @@ const UDropdownMenu = resolveComponent('UDropdownMenu')
 
 definePageMeta({
   name: 'schools-management-page',
-  middleware: 'auth',
 })
 
 // Seitenspezifischer Titel
@@ -364,7 +363,7 @@ const handleDeleteCancel = () => {
 </script>
 
 <template>
-  <div>
+  <UContainer>
     <UCard>
       <template #header>
         <div class="flex items-center justify-between">
@@ -670,5 +669,5 @@ const handleDeleteCancel = () => {
         </div>
       </template>
     </UModal>
-  </div>
+  </UContainer>
 </template>
