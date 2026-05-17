@@ -3,8 +3,9 @@ definePageMeta({
   title: 'Impressum',
 })
 
-useHead({
+useSeoMeta({
   title: 'Impressum',
+  description: 'Impressum der Kinder- und Jugendarztpraxis Holstein-Diepold & Dr. Diepold, Albert-Schweitzer-Weg 7, 37154 Northeim.',
 })
 </script>
 

@@ -3,9 +3,14 @@ definePageMeta({
   title: 'Patienteninfos',
 })
 
-useHead({
+useSeoMeta({
   title: 'Patienteninfos',
+  description: 'Verlässliche Anlaufstellen und Informationen zu Gesundheit, Bildschirmnutzung, Ernährung, Allergien und chronischen Erkrankungen.',
 })
+
+useBreadcrumbSchema([
+  { name: 'Patienteninfos', item: '/patienteninfos' },
+])
 
 const categories = [
   {

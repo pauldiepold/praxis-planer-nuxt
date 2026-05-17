@@ -3,12 +3,14 @@ definePageMeta({
   title: 'Leistungsspektrum',
 })
 
-useHead({
+useSeoMeta({
   title: 'Leistungsspektrum',
+  description: 'Unser Leistungsspektrum: U-Untersuchungen, Impfungen, Akut- und Vorsorgesprechstunde, Allergologie, Neuropädiatrie, Osteopathie.',
 })
 
-const visionScreenUrl = 'https://spot-vision-screener.de/wichtige-informationen-fuer-die-eltern/'
-const wagnerstibbeUrl = 'http://www.wagnerstibbe.de/'
+useBreadcrumbSchema([
+  { name: 'Leistungen', item: '/leistungen' },
+])
 
 // Einheitliche Farben für alle Karten (runder Look)
 const iconBoxClass = 'bg-primary/10'

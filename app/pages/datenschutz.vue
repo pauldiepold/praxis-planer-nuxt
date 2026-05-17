@@ -3,8 +3,9 @@ definePageMeta({
   title: 'Datenschutz',
 })
 
-useHead({
+useSeoMeta({
   title: 'Datenschutz',
+  description: 'Datenschutzerklärung der Kinder- und Jugendarztpraxis Holstein-Diepold & Dr. Diepold.',
 })
 </script>
 
@@ -56,7 +57,7 @@ useHead({
 
         <section>
           <p class="text-muted">
-            Hiermit erklären wir, Th. Holstein-Diepold und Dr. med. K. Diepold, Inhaber der Kinder- und Jugendarztpraxis Holstein-Diepold & Diepold – BAG (Berufsausübungsgemeinschaft), folgende Sachverhalte zum Datenschutz in unserer Praxis.
+            Hiermit erklären wir, Th. Holstein-Diepold und Dr. med. K. Diepold, Inhaber der Kinder- und Jugendarztpraxis Holstein-Diepold & Dr. Diepold – BAG (Berufsausübungsgemeinschaft), folgende Sachverhalte zum Datenschutz in unserer Praxis.
             Alle in der Praxis arbeitenden Personen, welche Zugriff auf die Patientendaten haben, sowie alle mit uns kooperierenden Firmen, z.B. Serviceagentur zur Pflege der Praxissoftware oder IT-Serviceagentur, halten sich an die gültige sog. Datenschutzgrundverordnung (DSGVO) und haben mit uns entsprechende Verträge geschlossen.
             Alle in der Praxis gespeicherten personenbezogenen Daten wie z.B. Name, Postanschrift, E-Mail Adressen, Telefonnummern oder Geburtsdaten, werden ausschließlich in Übereinstimmung mit dem jeweils geltenden Datenschutzrecht erhoben und genutzt.
             Wir speichern Patientendaten nur, wenn diese aktiv übermittelt bzw. ermittelt wurden, also nur, wenn Sie davon Kenntnis haben um welche Daten es sich handelt. Patienten haben das Recht auf Dateneinsicht und auf Widerruf zuvor getroffener Einwilligungen zur Datenverarbeitung.

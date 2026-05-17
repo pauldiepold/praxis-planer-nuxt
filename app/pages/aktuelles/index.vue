@@ -5,9 +5,14 @@ definePageMeta({
   title: 'Aktuelle Informationen',
 })
 
-useHead({
-  title: 'Aktuelle Informationen – Kinder- und Jugendarztpraxis Northeim',
+useSeoMeta({
+  title: 'Aktuelle Informationen',
+  description: 'Aktuelle Neuigkeiten, Termine und Hinweise aus der Kinder- und Jugendarztpraxis Holstein-Diepold & Dr. Diepold.',
 })
+
+useBreadcrumbSchema([
+  { name: 'Aktuelles', item: '/aktuelles' },
+])
 
 const { data: neuigkeiten } = await useAsyncData('aktuelles-archiv', () =>
   queryCollection('aktuelles')

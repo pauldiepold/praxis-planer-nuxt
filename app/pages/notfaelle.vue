@@ -5,9 +5,14 @@ definePageMeta({
   title: 'Notfälle',
 })
 
-useHead({
+useSeoMeta({
   title: 'Notfälle – Außerhalb der Sprechzeiten',
+  description: 'Notfallnummern, ärztlicher Bereitschaftsdienst und nächstgelegene Kinderkliniken — was bei Notfällen außerhalb unserer Sprechzeiten zu tun ist.',
 })
+
+useBreadcrumbSchema([
+  { name: 'Notfälle', item: '/notfaelle' },
+])
 
 const emergencyNumbers = [
   {

@@ -3,9 +3,14 @@ definePageMeta({
   title: 'Über uns',
 })
 
-useHead({
+useSeoMeta({
   title: 'Über uns',
+  description: 'Lernen Sie unser Praxisteam kennen: Thomas Holstein-Diepold und Dr. med. Katharina Diepold mit ihrem Team.',
 })
+
+useBreadcrumbSchema([
+  { name: 'Über uns', item: '/ueber-uns' },
+])
 
 type Doctor = {
   id: string

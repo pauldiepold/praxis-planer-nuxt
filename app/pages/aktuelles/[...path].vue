@@ -26,13 +26,16 @@ const { data: surround } = await useAsyncData(
   { watch: [() => route.path] },
 )
 
-const title = `${item.value.title} – Aktuelle Informationen`
 useSeoMeta({
-  title,
-  ogTitle: title,
-  description: 'Aktuelle Informationen und Neuigkeiten unserer Praxis.',
-  ogDescription: 'Aktuelle Informationen und Neuigkeiten unserer Praxis.',
+  title: item.value.title,
+  description: item.value.description,
+  robots: item.value.hidden ? 'noindex, nofollow' : undefined,
 })
+
+useBreadcrumbSchema([
+  { name: 'Aktuelles', item: '/aktuelles' },
+  { name: item.value.title, item: route.path },
+])
 
 definePageMeta({
   title: 'Aktuelle Informationen',

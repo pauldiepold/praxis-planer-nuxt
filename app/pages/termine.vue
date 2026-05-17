@@ -6,9 +6,14 @@ definePageMeta({
   title: 'Termine & Kontakt',
 })
 
-useHead({
+useSeoMeta({
   title: 'Termine & Kontakt',
+  description: 'Termine online über Doctolib oder telefonisch unter 05551 9099307. Adresse, Sprechzeiten, Anfahrt und Erreichbarkeit.',
 })
+
+useBreadcrumbSchema([
+  { name: 'Termine & Kontakt', item: '/termine' },
+])
 
 const contact = {
   name: 'Kinder- und Jugendarztpraxis',

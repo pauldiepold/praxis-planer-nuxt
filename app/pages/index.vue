@@ -3,8 +3,10 @@ definePageMeta({
   title: 'Startseite',
 })
 
-useHead({
-  title: 'Kinder- und Jugendarztpraxis Northeim – Thomas Holstein-Diepold & Dr. Katharina Diepold',
+useSeoMeta({
+  title: 'Kinder- und Jugendarztpraxis Holstein-Diepold & Dr. Diepold',
+  titleTemplate: '%s',
+  description: 'Vorsorgen, Impfungen, Akutsprechstunde, Allergologie, Neuropädiatrie und Osteopathie für Kinder und Jugendliche.',
 })
 
 const appLinks = {
