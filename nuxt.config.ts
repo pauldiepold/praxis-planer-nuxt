@@ -106,6 +106,10 @@ export default defineNuxtConfig({
     experimental: {
       tasks: true,
     },
+    prerender: {
+      crawlLinks: true,
+      routes: ['/'],
+    },
   },
 
   hub: {
