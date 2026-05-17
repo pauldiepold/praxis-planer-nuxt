@@ -1,4 +1,8 @@
 <script setup lang="ts">
+if (import.meta.client) {
+  useColorMode().preference = 'dark'
+}
+
 onMounted(() => {
   useEntitiesStore().fetchAll()
 })

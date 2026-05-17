@@ -3,6 +3,14 @@ export type PraxisAppointmentLinks = {
   doctolibUrl: string
 }
 
+export type PraxisPhoneHours = {
+  summary: string
+  days: Array<{ day: string, time: string }>
+  note: string
+  phoneDisplay: string
+  phoneTel: string
+}
+
 defineProps<{
   appointmentLinks: PraxisAppointmentLinks
 }>()

@@ -38,7 +38,7 @@ const weekSchema = z.object({
   status: z.enum(['free', 'booked', 'vacation', 'reserved']),
   studentId: z.number().nullable(),
   schoolId: z.number().nullable(),
-  notes: z.string().max(1000, 'Notizen können maximal 1000 Zeichen haben').optional().or(z.literal('')).nullish(),
+  notes: z.string().max(1000, 'Notizen können maximal 1000 Zeichen haben').optional().or(z.literal('')),
 })
 
 type WeekSchema = z.output<typeof weekSchema>

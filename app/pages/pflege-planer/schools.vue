@@ -45,9 +45,9 @@ const isDeleting = ref(false)
 // Zod schema for form validation
 const schoolSchema = z.object({
   name: z.string().min(1, 'Name ist erforderlich').max(255, 'Name kann maximal 255 Zeichen haben'),
-  contactPerson: z.string().max(255, 'Ansprechpartner kann maximal 255 Zeichen haben').nullable().default(null),
-  phone: z.string().max(50, 'Telefonnummer kann maximal 50 Zeichen haben').nullable().default(null),
-  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail kann maximal 255 Zeichen haben').nullable().default(null),
+  contactPerson: z.string().max(255, 'Ansprechpartner kann maximal 255 Zeichen haben').optional(),
+  phone: z.string().max(50, 'Telefonnummer kann maximal 50 Zeichen haben').optional(),
+  email: z.string().email('Ungültige E-Mail-Adresse').max(255, 'E-Mail kann maximal 255 Zeichen haben').optional().or(z.literal('')),
 })
 
 type SchoolSchema = z.output<typeof schoolSchema>

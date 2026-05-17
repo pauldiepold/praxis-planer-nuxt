@@ -17,7 +17,7 @@ Nuxt-4-App mit zwei strikt getrennten Bereichen:
 pnpm dev           # Dev-Server
 pnpm build         # → dist/ (Deploy via wrangler)
 pnpm lint[:fix]
-pnpm typecheck
+pnpm typecheck        # TypeScript-Typen prüfen — immer mit Exit-Code prüfen: `pnpm typecheck 2>&1; echo "Exit: $?"`
 pnpm db:generate   # Drizzle: Migration aus Schema
 pnpm db:migrate
 ```
