@@ -92,8 +92,6 @@ export default defineNuxtConfig({
     '/patienteninfos/rund-ums-internet': { redirect: { to: '/patienteninfos', statusCode: 301 } },
     '/notfaelle-bereitschaftsdienst': { redirect: { to: '/notfaelle', statusCode: 301 } },
     '/praxis-app': { redirect: { to: '/#app', statusCode: 301 } },
-    '/corona-info-**': { redirect: { to: '/aktuelles', statusCode: 301 } },
-    '/praxisinterne-corona-infos-**': { redirect: { to: '/aktuelles', statusCode: 301 } },
   },
 
   experimental: {
