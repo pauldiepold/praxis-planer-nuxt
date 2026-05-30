@@ -33,14 +33,21 @@ const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
 
 <template>
   <div>
-    <!-- Hero: Verlauf, zentriert, ohne Bild -->
-    <section class="relative bg-gradient-to-br from-primary via-primary/90 to-primary-700 pt-12 pb-8 md:pt-16 md:pb-10 overflow-hidden">
-      <!-- Dekorative Elemente -->
-      <div class="absolute inset-0 opacity-10 pointer-events-none">
-        <div class="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl" />
-        <div class="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full translate-y-1/3 -translate-x-1/4 blur-2xl" />
-      </div>
-      <UContainer class="text-center relative z-10">
+    <!-- Hero: Foto mit Overlay, zentrierter Text -->
+    <section class="relative flex items-center min-h-[420px] md:min-h-[520px] overflow-hidden">
+      <!-- Hintergrundbild -->
+      <img
+        src="/hero-empfang.webp"
+        alt="Empfangsbereich unserer Kinder- und Jugendarztpraxis"
+        width="2000"
+        height="724"
+        fetchpriority="high"
+        class="absolute inset-0 size-full object-cover object-[25%_70%]"
+      >
+      <!-- Overlay-Verlauf für Lesbarkeit (warmer Ton) -->
+      <div class="absolute inset-0 bg-stone-950/50 pointer-events-none" />
+      <div class="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-amber-900/10 to-stone-950/35 pointer-events-none" />
+      <UContainer class="text-center relative z-10 py-12 md:py-16">
         <div class="max-w-xl mx-auto">
           <h1 class="text-xl md:text-2xl font-semibold text-white leading-tight mb-4">
             Guten Tag liebe Eltern, Kinder und Jugendliche!
