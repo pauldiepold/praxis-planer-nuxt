@@ -10,30 +10,45 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postinstall": "nuxt prepare",
-    "typecheck": "nuxi typecheck"
+    "typecheck": "nuxi typecheck",
+    "prepare": "npx skilld prepare || true"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.86",
-    "@iconify-json/simple-icons": "^1.2.67",
-    "@libsql/client": "^0.17.0",
-    "@nuxt/eslint": "^1.13.0",
-    "@nuxt/ui": "^4.4.0",
-    "@nuxthub/core": "^0.10.5",
+    "@iconify-json/lucide": "^1.2.107",
+    "@iconify-json/simple-icons": "^1.2.82",
+    "@libsql/client": "^0.17.3",
+    "@nuxt/content": "^3.13.0",
+    "@nuxt/eslint": "^1.15.2",
+    "@nuxt/fonts": "0.13.0",
+    "@nuxt/icon": "2.2.2",
+    "@nuxt/ui": "^4.7.1",
+    "@nuxthub/core": "^0.10.7",
+    "@nuxtjs/robots": "6.0.8",
+    "@nuxtjs/seo": "5.1.3",
+    "@nuxtjs/sitemap": "8.0.15",
     "@pinia/nuxt": "^0.11.3",
+    "better-sqlite3": "^12.10.0",
     "date-fns": "^4.1.0",
-    "drizzle-kit": "^0.31.8",
-    "drizzle-orm": "^0.45.1",
+    "drizzle-kit": "^0.31.10",
+    "drizzle-orm": "^0.45.2",
     "i": "^0.3.7",
-    "nuxt": "^4.3.0",
-    "nuxt-auth-utils": "^0.5.27",
+    "nuxt": "^4.4.5",
+    "nuxt-auth-utils": "^0.5.29",
+    "nuxt-studio": "^1.7.0",
     "pinia": "^3.0.4",
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "eslint": "^9.39.2",
+    "eslint": "^9.39.4",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.2.3",
-    "wrangler": "^4.60.0"
+    "vue-tsc": "^3.2.8",
+    "wrangler": "^4.90.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "sqlite3"
+    ]
   },
   "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b"
 }

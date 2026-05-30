@@ -1,53 +1,47 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-@theme static {
-  --font-sans: 'Public Sans', sans-serif;
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --breakpoint-lg: 68rem;
+  --breakpoint-xl: 80rem;
+
+  /* Eigene Rot-Palette: weniger Orange, voller/crimson-artiger. Genutzt u. a. für Neuigkeit-Karten (border=red). */
+  --color-red-50: hsl(354 80% 97%);
+  --color-red-100: hsl(354 75% 93%);
+  --color-red-200: hsl(354 68% 84%);
+  --color-red-300: hsl(354 62% 72%);
+  --color-red-400: hsl(354 60% 56%);
+  --color-red-500: hsl(354 68% 46%);
+  --color-red-600: hsl(354 75% 40%);
+  --color-red-700: hsl(354 78% 33%);
+  --color-red-800: hsl(354 72% 27%);
+  --color-red-900: hsl(354 65% 22%);
+  --color-red-950: hsl(354 72% 12%);
 }
 
 :root {
-  /* Main background color */
-  --ui-bg: var(--ui-color-neutral-50);
-  /* Subtle background */
-  --ui-bg-muted: var(--ui-color-neutral-100);
-  /* Slightly elevated background */
-  --ui-bg-elevated: var(--ui-color-neutral-100);
-  /* More prominent background */
-  --ui-bg-accented: var(--ui-color-neutral-200);
-  /* Inverted background color */
-  --ui-bg-inverted: var(--ui-color-neutral-900);
-  --ui-text-dimmed: var(--ui-color-neutral-800);
-  --ui-border-accented: var(--ui-color-neutral-300);
+  --ui-container: 80rem;
+  --ui-header-height: 5rem;
 
-  --ui-color-primary: oklch(82.53% 0.17093 80.013);
-  --ui-color-primary-50: oklch(97.437% 0.0304 88.371);
-  --ui-color-primary-100: oklch(95.989% 0.05036 89.756);
-  --ui-color-primary-200: oklch(92.811% 0.0881 88.965);
-  --ui-color-primary-300: oklch(90.022% 0.1224 88.797);
-  --ui-color-primary-400: oklch(87.254% 0.14825 86.981);
-  --ui-color-primary-500: oklch(84.884% 0.16525 84.648);
-  --ui-color-primary-600: oklch(82.53% 0.17093 80.013);
-  --ui-color-primary-700: oklch(68.67% 0.14197 80.669);
-  --ui-color-primary-800: oklch(53.86% 0.11128 80.913);
-  --ui-color-primary-900: oklch(38.161% 0.0785 82.78);
-  --ui-color-primary-950: oklch(29.697% 0.06088 84.761);
+  --ui-color-primary-50: #f1f8f3;
+  --ui-color-primary-100: #deede1;
+  --ui-color-primary-200: #bfdbc6;
+  --ui-color-primary-300: #94c1a3;
+  --ui-color-primary-400: #66a17c;
+  --ui-color-primary-500: #45845e;
+  --ui-color-primary-600: #3a7854;
+  --ui-color-primary-700: #28543b;
+  --ui-color-primary-800: #224331;
+  --ui-color-primary-900: #1d3729;
+  --ui-color-primary-950: #0f1f17;
 
   --ui-primary: var(--ui-color-primary-600);
-}
-
-.dark {
-  /* Main background color */
-  --ui-bg: var(--ui-color-neutral-900);
-  /* Subtle background */
-  --ui-bg-muted: var(--ui-color-neutral-800);
-  /* Slightly elevated background */
-  --ui-bg-elevated: var(--ui-color-neutral-800);
-  /* More prominent background */
-  --ui-bg-accented: var(--ui-color-neutral-700);
-  /* Inverted background color */
-  --ui-bg-inverted: var(--color-white);
-  --ui-text-dimmed: var(--ui-color-neutral-200);
-  --ui-border-accented: var(--ui-color-neutral-600);
+  /* Akzentfarben für Karten (Lovable-Stil) */
+  --praxis-accent: hsl(38 85% 55%);
+  --praxis-sky-blue: hsl(200 70% 50%);
+  --ui-color-accent: var(--praxis-accent);
+  --ui-color-sky-blue: var(--praxis-sky-blue);
 }
 
 button,
@@ -57,4 +51,9 @@ button,
 
 :disabled {
   cursor: default;
+}
+
+/* Anker-Ziele: Abstand nach oben beim Scrollen, damit der feste Header nicht überdeckt */
+[id] {
+  scroll-margin-top: var(--ui-header-height);
 }

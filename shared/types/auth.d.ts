@@ -29,7 +29,7 @@ declare global {
     user: Ref<User | null>
     ready: Ref<boolean>
     signIn: (provider?: string) => Promise<void>
-    signOut: () => Promise<void>
+    clear: () => Promise<void>
   }
 }
 

@@ -1,391 +1,272 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
-
-// Authentifizierung prüfen
-const { loggedIn } = useUserSession()
-
-const nextYear = ref<number | null>(null)
-const isLoading = ref(true)
-const isSuccess = ref(false)
-const isError = ref(false)
-const feedbackMsg = ref('')
-const isWeeksLoading = ref(false)
-const isWeeksError = ref(false)
-
-const selectedYear = ref(new Date().getFullYear())
-
-const years = ref<number[]>([])
-const isLoadingYears = ref(true)
-
-interface WeekEntry {
-  id: number
-  weekStartDate: string
-  status: 'free' | 'booked' | 'vacation' | 'reserved'
-  studentId: number | null
-  studentName: string | null
-  schoolId: number | null
-  schoolName: string | null
-  notes: string | null
-}
-
-const weeksRaw = ref<WeekEntry[]>([])
-const weeksByMonth = computed<Record<number, WeekEntry[]>>(() => {
-  const grouped: Record<number, WeekEntry[]> = {}
-  weeksRaw.value.forEach((week) => {
-    const month = new Date(week.weekStartDate).getMonth()
-    if (!grouped[month]) grouped[month] = []
-    grouped[month].push(week)
-  })
-  return grouped
-})
-
-async function fetchAvailableYears() {
-  isLoadingYears.value = true
-  try {
-    const res = await $fetch<{ years: number[] }>('/api/weeks/available-years')
-    years.value = res.years
-
-    const currentYear = new Date().getFullYear()
-
-    // Wähle das aktuelle Jahr aus, falls es verfügbar ist
-    if (years.value.includes(currentYear)) {
-      selectedYear.value = currentYear
-    }
-    else if (years.value.length > 0) {
-      // Fallback: Wähle das erste verfügbare Jahr
-      const firstYear = years.value[0]
-      if (firstYear !== undefined) {
-        selectedYear.value = firstYear
-      }
-    }
-  }
-  catch {
-    console.error('Fehler beim Laden der verfügbaren Jahre')
-  }
-  finally {
-    isLoadingYears.value = false
-  }
-}
-
-async function fetchNextYear() {
-  isLoading.value = true
-  isError.value = false
-  isSuccess.value = false
-  feedbackMsg.value = ''
-  try {
-    const res = await $fetch<{ nextYear: number | null }>('/api/weeks/next-missing-year')
-    nextYear.value = res.nextYear
-  }
-  catch {
-    isError.value = true
-    feedbackMsg.value = 'Fehler beim Laden des nächsten Jahres.'
-  }
-  finally {
-    isLoading.value = false
-  }
-}
-
-async function handleFillWeeks() {
-  if (!nextYear.value) return
-  isLoading.value = true
-  isError.value = false
-  isSuccess.value = false
-  feedbackMsg.value = ''
-  try {
-    const res = await $fetch<{ year: number | null, created: number }>('/api/weeks/fill-missing', { method: 'POST' })
-    if (res.created > 0) {
-      isSuccess.value = true
-      feedbackMsg.value = `Kalenderwochen für ${res.year} wurden angelegt.`
-
-      // Aktualisiere die verfügbaren Jahre
-      await fetchAvailableYears()
-
-      // Wenn das neue Jahr hinzugefügt wurde, wähle es aus und lade die Daten
-      if (res.year && years.value.includes(res.year)) {
-        selectedYear.value = res.year
-        await fetchWeeksForYear(res.year)
-      }
-    }
-    else {
-      feedbackMsg.value = 'Es wurden keine neuen Wochen angelegt.'
-    }
-    await fetchNextYear()
-  }
-  catch {
-    isError.value = true
-    feedbackMsg.value = 'Fehler beim Anlegen der Kalenderwochen.'
-  }
-  finally {
-    isLoading.value = false
-  }
-}
-
-async function fetchWeeksForYear(year: number) {
-  isWeeksLoading.value = true
-  isWeeksError.value = false
-  try {
-    weeksRaw.value = await $fetch<WeekEntry[]>(`/api/weeks?year=${year}`)
-  }
-  catch {
-    isWeeksError.value = true
-  }
-  finally {
-    isWeeksLoading.value = false
-  }
-}
-
-watch(selectedYear, (year) => {
-  if (year) {
-    fetchWeeksForYear(year)
-  }
-})
-
-// Funktion zum Aktualisieren einer Woche
-function handleWeekUpdated(updatedWeek: { id: number, status: 'free' | 'booked' | 'vacation' | 'reserved', studentId: number | null, schoolId: number | null, notes: string | null, studentName: string | null, schoolName: string | null }) {
-  // Finde die Woche in der Liste und aktualisiere sie
-  const weekIndex = weeksRaw.value.findIndex(w => w.id === updatedWeek.id)
-  if (weekIndex !== -1) {
-    // Aktualisiere die Woche mit den neuen Daten
-    const existingWeek = weeksRaw.value[weekIndex]
-    if (existingWeek) {
-      weeksRaw.value[weekIndex] = {
-        ...existingWeek,
-        status: updatedWeek.status,
-        studentId: updatedWeek.studentId,
-        schoolId: updatedWeek.schoolId,
-        notes: updatedWeek.notes,
-        // Verwende die übergebenen Daten oder lade sie neu
-        studentName: updatedWeek.studentName || (updatedWeek.studentId ? 'Laden...' : null),
-        schoolName: updatedWeek.schoolName || (updatedWeek.schoolId ? 'Laden...' : null) || (updatedWeek.studentId ? 'Laden...' : null),
-      }
-    }
-
-    // Wenn eine Schülerin zugeordnet wurde, lade die Details
-    if (updatedWeek.studentId) {
-      loadStudentDetails(updatedWeek.studentId, weekIndex)
-    }
-
-    // Wenn eine Schule direkt zugeordnet wurde (reserved), lade die Details
-    if (updatedWeek.schoolId) {
-      loadSchoolDetails(updatedWeek.schoolId, weekIndex)
-    }
-  }
-}
-
-// Entities Composable verwenden
-const { students, schools, isLoading: entitiesLoading } = useEntities()
-
-// Funktion zum Laden der Schülerin-Details
-async function loadStudentDetails(studentId: number, weekIndex: number) {
-  try {
-    const student = students.value.find(s => s.id === studentId)
-    if (student && weekIndex !== -1 && weeksRaw.value[weekIndex]) {
-      weeksRaw.value[weekIndex].studentName = student.name
-
-      // Schule-Name laden, falls verfügbar
-      if (student.schoolId) {
-        const school = schools.value.find(s => s.id === student.schoolId)
-        weeksRaw.value[weekIndex].schoolName = school?.name || null
-      }
-      else {
-        weeksRaw.value[weekIndex].schoolName = null
-      }
-    }
-  }
-  catch (error) {
-    console.error('Fehler beim Laden der Schülerin-Details:', error)
-  }
-}
-
-// Funktion zum Laden der Schul-Details (für reserved Status)
-async function loadSchoolDetails(schoolId: number, weekIndex: number) {
-  try {
-    const school = schools.value.find(s => s.id === schoolId)
-    if (school && weekIndex !== -1 && weeksRaw.value[weekIndex]) {
-      weeksRaw.value[weekIndex].schoolName = school.name
-    }
-  }
-  catch (error) {
-    console.error('Fehler beim Laden der Schul-Details:', error)
-  }
-}
-
-onMounted(async () => {
-  await fetchAvailableYears()
-  await fetchNextYear()
-  if (years.value.length > 0) {
-    await fetchWeeksForYear(selectedYear.value)
-  }
-})
-
 definePageMeta({
   title: 'Startseite',
-  colorMode: 'dark',
-  layout: 'fullwidth',
 })
 
-// Seitenspezifischer Titel
-useHead({
-  title: 'Startseite',
+useSeoMeta({
+  title: 'Kinder- und Jugendarztpraxis Holstein-Diepold & Dr. Diepold',
+  titleTemplate: '%s',
+  description: 'Vorsorgen, Impfungen, Akutsprechstunde, Allergologie, Neuropädiatrie und Osteopathie für Kinder und Jugendliche.',
 })
+
+const appLinks = {
+  playStoreUrl: 'https://cux.link/playstore',
+  appStoreUrl: 'https://cux.link/appstore',
+} as const
+
+const appUseCases = [
+  { label: 'Fragen an das Praxisteam' },
+  { label: 'Rezepte (insbesondere bei bekannten Dauermedikationen)' },
+  { label: 'Verordnungen für Heilmittel (Ergotherapie, Logopädie, Physiotherapie)' },
+  { label: 'Ein- oder Überweisungen' },
+  { label: 'Terminanfragen' },
+] as const
+
+const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
+  queryCollection('aktuelles')
+    .where('hidden', '=', false)
+    .order('date', 'DESC')
+    .limit(3)
+    .all(),
+)
 </script>
 
 <template>
-  <!-- Nicht angemeldete Benutzer sehen nur die Willkommensseite -->
-  <div
-    v-if="!loggedIn"
-    class="mx-auto p-6"
-  >
-    <div class="max-w-2xl mx-auto text-center">
-      <div class="mb-8">
-        <img
-          src="~/assets/images/praxis-logo.png"
-          alt="Praxis Logo"
-          class="mx-auto bg-gray-200 p-1 rounded-lg h-24 w-auto mb-6"
-        >
-        <h1 class="text-4xl font-bold mb-4">
-          Praxis Pflege Planer
-        </h1>
-        <p class="text-lg text-muted mb-8">
-          Bitte melden dich an, um auf die Anwendung zuzugreifen.
-        </p>
-      </div>
-
-      <UButton
-        href="/auth/github"
-        external
-        variant="solid"
-        color="primary"
-        size="lg"
-        icon="i-lucide-github"
-        class="text-lg px-4 py-2"
+  <div>
+    <!-- Hero: Foto mit Overlay, zentrierter Text -->
+    <section class="relative flex items-center min-h-[420px] md:min-h-[520px] overflow-hidden">
+      <!-- Hintergrundbild -->
+      <img
+        src="/hero-empfang.webp"
+        alt="Empfangsbereich unserer Kinder- und Jugendarztpraxis"
+        width="2000"
+        height="724"
+        fetchpriority="high"
+        class="absolute inset-0 size-full object-cover object-[25%_70%]"
       >
-        Mit GitHub anmelden
-      </UButton>
-    </div>
-  </div>
-
-  <!-- Angemeldete Benutzer sehen den Jahresplaner -->
-  <div
-    v-else
-    class="mx-auto p-6"
-  >
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold">
-        Jahresplaner
-      </h1>
-      <div class="flex items-center gap-4">
-        <div class="flex flex-col gap-2">
-          <label class="flex flex-col gap-1">
-            <span class="text-sm font-medium text-muted">Jahr</span>
-          </label>
-          <USelect
-            v-model="selectedYear"
-            :items="years"
-            class="min-w-[100px]"
-            :placeholder="isLoadingYears ? 'Lade...' : 'Jahr auswählen'"
-            :loading="isLoadingYears"
-          />
-        </div>
-      </div>
-    </div>
-
-    <!-- Legend -->
-    <div class="bg-muted rounded-lg shadow-md mb-6">
-      <div class="py-3 px-6">
-        <div class="flex justify-center gap-8">
-          <div class="flex items-center gap-2">
-            <div class="w-4 h-4 bg-success rounded" />
-            <span class="text-sm">Frei</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="w-4 h-4 bg-error rounded" />
-            <span class="text-sm">Belegt</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="w-4 h-4 bg-warning rounded" />
-            <span class="text-sm">Urlaub</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="w-4 h-4 bg-info rounded" />
-            <span class="text-sm">Reserviert</span>
+      <!-- Overlay-Verlauf für Lesbarkeit (warmer Ton) -->
+      <div class="absolute inset-0 bg-stone-950/50 pointer-events-none" />
+      <div class="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-amber-900/10 to-stone-950/35 pointer-events-none" />
+      <UContainer class="text-center relative z-10 py-12 md:py-16">
+        <div class="max-w-xl mx-auto">
+          <h1 class="text-xl md:text-2xl font-semibold text-white leading-tight mb-4">
+            Guten Tag liebe Eltern, Kinder und Jugendliche!
+          </h1>
+          <p class="text-sm md:text-base text-white/90 max-w-lg mx-auto leading-relaxed mt-1 mb-0">
+            Herzlich willkommen auf unserer Praxis-Webseite. Diese Seite soll Ihnen helfen, uns kennenzulernen, Kontakt mit uns aufzunehmen und weitere Informationen zu erhalten. Wir freuen uns darauf, Sie und Ihre Kinder beim Heranwachsen zu begleiten.
+          </p>
+          <p class="text-base md:text-lg font-medium text-white/95 mt-5 mb-5 leading-tight">
+            Th. Holstein-Diepold, Dr. K. Diepold und das Praxisteam
+          </p>
+          <div class="mt-5 flex justify-center">
+            <UButton
+              to="/termine"
+              size="lg"
+              color="neutral"
+              variant="outline"
+              class="font-semibold"
+            >
+              <UIcon
+                name="i-lucide-calendar"
+                class="size-4"
+              />
+              Termine & Kontakt
+            </UButton>
           </div>
         </div>
-      </div>
-    </div>
+      </UContainer>
+    </section>
 
-    <!-- Loading Indicator -->
-    <div
-      v-if="isLoading ||isWeeksLoading || entitiesLoading.schools || entitiesLoading.students || entitiesLoading.companies"
-      class="flex justify-center items-center py-20"
-    >
-      <div class="text-center">
-        <UIcon
-          name="i-lucide-loader-2"
-          class="w-16 h-16 text-primary animate-spin mx-auto mb-4"
-        />
-        <p class="text-lg text-muted">
-          Lade Jahresplaner...
-        </p>
-      </div>
-    </div>
+    <!-- Aktuelle Informationen -->
+    <section class="py-16">
+      <UContainer>
+        <div class="max-w-4xl mx-auto">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="h-1 w-12 rounded-full bg-gray-800" />
+            <h2 class="text-2xl md:text-3xl font-bold text-highlighted">
+              Aktuelle Informationen
+            </h2>
+          </div>
 
-    <!-- Calendar Container -->
-    <div
-      v-else-if="!isLoading && !isWeeksLoading && !entitiesLoading.schools && !entitiesLoading.students && !entitiesLoading.companies"
-      class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
-    >
-      <div
-        v-for="month in 12"
-        :key="month"
-        class="bg-muted rounded-lg shadow-xl border-t-4 border-primary hover:shadow-2xl transition-all duration-200 cursor-pointer"
-      >
-        <div class="p-4">
-          <h2 class="text-2xl font-bold text-center mb-4">
-            {{ selectedYear ? new Date(selectedYear, month-1, 1).toLocaleString('de-DE', { month: 'long', year: 'numeric' }) : '' }}
-          </h2>
-          <div
-            v-if="weeksByMonth[month-1] && (weeksByMonth[month-1]?.length ?? 0) > 0"
-            class="space-y-3"
-          >
-            <CalendarWeek
-              v-for="week in (weeksByMonth[month-1] || [])"
-              :key="week.id"
-              :week="week"
-              @updated="handleWeekUpdated"
+          <div class="space-y-6">
+            <NeuigkeitCard
+              v-for="item in neuigkeiten"
+              :key="item.path"
+              :item="item"
             />
           </div>
-          <div
-            v-else
-            class="text-sm text-muted text-center py-4"
-          >
-            Keine Wochen in diesem Monat
+          <div class="mt-8">
+            <UButton
+              to="/aktuelles"
+              color="primary"
+              variant="subtle"
+              trailing-icon="i-lucide-chevron-right"
+              class="font-medium"
+            >
+              Alle Neuigkeiten anzeigen
+            </UButton>
           </div>
         </div>
-      </div>
-    </div>
+      </UContainer>
+    </section>
 
-    <!-- Trennelement -->
-    <div class="border-t border-neutral-600 my-8" />
+    <!-- Quick Links -->
+    <section class="py-16 bg-primary-50">
+      <UContainer>
+        <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          <NuxtLink
+            to="/ueber-uns"
+            class="group block md:col-span-2 md:col-start-2 lg:col-start-auto"
+          >
+            <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
+              <div class="flex flex-row items-start gap-3 md:flex-col md:gap-2 mb-2">
+                <div class="flex shrink-0 -space-x-3">
+                  <img
+                    src="/team/doctors/diepold-small.webp"
+                    alt="Dr. Katharina Diepold"
+                    class="size-10 rounded-full object-cover ring-2 ring-default"
+                  >
+                  <img
+                    src="/team/doctors/holstein-small.webp"
+                    alt="Thomas Holstein-Diepold"
+                    class="size-10 rounded-full object-cover ring-2 ring-default"
+                  >
+                </div>
+                <h3 class="font-semibold text-lg text-highlighted group-hover:text-primary transition-colors min-w-0 md:mb-0">
+                  Über uns
+                </h3>
+              </div>
+              <p class="text-sm text-muted mb-3">
+                Lernen Sie Frau Dr. Diepold, Herrn Holstein-Diepold und unser Praxisteam kennen.
+              </p>
+              <span class="text-primary font-medium text-sm flex items-center gap-1">
+                Mehr erfahren
+                <UIcon
+                  name="i-lucide-chevron-right"
+                  class="size-4 shrink-0"
+                />
+              </span>
+            </BaseCard>
+          </NuxtLink>
 
-    <!-- Jahr hinzufügen Button -->
-    <div class="flex justify-center">
-      <UButton
-        v-if="nextYear !== null"
-        color="primary"
-        variant="outline"
-        :loading="isLoading"
-        icon="i-lucide-plus"
-        @click="handleFillWeeks"
-      >
-        Kalenderwochen für {{ nextYear }} anlegen
-      </UButton>
-      <div
-        v-else
-        class="text-muted text-sm"
-      >
-        Alle Kalenderwochen bis 5 Jahre im Voraus sind angelegt.
-      </div>
-    </div>
+          <NuxtLink
+            to="/termine"
+            class="group block md:col-span-2"
+          >
+            <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
+              <BaseHeadingWithIcon
+                icon="i-lucide-calendar"
+                layout="responsive"
+              >
+                <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
+                  Termine & Kontakt
+                </h3>
+              </BaseHeadingWithIcon>
+              <p class="text-sm text-muted mb-3">
+                Terminbuchung, Erreichbarkeit, Sprechzeiten und Anfahrt.
+              </p>
+              <span class="text-primary font-medium text-sm flex items-center gap-1">
+                Mehr erfahren
+                <UIcon
+                  name="i-lucide-chevron-right"
+                  class="size-4 shrink-0"
+                />
+              </span>
+            </BaseCard>
+          </NuxtLink>
+
+          <NuxtLink
+            to="/leistungen"
+            class="group block md:col-span-2"
+          >
+            <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
+              <BaseHeadingWithIcon
+                icon="i-lucide-stethoscope"
+                layout="responsive"
+              >
+                <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
+                  Leistungen
+                </h3>
+              </BaseHeadingWithIcon>
+              <p class="text-sm text-muted mb-3">
+                Von Vorsorgen über Allergietests bis zur Neuropädiatrie – unser umfassendes Angebot.
+              </p>
+              <span class="text-primary font-medium text-sm flex items-center gap-1">
+                Mehr erfahren
+                <UIcon
+                  name="i-lucide-chevron-right"
+                  class="size-4 shrink-0"
+                />
+              </span>
+            </BaseCard>
+          </NuxtLink>
+
+          <NuxtLink
+            to="/patienteninfos"
+            class="group block md:col-span-2 lg:col-start-2"
+          >
+            <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
+              <BaseHeadingWithIcon
+                icon="i-lucide-info"
+                layout="responsive"
+              >
+                <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
+                  Patienteninfos
+                </h3>
+              </BaseHeadingWithIcon>
+              <p class="text-sm text-muted mb-3">
+                Verlässliche Anlaufstellen zu Gesundheit, Medien und chronischen Erkrankungen.
+              </p>
+              <span class="text-primary font-medium text-sm flex items-center gap-1">
+                Mehr erfahren
+                <UIcon
+                  name="i-lucide-chevron-right"
+                  class="size-4 shrink-0"
+                />
+              </span>
+            </BaseCard>
+          </NuxtLink>
+
+          <NuxtLink
+            to="/notfaelle"
+            class="group block md:col-span-2"
+          >
+            <BaseCard class="h-full transition-all hover:shadow-lg hover:-translate-y-1 border-transparent hover:border-primary">
+              <BaseHeadingWithIcon
+                icon="i-lucide-hospital"
+                layout="responsive"
+              >
+                <h3 class="font-semibold text-lg text-highlighted mb-2 group-hover:text-primary transition-colors md:mb-2">
+                  Notfälle
+                </h3>
+              </BaseHeadingWithIcon>
+              <p class="text-sm text-muted mb-3">
+                Außerhalb der Sprechzeiten: Bereitschaftsdienst und Kinderkliniken.
+              </p>
+              <span class="text-primary font-medium text-sm flex items-center gap-1">
+                Mehr erfahren
+                <UIcon
+                  name="i-lucide-chevron-right"
+                  class="size-4 shrink-0"
+                />
+              </span>
+            </BaseCard>
+          </NuxtLink>
+        </div>
+      </UContainer>
+    </section>
+
+    <!-- Praxis App (gleiche Karte wie auf Termine & Kontakt) -->
+    <section class="py-16 bg-primary-50">
+      <UContainer>
+        <h2 class="sr-only">
+          Praxis App
+        </h2>
+        <PraxisAppCommunication
+          :app-links="appLinks"
+          :use-cases="appUseCases"
+        />
+      </UContainer>
+    </section>
   </div>
 </template>
