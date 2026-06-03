@@ -87,7 +87,7 @@ const teamMembers: TeamMember[] = [
   { name: 'Elena Lorenz', role: 'MFA', image: '/team/staff/03-lorenz.webp' },
   { name: 'Zeynep Boga', role: 'MFA', image: '/team/staff/04-boga.webp' },
   { name: 'Marina Gottfried', role: 'MFA', image: '/team/staff/05-gottfried.webp' },
-  { name: 'Pauline Mönkemeyer', role: 'Auszubildende', image: '/team/staff/06-moenkemeyer.webp' },
+  { name: 'Pauline Mönkemeyer', role: 'MFA', image: '/team/staff/06-moenkemeyer.webp' },
   { name: 'Malak El Batal', role: 'Auszubildende', image: '/team/staff/07-batal.webp' },
   { name: 'Tanja Preußner', role: 'Mitarbeiterin' },
   { name: 'Peter Reese', role: 'Freier Mitarbeiter', image: '/team/staff/09-reese.jpg' },
