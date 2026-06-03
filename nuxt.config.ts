@@ -69,6 +69,8 @@ export default defineNuxtConfig({
     // Nuxt Studio: nicht vorrendern (wird bei Production mit SSR für Auth benötigt)
     '/_studio': { prerender: false },
     '/_studio/**': { prerender: false },
+    // OAuth: dynamisch, nicht prerendern (sonst wird localhost-redirect_uri eingebacken)
+    '/auth/**': { prerender: false },
     // Pflege-Planer: nicht vorrendern (SPA/on-demand), eigenes Layout
     '/pflege-planer': { appLayout: 'pflege-planer', prerender: false },
     '/pflege-planer/**': { appLayout: 'pflege-planer', prerender: false },
@@ -177,7 +179,7 @@ export default defineNuxtConfig({
       provider: 'github',
       owner: 'pauldiepold',
       repo: 'praxis-planer-nuxt',
-      branch: 'neue-website',
+      branch: 'main',
     },
     editor: {
       iconLibraries: ['lucide'],
