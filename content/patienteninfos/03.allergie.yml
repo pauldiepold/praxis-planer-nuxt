@@ -1,0 +1,14 @@
+title: Allergie Informationen
+icon: i-lucide-flower-2
+description: Informationen für mit Allergien betroffene Familien
+links:
+  - name: Pollenflugkalender des Deutschen Wetterdienstes
+    url: http://www.dwd.de/pollenflug
+  - name: HAL-Allergie Informationsseite
+    url: http://www.hal-allergy.de/allergien
+  - name: Allergiezentrum Südniedersachsen
+    url: https://allergiezentrum.umg.eu/
+  - name: Informationen über Allergien (allergiezentrum.org)
+    url: http://www.allergiezentrum.org/de/
+  - name: AGATE – Anaphylaxie-Schulungen
+    url: http://www.anaphylaxieschulung.de/index.html
