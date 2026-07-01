@@ -27,5 +27,18 @@ export default defineContentConfig({
         { columns: ['hidden'] },
       ],
     }),
+    patienteninfos: defineCollection({
+      type: 'data',
+      source: 'patienteninfos/*.yml',
+      schema: z.object({
+        title: z.string(),
+        icon: z.string(),
+        description: z.string(),
+        links: z.array(z.object({
+          name: z.string(),
+          url: z.string(),
+        })),
+      }),
+    }),
   },
 })
