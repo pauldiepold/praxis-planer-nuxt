@@ -9,7 +9,10 @@ defineProps<{
 </script>
 
 <template>
-  <BaseCard class="text-center transition-shadow hover:shadow-md" content-class="p-3 sm:p-4">
+  <BaseCard
+    class="text-center transition-shadow hover:shadow-md"
+    content-class="p-3 sm:p-4"
+  >
     <div class="mx-auto mb-3 flex aspect-[3/4] w-40 items-center justify-center overflow-hidden rounded-2xl bg-primary/10 sm:w-32">
       <img
         v-if="image"
