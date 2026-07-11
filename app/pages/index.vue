@@ -4,9 +4,9 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'Kinder- und Jugendarztpraxis Holstein-Diepold & Dr. Diepold',
+  title: 'Holstein-Diepold & Dr. Diepold – Kinderarztpraxis Northeim',
   titleTemplate: '%s',
-  description: 'Vorsorgen, Impfungen, Akutsprechstunde, Allergologie, Neuropädiatrie und Osteopathie für Kinder und Jugendliche.',
+  description: 'Kinder- und Jugendarztpraxis Holstein-Diepold & Dr. Diepold in Northeim: Vorsorgen, Impfungen, Akutsprechstunde, Neuropädiatrie, Allergologie und Osteopathie.',
 })
 
 const appLinks = {
@@ -52,8 +52,8 @@ const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
           <h1 class="text-xl md:text-2xl font-semibold text-white leading-tight mb-4">
             Guten Tag liebe Eltern, Kinder und Jugendliche!
           </h1>
-          <p class="text-sm md:text-base text-white/90 max-w-lg mx-auto leading-relaxed mt-1 mb-0">
-            Herzlich willkommen auf unserer Praxis-Webseite. Diese Seite soll Ihnen helfen, uns kennenzulernen, Kontakt mit uns aufzunehmen und weitere Informationen zu erhalten. Wir freuen uns darauf, Sie und Ihre Kinder beim Heranwachsen zu begleiten.
+          <p class="text-sm md:text-base text-white/90 max-w-2xl mx-auto leading-relaxed mt-1 mb-0">
+            In der Kinder- und Jugendarztpraxis Holstein-Diepold & Dr. Diepold in Northeim sind wir für Sie und Ihre Kinder da – von Vorsorgen und Impfungen über die Akutsprechstunde bis zu Neuropädiatrie, Allergologie und Osteopathie. Wir freuen uns darauf, Sie beim Heranwachsen Ihrer Kinder zu begleiten.
           </p>
           <p class="text-base md:text-lg font-medium text-white/95 mt-5 mb-5 leading-tight">
             Th. Holstein-Diepold, Dr. K. Diepold und das Praxisteam

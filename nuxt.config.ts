@@ -30,7 +30,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: 'de' },
-      titleTemplate: '%s — Kinder- und Jugendarztpraxis',
+      titleTemplate: '%s — Holstein-Diepold & Dr. Diepold',
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' },
       ],
@@ -42,7 +42,7 @@ export default defineNuxtConfig({
   site: {
     url: 'https://praxis-hd.de',
     name: 'Kinder- und Jugendarztpraxis Holstein-Diepold & Dr. Diepold',
-    description: 'Kinder- und Jugendarztpraxis Holstein-Diepold & Dr. Diepold. Vorsorgen, Impfungen, Akutsprechstunde, Neuropädiatrie, Allergologie, Osteopathie.',
+    description: 'Kinder- und Jugendarztpraxis Holstein-Diepold & Dr. Diepold in Northeim: Vorsorgen, Impfungen, Akutsprechstunde, Neuropädiatrie, Allergologie und Osteopathie.',
     defaultLocale: 'de',
   },
 
