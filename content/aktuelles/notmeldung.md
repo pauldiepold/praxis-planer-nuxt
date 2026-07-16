@@ -1,6 +1,6 @@
 ---
 title: "Notmeldung "
-date: 16.7.26
+date: 2026-07-16
 hidden: false
 seo:
   title: Notmeldung file
