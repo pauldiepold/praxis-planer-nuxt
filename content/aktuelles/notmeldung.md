@@ -1,7 +1,12 @@
 ---
-title: Notmeldung file
+title: "Notmeldung "
+date: 16.7.26
 hidden: false
+seo:
+  title: Notmeldung file
+  description: ""
 sitemap:
+  loc: /aktuelles/notmeldung
   videos: []
   images: []
 ---
