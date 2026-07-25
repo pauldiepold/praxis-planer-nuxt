@@ -22,13 +22,13 @@ const appUseCases = [
   { label: 'Terminanfragen' },
 ] as const
 
-const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
-  queryCollection('aktuelles')
-    .where('hidden', '=', false)
-    .order('date', 'DESC')
-    .limit(3)
-    .all(),
-)
+// Sichtbarkeitsfenster wird zur Build-Zeit (Prerender) mit dem aktuellen Datum
+// ausgewertet – ein täglicher Rebuild lässt Einträge am Stichtag auf-/abtauchen.
+const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', async () => {
+  const alle = await queryCollection('aktuelles').order('datum', 'DESC').all()
+  const heute = heuteIso()
+  return alle.filter(n => istSichtbar(n.anzeigenAb, n.anzeigenBis, heute))
+})
 </script>
 
 <template>
@@ -91,20 +91,9 @@ const { data: neuigkeiten } = await useAsyncData('aktuelles-latest', () =>
           <div class="space-y-6">
             <NeuigkeitCard
               v-for="item in neuigkeiten"
-              :key="item.path"
+              :key="item.id"
               :item="item"
             />
-          </div>
-          <div class="mt-8">
-            <UButton
-              to="/aktuelles"
-              color="primary"
-              variant="subtle"
-              trailing-icon="i-lucide-chevron-right"
-              class="font-medium"
-            >
-              Alle Neuigkeiten anzeigen
-            </UButton>
           </div>
         </div>
       </UContainer>

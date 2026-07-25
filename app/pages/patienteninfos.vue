@@ -26,7 +26,7 @@ function idFromStem(stem: string) {
 // wird zwischen "allergie" und "ernaehrung" ins Accordion eingeschoben.
 const accordionItems = computed(() => {
   const items = (categories.value ?? []).map(c => ({
-    label: c.title,
+    label: c.titel,
     icon: c.icon,
     value: idFromStem(c.stem),
     slot: idFromStem(c.stem),
@@ -83,7 +83,7 @@ const accordionItems = computed(() => {
               #[idFromStem(cat.stem)]
             >
               <PraxisPatienteninfosCategoryContent
-                :description="cat.description"
+                :description="cat.beschreibung"
                 :links="[...cat.links]"
               />
             </template>
