@@ -8,6 +8,7 @@ const UDropdownMenu = resolveComponent('UDropdownMenu')
 
 definePageMeta({
   name: 'students-management-page',
+  colorMode: 'dark',
 })
 
 // Seitenspezifischer Titel

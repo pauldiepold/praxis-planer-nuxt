@@ -14,15 +14,15 @@
     "prepare": "npx skilld prepare || true"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.115",
-    "@iconify-json/simple-icons": "^1.2.88",
+    "@iconify-json/lucide": "^1.2.119",
+    "@iconify-json/simple-icons": "^1.2.91",
     "@libsql/client": "^0.17.4",
-    "@nuxt/content": "^3.14.0",
+    "@nuxt/content": "^3.15.2",
     "@nuxt/eslint": "^1.16.0",
     "@nuxt/fonts": "0.14.0",
     "@nuxt/icon": "2.2.5",
-    "@nuxt/ui": "^4.9.0",
-    "@nuxthub/core": "^0.10.7",
+    "@nuxt/ui": "^4.10.0",
+    "@nuxthub/core": "^0.10.8",
     "@nuxtjs/robots": "6.1.2",
     "@nuxtjs/seo": "5.3.1",
     "@nuxtjs/sitemap": "8.2.2",
@@ -32,19 +32,23 @@
     "drizzle-kit": "^0.31.10",
     "drizzle-orm": "^0.45.2",
     "i": "^0.3.7",
-    "nuxt": "^4.4.8",
+    "nuxt": "^4.5.0",
     "nuxt-auth-utils": "^0.5.29",
     "nuxt-studio": "^1.7.0",
     "pinia": "^3.0.4",
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "eslint": "^10.6.0",
+    "eslint": "^10.8.0",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.3.6",
-    "wrangler": "^4.106.0"
+    "vue-tsc": "^3.3.8",
+    "wrangler": "^4.114.0"
   },
   "pnpm": {
+    "overrides": {
+      "unhead": "^3.2.3",
+      "@unhead/vue": "^3.2.3"
+    },
     "onlyBuiltDependencies": [
       "better-sqlite3",
       "sqlite3"

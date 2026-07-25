@@ -46,6 +46,18 @@ export default defineNuxtConfig({
     defaultLocale: 'de',
   },
 
+  // Farbmodus: Die öffentliche Website ist ausschließlich hell — kein System-Dark-Mode.
+  // Dark Mode gibt es nur im Pflege-Planer, dort per `definePageMeta({ colorMode: 'dark' })`
+  // erzwungen (erzwungene Seiten schreiben nichts in den Storage, können also nicht
+  // auf die öffentliche Seite durchschlagen).
+  // `storageKey` ist bewusst neu gesetzt: entwertet die alten, in Browsern gespeicherten
+  // 'dark'-Werte aus der früheren Layout-Logik.
+  colorMode: {
+    preference: 'light',
+    fallback: 'light',
+    storageKey: 'praxis-color-mode',
+  },
+
   content: {
     experimental: { sqliteConnector: 'native' as const },
   },

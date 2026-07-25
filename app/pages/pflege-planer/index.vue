@@ -217,6 +217,7 @@ onMounted(async () => {
 
 definePageMeta({
   title: 'Startseite',
+  colorMode: 'dark',
 })
 
 // Seitenspezifischer Titel

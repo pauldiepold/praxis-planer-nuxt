@@ -1,9 +1,5 @@
 <!-- Default-Layout = öffentliche Praxis-Website (Header, Banner, Footer). -->
 <script setup lang="ts">
-if (import.meta.client) {
-  useColorMode().preference = 'light'
-}
-
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'MedicalClinic',
