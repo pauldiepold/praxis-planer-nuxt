@@ -1,0 +1,30 @@
+name: Täglicher Rebuild
+
+# Löst einmal täglich einen Cloudflare-Pages-Deploy aus, damit das
+# Sichtbarkeitsfenster der Neuigkeiten (anzeigenAb/anzeigenBis) ohne manuellen
+# Push am Stichtag greift. Der Filter wird zur Build-Zeit ausgewertet (siehe
+# docs/adr/0001). Der reguläre Deploy läuft weiterhin über die Git-Integration
+# von Cloudflare Pages bei Push auf main.
+#
+# Voraussetzung: Deploy-Hook im Cloudflare-Pages-Dashboard anlegen und die URL
+# als Repository-Secret CLOUDFLARE_DEPLOY_HOOK_URL hinterlegen.
+
+on:
+  schedule:
+    # Täglich um 04:00 UTC (früh, vor den Praxis-Sprechzeiten).
+    - cron: '0 4 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  trigger-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy-Hook auslösen
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "::error::Secret CLOUDFLARE_DEPLOY_HOOK_URL ist nicht gesetzt."
+            exit 1
+          fi
+          curl --fail --silent --show-error -X POST "$DEPLOY_HOOK_URL"

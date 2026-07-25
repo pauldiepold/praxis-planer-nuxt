@@ -8,6 +8,7 @@ const UDropdownMenu = resolveComponent('UDropdownMenu')
 
 definePageMeta({
   name: 'companies-management-page',
+  colorMode: 'dark',
 })
 
 // Seitenspezifischer Titel

@@ -1,8 +1,6 @@
 <script setup lang="ts">
-if (import.meta.client) {
-  useColorMode().preference = 'dark'
-}
-
+// Dark Mode wird pro Planer-Seite via definePageMeta({ colorMode: 'dark' }) erzwungen,
+// damit er nicht über den Storage auf die öffentliche Website durchschlägt.
 onMounted(() => {
   useEntitiesStore().fetchAll()
 })
