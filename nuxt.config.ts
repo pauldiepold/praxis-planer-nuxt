@@ -94,6 +94,10 @@ export default defineNuxtConfig({
     '/patienteninfos/rund-ums-internet': { redirect: { to: '/patienteninfos', statusCode: 301 } },
     '/notfaelle-bereitschaftsdienst': { redirect: { to: '/notfaelle', statusCode: 301 } },
     '/praxis-app': { redirect: { to: '/#app', statusCode: 301 } },
+    // Aktuelles ist jetzt eine data-Collection ohne Einzelseiten – alte, evtl.
+    // indexierte URLs auf die Startseite umleiten.
+    '/aktuelles': { redirect: { to: '/', statusCode: 301 } },
+    '/aktuelles/**': { redirect: { to: '/', statusCode: 301 } },
   },
 
   experimental: {
@@ -158,7 +162,7 @@ export default defineNuxtConfig({
   },
 
   // Indexing-Steuerung: Disallow in robots.txt; ergänzend setzen wir pro Page bei Bedarf
-  // useSeoMeta({ robots: 'noindex' }) (z.B. aktuelles/[...path].vue bei hidden:true).
+  // useSeoMeta({ robots: 'noindex' }).
   robots: {
     disallow: nonPublicPaths,
   },

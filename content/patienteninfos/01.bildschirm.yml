@@ -1,6 +1,5 @@
-title: Rund um Bildschirm & Internet
+beschreibung: Themenvorschläge für Kinder, Jugendliche, Eltern, Pädagogen und Erzieher
 icon: i-lucide-monitor
-description: Themenvorschläge für Kinder, Jugendliche, Eltern, Pädagogen und Erzieher
 links:
   - name: bildschrimFREI bis DREI
     url: https://bildschirmfrei-bis-3.de/
@@ -10,3 +9,4 @@ links:
     url: https://www.klicksafe.de/kinder
   - name: klicksafe für Jugendliche
     url: https://www.klicksafe.de/jugendliche
+titel: Rund um Bildschirm & Internet
