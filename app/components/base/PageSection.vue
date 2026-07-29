@@ -8,14 +8,15 @@ defineProps<{
 
 <template>
   <section
-    :aria-labelledby="id"
+    :id="id"
+    :aria-labelledby="heading ? `${id}-heading` : undefined"
     class="py-10"
     :class="bgClass"
   >
     <UContainer class="space-y-10">
       <BaseSectionHeading
         v-if="heading"
-        :id="id"
+        :id="`${id}-heading`"
         :heading="heading"
       />
       <slot />

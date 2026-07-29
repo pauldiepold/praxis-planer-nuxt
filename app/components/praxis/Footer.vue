@@ -10,6 +10,7 @@ const currentYear = new Date().getFullYear()
         <div class="lg:col-span-1">
           <NuxtLink
             to="/"
+            aria-label="Zur Startseite"
             class="inline-block mb-4"
           >
             <UIcon

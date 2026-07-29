@@ -105,7 +105,8 @@ export default defineNuxtConfig({
     '/patienteninfos/ernaehrung': { redirect: { to: '/patienteninfos', statusCode: 301 } },
     '/patienteninfos/rund-ums-internet': { redirect: { to: '/patienteninfos', statusCode: 301 } },
     '/notfaelle-bereitschaftsdienst': { redirect: { to: '/notfaelle', statusCode: 301 } },
-    '/praxis-app': { redirect: { to: '/#app', statusCode: 301 } },
+    // Die App-Sektion liegt auf /termine, nicht auf der Startseite.
+    '/praxis-app': { redirect: { to: '/termine#app', statusCode: 301 } },
     // Aktuelles ist jetzt eine data-Collection ohne Einzelseiten – alte, evtl.
     // indexierte URLs auf die Startseite umleiten.
     '/aktuelles': { redirect: { to: '/', statusCode: 301 } },
@@ -165,6 +166,12 @@ export default defineNuxtConfig({
       prefix: 'praxis',
       dir: './app/assets/icons',
     }],
+  },
+
+  // OAuth-Routen existieren nur zur Laufzeit (prerender: false) und antworten beim
+  // Prerender zwangsläufig mit 404 – für den Link-Checker ein Falsch-Positiv.
+  linkChecker: {
+    excludeLinks: ['/auth/**'],
   },
 
   // OG-Image-Modul ist Teil von @nuxtjs/seo, brauchen wir aktuell aber nicht

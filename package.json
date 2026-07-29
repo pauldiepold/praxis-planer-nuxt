@@ -14,8 +14,8 @@
     "prepare": "npx skilld prepare || true"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.119",
-    "@iconify-json/simple-icons": "^1.2.91",
+    "@iconify-json/lucide": "^1.2.120",
+    "@iconify-json/simple-icons": "^1.2.92",
     "@libsql/client": "^0.17.4",
     "@nuxt/content": "^3.15.2",
     "@nuxt/eslint": "^1.16.0",
@@ -32,7 +32,7 @@
     "drizzle-kit": "^0.31.10",
     "drizzle-orm": "^0.45.2",
     "i": "^0.3.7",
-    "nuxt": "^4.5.0",
+    "nuxt": "^4.5.1",
     "nuxt-auth-utils": "^0.5.29",
     "nuxt-studio": "^1.7.0",
     "pinia": "^3.0.4",
@@ -42,7 +42,7 @@
     "eslint": "^10.8.0",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.3.8",
-    "wrangler": "^4.114.0"
+    "wrangler": "^4.115.0"
   },
   "pnpm": {
     "overrides": {
