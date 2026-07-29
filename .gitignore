@@ -27,3 +27,5 @@ logs
 
 # Skilld references (recreated by `skilld install`)
 .skilld
+
+*:Zone.Identifier

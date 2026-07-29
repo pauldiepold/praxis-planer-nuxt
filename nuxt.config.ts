@@ -60,6 +60,13 @@ export default defineNuxtConfig({
 
   content: {
     experimental: { sqliteConnector: 'native' as const },
+    // Ohne das würde der Parser bei page-Collections den ersten Absatz des Bodys
+    // als `description` (und ein führendes H1 als `title`) übernehmen. Für
+    // `aktuelles` unerwünscht – Titel stehen im Frontmatter, eine description
+    // brauchen die Einträge nicht. Entfernt nichts aus dem gerenderten Body.
+    build: {
+      markdown: { contentHeading: false },
+    },
   },
 
   runtimeConfig: {
@@ -203,6 +210,11 @@ export default defineNuxtConfig({
       owner: 'pauldiepold',
       repo: 'praxis-planer-nuxt',
       branch: 'main',
+    },
+    // Steuert die Studio-UI-Sprache *und* das Nuxt-UI-Locale der Editor-App –
+    // damit rendern Datumsfelder als TT.MM.JJJJ statt mm/dd/yyyy.
+    i18n: {
+      defaultLocale: 'de',
     },
     editor: {
       iconLibraries: ['lucide'],
