@@ -21,6 +21,30 @@ Dr. med. Katharina Diepold). Im JSON-LD als `alternateName` hinterlegt.
 Interner SPA-Bereich unter `/pflege-planer/**` für Schülerinnen-/Wochenplanung.
 Auth-geschützt, **nicht** öffentlich, `noindex` via `routeRules`.
 
+### Redaktion
+Das Bearbeiten der pflegbaren Inhalte durch die Praxisinhaberinnen — konkret
+**Aktuelles** (Startseite) und **Patienteninfos**. Findet in Nuxt Studio statt.
+
+Wichtig für die Wortwahl: Die Redaktion ist **kein Bereich mit eigenen Seiten**. Studio
+öffnet eine Seitenleiste über der ganz normalen Website; bearbeitet wird ausschließlich
+dort, die Seite dahinter dient als Live-Kontrolle. Es gibt deshalb auch kein Ziel, auf
+das man nach dem Studio-Login „weiterleiten" könnte — anders als beim Pflege-Planer.
+`/_studio` ist folgerichtig keine Seite, sondern nur der Einstieg in den Login.
+
+### Anmelde-Hub
+Die öffentlich verlinkte Seite `/anmelden` — der eine gemerkte Einstiegspunkt für beide
+internen Zugänge. Zeigt je eine Karte für **Redaktion** und **Pflege-Planer** samt deren
+Anmeldestatus.
+
+Die beiden Zugänge sind vollständig getrennt: eigene Anmeldung, eigene Berechtigten-Liste,
+unabhängig voneinander. Angemeldet sein heißt immer *in einem der beiden*, nie „im
+System".
+
+Der Hub ist öffentlich erreichbar und gibt nach außen **nur die beiden Bezeichnungen
+preis** – Beschreibungen, Anleitungen und Namen erscheinen erst im angemeldeten Zustand
+der jeweiligen Karte. Wer in keinem angemeldet ist, sieht zwei Titel und zwei
+Anmelde-Buttons.
+
 ### Aktuelles
 Nuxt-Content-Collection (`type: 'page'`) für Praxis-Neuigkeiten. `page` bleibt erhalten,
 damit Nuxt Studio den WYSIWYG-Markdown-Editor bietet (`data` kann das nicht, siehe ADR

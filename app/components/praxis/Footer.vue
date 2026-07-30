@@ -152,7 +152,7 @@ const currentYear = new Date().getFullYear()
               aria-hidden="true"
             >•</span>
             <NuxtLink
-              to="/login"
+              to="/anmelden"
               class="hover:text-primary-50 transition-colors"
             >
               Anmelden

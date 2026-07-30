@@ -2,7 +2,7 @@
 // der Sitemap ausgeschlossen.
 const nonPublicPaths = [
   '/pflege-planer',
-  '/login',
+  '/anmelden',
   '/_studio',
   '/platzhalter-patienteninformationen-datenschutz',
 ]
@@ -93,6 +93,8 @@ export default defineNuxtConfig({
     // Pflege-Planer: nicht vorrendern (SPA/on-demand), eigenes Layout
     '/pflege-planer': { appLayout: 'pflege-planer', prerender: false },
     '/pflege-planer/**': { appLayout: 'pflege-planer', prerender: false },
+    // Alte Login-URL: /login hieß bis zum Anmelde-Hub die Planer-Anmeldung.
+    '/login': { redirect: { to: '/anmelden', statusCode: 301 } },
     // Alte WP-URLs: server-seitige 301-Redirects auf neue Routes (SEO/Ranking erhalten)
     '/kontakt': { redirect: { to: '/termine', statusCode: 301 } },
     '/startseite': { redirect: { to: '/', statusCode: 301 } },
