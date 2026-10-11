@@ -17,7 +17,7 @@ defineProps<{
         variant="subtle"
         icon="i-lucide-triangle-alert"
         title="Keine Terminanfragen per E-Mail"
-        description="Für Termine nutzen Sie bitte die Praxis App oder die Online-Terminvergabe."
+        description="Für Termineanfragen sowie Rezept- oder Überweisungswünsche nutzen Sie bitte die Praxis App oder die Online-Terminvergabe."
         :ui="{
           title: 'text-highlighted',
           description: 'text-default',
