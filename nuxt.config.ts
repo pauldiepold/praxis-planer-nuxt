@@ -159,6 +159,10 @@ export default defineNuxtConfig({
     },
   },
 
+  // Seit @nuxtjs/seo v6 mitgeliefert, hier bewusst aus: würde llms.txt und
+  // Markdown-Varianten jeder Seite ausliefern.
+  aiReady: false,
+
   eslint: {
     config: {
       stylistic: true,
@@ -202,6 +206,11 @@ export default defineNuxtConfig({
     exclude: nonPublicPaths.flatMap(p => [p, `${p}/**`]),
     zeroRuntime: true,
   },
+
+  // Seit @nuxtjs/seo v6 mitgeliefert, hier bewusst aus: braucht einen zwischen
+  // Builds persistierten Cache (node_modules/.cache), den der Cloudflare-Build
+  // nicht hat – wäre wirkungslos.
+  skewProtection: false,
 
   studio: {
     route: '/_studio',
