@@ -1,74 +1,69 @@
-# GitHub Authentifizierung Setup
+# Authentifizierung
+
+Das Projekt hat **zwei voneinander unabhängige Anmeldungen**, beide über GitHub, aber mit
+getrennten OAuth-Apps, getrennten Sessions und getrennten Berechtigten-Listen. Man kann in
+genau einer, in beiden oder in keiner angemeldet sein.
+
+| | Pflege-Planer | Redaktion (Nuxt Studio) |
+| --- | --- | --- |
+| Einstieg | `/auth/github` | `/_studio` |
+| Umsetzung | `nuxt-auth-utils` | `nuxt-studio` (eigenes Auth) |
+| Session-Cookie | `nuxt-session` | `studio-session` (+ `studio-session-check`) |
+| Berechtigte | `NUXT_ALLOWED_USERS` (GitHub-**Logins**) | `STUDIO_GITHUB_MODERATORS` (**E-Mails**) |
+| Ziel nach Login | `/pflege-planer` | zurück auf `/anmelden` |
+
+Gemeinsamer Einstiegspunkt für beide ist der **Anmelde-Hub** `/anmelden` (im Footer
+verlinkt, `noindex`, aus der Sitemap ausgeschlossen). Er zeigt je eine Karte pro Zugang mit
+dem jeweiligen Anmeldestatus. Siehe `CONTEXT.md`.
 
 ## Einrichtung
 
-1. **GitHub OAuth App erstellen:**
-   
-   - Gehe zu [GitHub Developer Settings](https://github.com/settings/developers)
-   - Klicke auf "New OAuth App"
-   - Fülle die Felder aus:
-     - **Application name:** Praxis Planer
-     - **Homepage URL:** `http://localhost:3000` (für Entwicklung)
-     - **Authorization callback URL:** `http://localhost:3000/auth/github`
-   - Speichere die **Client ID** und **Client Secret**
+### 1. Zwei GitHub-OAuth-Apps anlegen
 
-2. **Umgebungsvariablen konfigurieren:**
-   
-   Kopiere `env.example` zu `.env` und setze die erforderlichen Werte:
-   
-   ```bash
-   cp env.example .env
-   ```
-   
-   Bearbeite die `.env`-Datei:
-   ```
-   NUXT_SESSION_PASSWORD=dein-super-geheimes-session-passwort-mit-mindestens-32-zeichen
-   NUXT_ALLOWED_USERS=dein-github-username,weitere-github-usernames
-   NUXT_OAUTH_GITHUB_CLIENT_ID=deine-github-client-id
-   NUXT_OAUTH_GITHUB_CLIENT_SECRET=dein-github-client-secret
-   ```
+Unter [GitHub Developer Settings](https://github.com/settings/developers) je eine App für
+Planer und Studio. Callback-URLs:
 
-3. **Session-Passwort generieren:**
-   
-   Das `NUXT_SESSION_PASSWORD` muss mindestens 32 Zeichen lang sein:
-   
-   ```bash
-   openssl rand -base64 32
-   ```
+| App | Callback (Dev) | Callback (Prod) |
+| --- | --- | --- |
+| Planer | `http://localhost:3000/auth/github` | `https://praxis-hd.de/auth/github` |
+| Studio | `http://localhost:3000/__nuxt_studio/auth/github` | `https://praxis-hd.de/__nuxt_studio/auth/github` |
 
-4. **Erlaubte Benutzer konfigurieren:**
-   
-   In `NUXT_ALLOWED_USERS` kannst du eine kommagetrennte Liste von GitHub-Benutzernamen angeben, die sich anmelden dürfen.
+### 2. Umgebungsvariablen
 
-## Funktionalität
+`cp env.example .env` und ausfüllen – die Datei dokumentiert jede Variable. Das
+Session-Passwort des Planers erzeugt `openssl rand -base64 32` (mindestens 32 Zeichen).
 
-### Geschützte Routen
-- **Frontend-Seiten:** Alle Seiten außer der Startseite sind geschützt
-- **API-Endpunkte:** Alle API-Routen außer `/auth/*` und `/api/_auth/*` sind geschützt
+Zwei Fallstricke:
 
-### Authentifizierung
-- **Login:** GitHub OAuth über `/auth/github`
-- **Session:** Automatische Session-Verwaltung mit Cookies
-- **Logout:** Session-Löschung über Navbar-Button
+- **`STUDIO_GITHUB_MODERATORS` ist nicht optional.** Ist die Variable leer, entfällt die
+  Zugangsprüfung komplett (`moderators.length > 0 && …`) – jeder GitHub-Account bekommt
+  dann eine Studio-Session und damit Zugriff auf `/__nuxt_studio/medias/**` und
+  `/__nuxt_studio/ai/**`. Nur das Publish scheitert noch, weil dafür Schreibrechte am
+  Repository nötig sind.
+- **`STUDIO_GITHUB_CLIENT_ID` und `_SECRET` müssen auch zur Build-Zeit gesetzt sein.**
+  `nuxt-studio` leitet das Passwort des `studio-session`-Cookies beim Build aus
+  `md5(clientId + clientSecret)` ab. Fehlen die Werte im Build-Environment (bei uns:
+  Cloudflare Pages), ist das Passwort `md5('')` – öffentlich bekannt, die Session also
+  fälschbar. Der Fehler ist zur Laufzeit nicht sichtbar.
 
-### Middleware
-- **Client-Middleware:** `app/middleware/auth.ts` - Leitet nicht-authentifizierte Benutzer zur Startseite weiter
-- **Server-Middleware:** `server/middleware/auth.ts` - Schützt alle API-Routen
+## Schutzschichten
 
-### Komponenten
-- **LayoutNavbar:** Navigation mit Auth-State und Logout-Funktionalität
-- **AuthState:** Vue-Komponente für sichere Auth-Zustandsanzeige
+- **Client** (`app/middleware/auth.global.ts`, global): schickt nicht angemeldete Besucher
+  von `/pflege-planer/**` auf `/anmelden`. **Nur dieser Pfad** ist geschützt, die
+  öffentliche Website nicht.
+- **Server** (`server/middleware/auth.ts`): schützt alle `/api/**` außer `/auth/**` und
+  `/api/_auth/**`. Neue öffentliche Endpoints müssen unter diesen Pfaden liegen.
+- **Studio**: das Modul schützt seine eigenen Endpoints über `requireStudioAuth`; unsere
+  Server-Middleware greift dort nicht (`/__nuxt_studio/**` ist kein `/api/**`).
 
-## Sicherheit
+## Fehlerpfade
 
-- Sessions sind verschlüsselt und in Cookies gespeichert
-- Nur GitHub-Benutzer aus der erlaubten Liste können sich anmelden
-- Automatische Weiterleitung bei fehlender Authentifizierung
-- Sichere Session-Konfiguration
+`server/routes/auth/github.get.ts` leitet nicht freigeschaltete Accounts auf
+`/anmelden?fehler=nicht-berechtigt`, technische Fehler auf `/anmelden?fehler=oauth`; der
+Hub zeigt den Grund an. Das Studio wirft bei nicht freigeschalteten Accounts eine englische
+403-Seite aus dem Modul – bewusst nicht abgefangen.
 
-## Produktions-Setup
+## Produktion
 
-Für die Produktion:
-1. Ändere die GitHub OAuth App URLs auf deine Domain
-2. Setze die Umgebungsvariablen auf deinem Server
-3. Stelle sicher, dass `NUXT_SESSION_PASSWORD` sicher gespeichert ist 
+Variablen als Secrets im Cloudflare-Pages-Projekt hinterlegen (für Build **und** Runtime)
+und die Callback-URLs beider OAuth-Apps auf die Produktionsdomain setzen.

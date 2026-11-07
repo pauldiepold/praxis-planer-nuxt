@@ -2,7 +2,7 @@
 // der Sitemap ausgeschlossen.
 const nonPublicPaths = [
   '/pflege-planer',
-  '/login',
+  '/anmelden',
   '/_studio',
   '/platzhalter-patienteninformationen-datenschutz',
 ]
@@ -93,6 +93,8 @@ export default defineNuxtConfig({
     // Pflege-Planer: nicht vorrendern (SPA/on-demand), eigenes Layout
     '/pflege-planer': { appLayout: 'pflege-planer', prerender: false },
     '/pflege-planer/**': { appLayout: 'pflege-planer', prerender: false },
+    // Alte Login-URL: /login hieß bis zum Anmelde-Hub die Planer-Anmeldung.
+    '/login': { redirect: { to: '/anmelden', statusCode: 301 } },
     // Alte WP-URLs: server-seitige 301-Redirects auf neue Routes (SEO/Ranking erhalten)
     '/kontakt': { redirect: { to: '/termine', statusCode: 301 } },
     '/startseite': { redirect: { to: '/', statusCode: 301 } },
@@ -157,6 +159,10 @@ export default defineNuxtConfig({
     },
   },
 
+  // Seit @nuxtjs/seo v6 mitgeliefert, hier bewusst aus: würde llms.txt und
+  // Markdown-Varianten jeder Seite ausliefern.
+  aiReady: false,
+
   eslint: {
     config: {
       stylistic: true,
@@ -200,6 +206,11 @@ export default defineNuxtConfig({
     exclude: nonPublicPaths.flatMap(p => [p, `${p}/**`]),
     zeroRuntime: true,
   },
+
+  // Seit @nuxtjs/seo v6 mitgeliefert, hier bewusst aus: braucht einen zwischen
+  // Builds persistierten Cache (node_modules/.cache), den der Cloudflare-Build
+  // nicht hat – wäre wirkungslos.
+  skewProtection: false,
 
   studio: {
     route: '/_studio',

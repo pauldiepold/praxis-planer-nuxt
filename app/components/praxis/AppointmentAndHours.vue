@@ -34,9 +34,12 @@ defineProps<{
             </p>
           </BaseHeadingWithIcon>
         </template>
+        <p class="text-sm text-muted mb-2">
+          Wir arbeiten im Rahmen einer Terminsprechstunde.
+        </p>
         <p class="text-sm text-muted">
-          Wir arbeiten im Rahmen einer Terminsprechstunde. Um unnötige Wartezeiten zu vermeiden, bitten wir Sie,
-          vor jedem Besuch einen Termin online zu vereinbaren oder anzurufen.
+          Um unnötige Wartezeiten zu vermeiden, bitten wir Sie,
+          vor jedem Besuch einen Termin online zu vereinbaren, anzurufen oder über den Chat Kontakt mit uns aufzunehmen.
         </p>
       </BaseCard>
 
@@ -58,8 +61,8 @@ defineProps<{
         </template>
         <div class="space-y-2 text-sm text-muted">
           <p>
-            Von Montag bis Freitag bieten wir am Ende des Vormittags eine Akutsprechstunde an – für Fieber oder andere
-            akute Krankheitsbilder bzw. dringende Fragestellungen.
+            Von Montag bis Freitag bieten wir am Ende des Vormittags über 2–4 Stunden eine Akutsprechstunde an: für Fieber
+            oder andere akute Krankheitsbilder bzw. dringende Fragestellungen oder Vertretungspatienten.
           </p>
 
           <ul class="text-sm list-disc space-y-2 pl-5">
@@ -67,9 +70,9 @@ defineProps<{
             <li>Für schon länger andauernde Beschwerden ist diese Sprechstunde nicht geeignet.</li>
           </ul>
           <p>
-            Einen Akuttermin können Sie frühestens einen Tag im Voraus online buchen –
-            bitte suchen Sie nach einem Termin bei Herrn Holstein-Diepold oder Frau Dr. Diepold (nicht immer bieten beide
-            die Akutsprechstunde an).
+            Einen Akuttermin können Sie frühestens einen Tag im Voraus online buchen. Bitte suchen Sie in Doctolib nach
+            einem Termin bei Herrn Holstein-Diepold und/oder Frau Dr. Diepold. Nicht immer bieten beide die
+            Akutsprechstunde zu denselben Zeiten, im selben Umfang oder an denselben Tagen an.
           </p>
         </div>
       </BaseCard>

@@ -14,8 +14,9 @@ export default defineOAuthGitHubEventHandler({
         console.log('Unauthorized login attempt:', user.login)
         // Session löschen, falls schon gesetzt
         await setUserSession(event, { user: undefined })
-        // Weiterleitung mit Fehler
-        return sendRedirect(event, '/')
+        // Zurück zum Anmelde-Hub, der den Grund anzeigt – eine stumme Weiterleitung auf /
+        // ist von "kaputt" nicht zu unterscheiden.
+        return sendRedirect(event, '/anmelden?fehler=nicht-berechtigt')
       }
 
       await setUserSession(event, {
@@ -42,12 +43,12 @@ export default defineOAuthGitHubEventHandler({
         console.error('Error clearing session:', sessionError)
       }
 
-      return sendRedirect(event, '/')
+      return sendRedirect(event, '/anmelden?fehler=oauth')
     }
   },
   // Optional, will return a JSON error and 401 statuscode by default
   onError(event, error) {
     console.error('GitHub OAuth error:', error)
-    return sendRedirect(event, '/')
+    return sendRedirect(event, '/anmelden?fehler=oauth')
   },
 })

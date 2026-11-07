@@ -66,6 +66,11 @@ const accordionItems = computed(() => {
     <section class="pb-16 pt-10">
       <UContainer>
         <div class="mx-auto max-w-4xl">
+          <PraxisPatienteninfosVeranstaltungen
+            id="veranstaltungen"
+            class="mb-8 scroll-mt-24"
+          />
+
           <UAccordion
             type="single"
             collapsible
