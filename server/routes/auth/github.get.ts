@@ -1,10 +1,12 @@
+import { sendRedirect, useRuntimeConfig } from 'nuxt/server'
+
 export default defineOAuthGitHubEventHandler({
   config: {
     emailRequired: true,
   },
   async onSuccess(event, { user, tokens: _tokens }) {
     try {
-      const { allowedUsers } = useRuntimeConfig(event)
+      const { allowedUsers } = useRuntimeConfig()
 
       // Hole die erlaubten E-Mails aus der ENV
       const allowed = (allowedUsers || '').split(',').map(e => e.trim().toLowerCase())
