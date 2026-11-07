@@ -10,8 +10,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postinstall": "nuxt prepare",
-    "typecheck": "nuxi typecheck",
-    "prepare": "npx skilld prepare || true"
+    "typecheck": "nuxi typecheck"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.152",
@@ -57,6 +56,9 @@
       "workerd"
     ],
     "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "sharp",
       "vue-demi"
     ]
   },
