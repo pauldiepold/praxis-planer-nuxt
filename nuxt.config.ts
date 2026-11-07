@@ -77,9 +77,6 @@ export default defineNuxtConfig({
         clientSecret: process.env.NUXT_OAUTH_GITHUB_CLIENT_SECRET || '',
       },
     },
-    session: {
-      password: process.env.NUXT_SESSION_PASSWORD || '',
-    },
   },
 
   routeRules: {
