@@ -1,0 +1,38 @@
+name: Preview auf develop
+
+# Setzt den Branch `develop` bei jedem PR-Push auf den Stand des PRs. Cloudflare
+# Pages baut ihn dann als Preview unter develop.praxis-planer-nuxt.pages.dev –
+# die einzige Preview-URL, die als Callback in der Preview-OAuth-App eingetragen
+# ist (GitHub erlaubt keine Wildcards). Bei mehreren offenen PRs gewinnt der
+# zuletzt gepushte. `develop` ist reiner Deploy-Zeiger, nie dorthin committen.
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: preview-develop
+  cancel-in-progress: true
+
+jobs:
+  update-develop:
+    # Fork-PRs haben keinen Schreibzugriff (und sollen nicht deployen)
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: develop auf PR-Head setzen
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if gh api "repos/$REPO/git/ref/heads/develop" --silent 2>/dev/null; then
+            gh api -X PATCH "repos/$REPO/git/refs/heads/develop" -f sha="$SHA" -F force=true --silent
+          else
+            gh api -X POST "repos/$REPO/git/refs" -f ref=refs/heads/develop -f sha="$SHA" --silent
+          fi
+          echo "develop → $SHA (PR #${{ github.event.pull_request.number }})" >> "$GITHUB_STEP_SUMMARY"
