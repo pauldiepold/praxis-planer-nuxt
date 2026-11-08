@@ -1,0 +1,38 @@
+name: Staging
+
+# Setzt den Branch `staging` bei jedem PR-Push auf den Stand des PRs. Cloudflare
+# Pages baut ihn dann unter staging.praxis-planer-nuxt.pages.dev – die einzige
+# Preview-URL, die als Callback in den Staging-OAuth-Apps eingetragen ist
+# (GitHub erlaubt keine Wildcards). Bei mehreren offenen PRs gewinnt der zuletzt
+# gepushte. `staging` ist reiner Deploy-Zeiger: nie dorthin committen.
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: staging
+  cancel-in-progress: true
+
+jobs:
+  update-staging:
+    # Fork-PRs haben keinen Schreibzugriff (und sollen nicht deployen)
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: staging auf PR-Head setzen
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if gh api "repos/$REPO/git/ref/heads/staging" --silent 2>/dev/null; then
+            gh api -X PATCH "repos/$REPO/git/refs/heads/staging" -f sha="$SHA" -F force=true --silent
+          else
+            gh api -X POST "repos/$REPO/git/refs" -f ref=refs/heads/staging -f sha="$SHA" --silent
+          fi
+          echo "staging → $SHA (PR #${{ github.event.pull_request.number }})" >> "$GITHUB_STEP_SUMMARY"

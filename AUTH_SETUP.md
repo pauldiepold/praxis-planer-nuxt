@@ -8,7 +8,7 @@ genau einer, in beiden oder in keiner angemeldet sein.
 | --- | --- | --- |
 | Einstieg | `/auth/github` | `/_studio` |
 | Umsetzung | `nuxt-auth-utils` | `nuxt-studio` (eigenes Auth) |
-| Session-Cookie | `nuxt-session` | `studio-session` (+ `studio-session-check`) |
+| Session-Cookie | `nuxt-auth-session` | `studio-session` (+ `studio-session-check`) |
 | Berechtigte | `NUXT_ALLOWED_USERS` (GitHub-**Logins**) | `STUDIO_GITHUB_MODERATORS` (**E-Mails**) |
 | Ziel nach Login | `/pflege-planer` | zurück auf `/anmelden` |
 
@@ -21,17 +21,19 @@ dem jeweiligen Anmeldestatus. Siehe `CONTEXT.md`.
 ### 1. Zwei GitHub-OAuth-Apps anlegen
 
 Unter [GitHub Developer Settings](https://github.com/settings/developers) je eine App für
-Planer und Studio. Callback-URLs:
+Planer und Studio – und zwar pro Umgebung, denn eine OAuth-App kennt genau **eine**
+Callback-URL (keine Wildcards). Callback-URLs:
 
-| App | Callback (Dev) | Callback (Prod) |
-| --- | --- | --- |
-| Planer | `http://localhost:3000/auth/github` | `https://praxis-hd.de/auth/github` |
-| Studio | `http://localhost:3000/__nuxt_studio/auth/github` | `https://praxis-hd.de/__nuxt_studio/auth/github` |
+| App | Dev | Staging | Prod |
+| --- | --- | --- | --- |
+| Planer | `http://localhost:3000/auth/github` | `https://staging.praxis-planer-nuxt.pages.dev/auth/github` | `https://praxis-hd.de/auth/github` |
+| Studio | `http://localhost:3000/__nuxt_studio/auth/github` | `https://staging.praxis-planer-nuxt.pages.dev/__nuxt_studio/auth/github` | `https://praxis-hd.de/__nuxt_studio/auth/github` |
 
 ### 2. Umgebungsvariablen
 
 `cp env.example .env` und ausfüllen – die Datei dokumentiert jede Variable. Das
-Session-Passwort des Planers erzeugt `openssl rand -base64 32` (mindestens 32 Zeichen).
+Session-Secret des Planers (`NUXT_APP_SECRET`) erzeugt `openssl rand -base64 32`
+(mindestens 32 Zeichen); ändert es sich, sind alle Planer-Sessions ungültig.
 
 Zwei Fallstricke:
 
@@ -63,7 +65,16 @@ Zwei Fallstricke:
 Hub zeigt den Grund an. Das Studio wirft bei nicht freigeschalteten Accounts eine englische
 403-Seite aus dem Modul – bewusst nicht abgefangen.
 
-## Produktion
+## Produktion und Staging
 
-Variablen als Secrets im Cloudflare-Pages-Projekt hinterlegen (für Build **und** Runtime)
-und die Callback-URLs beider OAuth-Apps auf die Produktionsdomain setzen.
+Variablen als Secrets im Cloudflare-Pages-Projekt hinterlegen (für Build **und** Runtime) –
+getrennt für die Umgebungen **Production** (Branch `main`) und **Preview** (alle anderen
+Branches). Unter Preview stehen die Client-IDs/Secrets der Staging-OAuth-Apps.
+
+Login funktioniert nur auf Production und auf **Staging**
+(`staging.praxis-planer-nuxt.pages.dev`), nicht auf den übrigen Branch-Previews. Den
+Branch `staging` setzt `.github/workflows/staging.yml` bei jedem Push auf einen PR gegen
+`main` automatisch auf dessen Stand.
+
+Achtung: Studio publiziert auch von Staging aus in den Branch aus
+`nuxt.config.ts → studio.repository` (= `main`), also direkt live.
