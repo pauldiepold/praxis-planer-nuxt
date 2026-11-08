@@ -26,7 +26,12 @@ Kein Test-Setup.
 
 ## Deployment
 
-Cloudflare Pages direkt via `wrangler` (kein NuxtHub-Dashboard). D1-Binding `DB` in `wrangler.jsonc`. Nuxt Studio publiziert in den Branch, der in `nuxt.config.ts → studio.repository` eingetragen ist.
+Cloudflare Pages über die Git-Integration (baut jeden gepushten Branch; kein NuxtHub-Dashboard). D1-Binding `DB` in `wrangler.jsonc`. Nuxt Studio publiziert in den Branch, der in `nuxt.config.ts → studio.repository` eingetragen ist.
+
+- **Branches**: Feature-Branch → PR direkt gegen `main` (kein develop). Push auf `main` = Production.
+- **Staging**: `.github/workflows/staging.yml` setzt den Branch `staging` bei jedem PR-Push auf den PR-Head → `staging.praxis-planer-nuxt.pages.dev`. Nur dort (und in Prod) funktioniert der GitHub-Login, weil OAuth-Apps nur eine Callback-URL kennen. Nie auf `staging` committen.
+- Jeder andere Branch bekommt eine Cloudflare-Preview (`<branch>.praxis-planer-nuxt.pages.dev`), aber ohne Login.
+- Auth-Setup und Secrets: `AUTH_SETUP.md`.
 
 ## Gotchas
 
