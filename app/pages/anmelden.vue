@@ -95,7 +95,7 @@ const planerAbmelden = async () => {
           <UIcon
             name="i-praxis-logo"
             aria-hidden="true"
-            class="block size-14 shrink-0 rounded-lg bg-gray-200 p-1 text-black"
+            class="size-12 shrink-0 text-black"
           />
           <h1 class="text-3xl font-bold text-highlighted md:text-4xl">
             Anmelden
